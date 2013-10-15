@@ -1,0 +1,51 @@
+body {
+  color: #5a5a5a;
+
+  .navbar-wrapper {
+    width: 100%;
+
+    .navbar {
+      margin-bottom: 0;
+      width: 100%;
+    }
+  }
+
+  .carousel {
+    margin-bottom: 60px;
+    margin-top: -90px;
+
+    .carousel-caption p {
+      font-size: 21px;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+  }
+
+  .marketing {
+    padding-left: 0;
+    padding-right: 0;
+
+    .col-lg-4 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-weight: normal;
+    }
+  }
+
+  .featurette {
+    margin-left: -15px;
+    margin-right: -15px;
+
+    .featurette-heading {
+      font-size: 50px;
+      margin-top: 120px;
+    }
+  }
+
+  .featurette-divider {
+    margin: 80px 0;
+  }
+}
