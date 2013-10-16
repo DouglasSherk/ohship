@@ -1,0 +1,203 @@
+@import 'constants';
+@import 'utilities';
+
+body {
+  .alert {
+    background: #cce1ef;
+    padding: 1em;
+    border-radius: 3px;
+    margin: 10px 0;
+
+    .alert-inner {
+      display: table;
+
+      * {
+        display: table-cell;
+      }
+
+      i {
+        padding-right: 20px;
+        vertical-align: middle;
+      }
+
+      p {
+        overflow: auto;
+      }
+    }
+
+    &.alert-error {
+      background: rgb(242, 222, 222);
+      border: rgb(238, 211, 215);
+      color: rgb(185, 74, 72);
+    }
+
+    &.alert-success {
+      background: rgb(223, 240, 216);
+      border: rgb(214, 233, 198);
+      color: rgb(70, 136, 71);
+    }
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .hide {
+    display: none;
+  }
+
+  hr.soften {
+    margin: 20px 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.1), rgba(0,0,0,0));
+    background-image:    -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.1), rgba(0,0,0,0));
+    background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.1), rgba(0,0,0,0));
+    background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.1), rgba(0,0,0,0));
+    border: 0;
+  }
+
+  a {
+    &, &:link, &:visited, &:hover, &:active {
+      text-decoration: none;
+      &.pretty {
+        color: #08c;
+      }
+    }
+  }
+
+  .align-right {
+    text-align: right;
+  }
+
+  .centered {
+    margin: auto;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .container {
+    margin: auto;
+  }
+
+  .separator {
+    margin: 40px 0;
+  }
+
+  .separator-small {
+    margin: 30px 0;
+  }
+
+  .separator-xsmall {
+    margin: 20px 0;
+  }
+
+  .section {
+    position: relative;
+    margin-bottom: 15px;
+
+    > button, > a.pure-button {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+
+  .well {
+    // XXX: Border conflicts with scaling in subsections.  Removed until further notice.
+    //border: 1px solid #d8d8d8;
+    //@include border-radius(3px);
+
+    background: $light-gray;
+  }
+
+  .well, .well-light {
+    padding: 20px;
+  }
+
+  /**
+   * Must be used below a position:absolute element that you want to center it in.
+   */
+  .modal {
+    @include transition();
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    @include transform(-100%, 0);
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 1006;
+
+    &.active {
+      @include transform(0, 0);
+    }
+
+    .modal-inside {
+      @include box-sizing(border-box);
+
+      overflow: auto;
+      height: 100%;
+      padding-bottom: $view-padding;
+
+      // "Hide" the menu.
+      padding-left: 0;
+
+      .content {
+        @include respond-to(handhelds) {margin: auto;}
+      }
+
+      /* Why is this here?
+      .form-content {
+        @include respond-to(widescreens){
+          display: block;
+          width: 80%;
+          margin: auto;
+        }
+      }*/
+    }
+  }
+
+  &.modal-active {
+    overflow: hidden;
+  }
+
+  .inherit-style {
+    color: inherit;
+  }
+
+  .except-desktops {
+    @include respond-to(desktops, widescreens) { display: none; }
+  }
+
+  .only-desktops {
+    @include respond-to(tablets, handhelds) { display: none; }
+  }
+
+  label.required:after {
+    content: "*";
+    color: red;
+    margin-left: -2px;
+  }
+
+  .affix {
+    position: fixed;
+  }
+
+  .no-bottom-margin {
+    margin-bottom: 0 !important;
+  }
+
+  .no-top-margin {
+    margin-top: 0 !important;
+  }
+
+  aside {
+    background: #1f8dd6;
+    padding: 1em;
+    border-radius: 3px;
+    color: #fff;
+  }
+}

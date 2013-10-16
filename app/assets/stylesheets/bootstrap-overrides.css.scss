@@ -1,1 +1,18 @@
 @import "twitter/bootstrap";
+
+@mixin btn-xlg {
+  @include button-size($padding-large-vertical, $padding-large-horizontal*2, $font-size-large*1.5, $line-height-large*1.5, $border-radius-large);
+}
+.btn-xlg {
+  @include btn-xlg;
+}
+
+body {
+  .navbar-brand {
+    padding: 0;
+  }
+
+  .navbar-inverse .navbar-nav > .active > a {
+    background-color: transparent;
+  }
+}

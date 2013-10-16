@@ -1,0 +1,69 @@
+$break-small: 480px;
+$break-large: 768px;
+$break-xlarge: 1200px;
+
+$break-tall: 768px;
+
+@mixin respond-to($media...) {
+  @if index($media, handhelds) {
+    @media only screen and (max-width: $break-small) { @content; }
+  }
+  @if index($media, tablets) {
+    @media only screen and (min-width: $break-small+1) and (max-width: $break-large) { @content; }
+  }
+  @if index($media, desktops) {
+    @media only screen and (min-width: $break-large+1) and (max-width: $break-xlarge) { @content; }
+  }
+  @if index($media, widescreens) {
+    @media only screen and (min-width: $break-xlarge+1) { @content; }
+  }
+  @if index($media, tallscreens) {
+    @media only screen and (min-height: $break-tall) { @content; }
+  }
+}
+
+@mixin transition($transition: all 0.4s ease-out) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -ms-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+
+@mixin transform($x, $y) {
+  -webkit-transform: translate3d($x, $y, 0);
+  transform: translate3d($x, $y, 0);
+}
+
+@mixin box-sizing($value: border-box) {
+  -webkit-box-sizing: $value; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: $value;    /* Firefox, other Gecko */
+  box-sizing: $value;         /* Opera/IE 8+ */
+}
+
+@mixin gradient($rgb-start, $rgb-finish, $occupancy, $location-start, $location-finish) {
+  $hex-start: rgb($rgb-start, $rgb-start, $rgb-start);
+  $hex-finish: rgb($rgb-finish, $rgb-finish, $rgb-finish);
+  background: rgb($rgb-start,$rgb-start,$rgb-start); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba($rgb-start,$rgb-start,$rgb-start,$occupancy) $location-start, rgba($rgb-finish,$rgb-finish,$rgb-finish,$occupancy) $location-finish); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop($location-start,rgba($rgb-start,$rgb-start,$rgb-start,$occupancy)), color-stop($location-finish,rgba($rgb-finish,$rgb-finish,$rgb-finish,$occupancy))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba($rgb-start,$rgb-start,$rgb-start,$occupancy) $location-start,rgba($rgb-finish,$rgb-finish,$rgb-finish,$occupancy) $location-finish); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba($rgb-start,$rgb-start,$rgb-start,$occupancy) $location-start,rgba($rgb-finish,$rgb-finish,$rgb-finish,$occupancy) $location-finish); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba($rgb-start,$rgb-start,$rgb-start,$occupancy) $location-start,rgba($rgb-finish,$rgb-finish,$rgb-finish,$occupancy) $location-finish); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba($rgb-start,$rgb-start,$rgb-start,$occupancy) $location-start,rgba($rgb-finish,$rgb-finish,$rgb-finish,$occupancy) $location-finish); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$hex-start', endColorstr='$hex-finish',GradientType=0 ); /* IE6-9 */
+}
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin ng-scope-hover() {
+  .ng-scope:hover {
+    cursor: pointer;
+    cursor: hand;
+    background-color: $table-hover;
+  }
+}
