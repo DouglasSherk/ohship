@@ -8,11 +8,15 @@ body {
       margin-bottom: 0;
       width: 100%;
     }
+
+    .navbar-inverse {
+      background-color: rgba(16, 16, 16, 0.5);
+    }
   }
 
   .carousel {
     margin-bottom: 60px;
-    margin-top: -90px;
+    margin-top: -51px;
 
     .carousel-caption p {
       font-size: 21px;
@@ -21,7 +25,11 @@ body {
     }
 
     .item {
-      height: 500px;
+      background-size: cover !important;
+    }
+
+    .item.slide1 {
+      background: url('../img/shipping.jpg');
     }
   }
 
