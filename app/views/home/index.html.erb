@@ -1,33 +1,37 @@
 <div id="overview" class="section expanded">
   <div class="container">
     <div class="hero-unit">
-      <h2>OhShip!</h2>
-      <ul>
-        <li><h3>Enter and track data easily.</h3></li>
-        <li><h3>Generate documents in seconds.</h3></li>
-        <li><h3>Track your brokerage's cost savings.</h3></li>
-      </ul>
+      <div class="logo">
+        <%= image_tag "../img/ohship-lg.png" %>
+      </div>
+      <h3>Ship from anywhere, to anywhere.</h3>
+      <p></p>
+      <p>Ever want to buy something, but it isn't available in <%= country %>?</p>
       <br>
       <div class="center">
-        <%= link_to 'Sign Up', "", :class => 'btn btn-primary btn-xlg' %>
+        <%= link_to 'Sign Up', "#signup", :class => 'btn btn-primary btn-xlg' %>
       </div>
     </div>
   </div>
-  <div class="caret caret-darken">
+  <div class="next-caret next-caret-darken">
     <a href="#features"><i class="icon-angle-down icon-4x"></i></a>
   </div>
 </div>
 
 <hr class="featurette-divider no-top-margin">
 
-<div class="container">
+<h1 class="featurette-heading">Meet OhShip</h1>
+
+<hr class="featurette-divider">
+
+<div id="features" class="section container">
   <div class="row featurette">
     <div class="col-md-7">
-      <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-      <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+      <h2 class="featurette-heading">Buy anything. <span class="text-muted">Ship anywhere.</span></h2>
+      <p class="lead">Tired of not being able to ship to <%= country %>? OhShip! will find you a person who lives </p>
     </div>
     <div class="col-md-5">
-      <img class="featurette-image img-responsive" src="data:image/png;base64," data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+      <%= image_tag "../img/slide1.png", class: "featurette-image img-responsive" %>
     </div>
   </div>
 </div>
@@ -40,8 +44,8 @@
       <img class="featurette-image img-responsive" src="data:image/png;base64," data-src="holder.js/500x500/auto" alt="Generic placeholder image">
     </div>
     <div class="col-md-7">
-      <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-      <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+      <h2 class="featurette-heading">Pay only for shipping. <span class="text-muted">No hidden fees.</span></h2>
+      <p class="lead"></p>
     </div>
   </div>
 </div>
@@ -62,17 +66,17 @@
 
 <hr class="featurette-divider no-bottom-margin">
 
-<div id="pricing" class="section">
+<div id="signup" class="section expanded">
   <div class="container">
-    <h1 class="center">Try Consilium risk-free</h1>
+    <h1 class="center">Get started with OhShip!</h1>
     <br>
     <br>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-5">
         <div class="title title-starter">
           Starter Plan
         </div>
-        <div class="pricing-inner">
+        <div class="signup-inner">
           <div class="price">
             $0
           </div>
@@ -86,7 +90,7 @@
           <%= link_to "Try for free", "", :class => "pure-button button-starter"%>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-5 col-md-offset-1">
         <div class="title title-monthly">
           Monthly Plan
         </div>

@@ -31,6 +31,10 @@ gem 'jbuilder', '~> 1.2.0'
 # Twitter Bootstrap
 gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails'
 
+gem 'font-awesome-rails'
+
+gem 'geoip'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

@@ -93,17 +93,6 @@ body {
     margin: 20px 0;
   }
 
-  .section {
-    position: relative;
-    margin-bottom: 15px;
-
-    > button, > a.pure-button {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-    }
-  }
-
   .well {
     // XXX: Border conflicts with scaling in subsections.  Removed until further notice.
     //border: 1px solid #d8d8d8;

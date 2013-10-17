@@ -1,7 +1,7 @@
 $(document).ready ->
   adjustDimensions = ->
-    $('.section').css('width', $(window).width())
-    $('.section.expanded').css('height', $(window).height())
+    $('.section.expanded').css('width', $(window).width())
+    $('.section.expanded').first().css('height', $(window).height())
 
   $(window).resize adjustDimensions
   adjustDimensions()
@@ -14,7 +14,7 @@ $(document).ready ->
     target = target.parent() if e.target.tagName != 'A'
     return if !e.target? || target.attr('href')[0] != '#'
     $('html, body').animate
-      scrollTop: $("#{target.attr('href')}").offset().top - 80
+      scrollTop: $("#{target.attr('href')}").offset().top - 170
     , 500
     e.preventDefault()
 

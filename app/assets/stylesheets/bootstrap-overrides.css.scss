@@ -8,11 +8,18 @@
 }
 
 body {
-  .navbar-brand {
+  .navbar > .container .navbar-brand {
     padding: 0;
+    margin-left: 0;
   }
 
   .navbar-inverse .navbar-nav > .active > a {
-    background-color: transparent;
+    &, &:hover {
+      background-color: transparent;
+    }
+  }
+
+  .row {
+    margin: 0;
   }
 }
