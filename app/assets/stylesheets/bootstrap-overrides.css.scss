@@ -13,9 +13,17 @@ body {
     margin-left: 0;
   }
 
-  .navbar-inverse .navbar-nav > .active > a {
-    &, &:hover {
-      background-color: transparent;
+  .navbar-inverse .navbar-nav {
+    & > .active > a {
+      &, &:hover {
+        background-color: transparent;
+      }
+    }
+
+    a.btn-primary {
+      &:hover {
+        background-color: darken($btn-primary-bg, 5%);
+      }
     }
   }
 
