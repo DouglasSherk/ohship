@@ -5,7 +5,8 @@ ruby '2.0.0'
 gem 'rails', '4.0.0'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+#gem 'sqlite3'
+gem 'mysql'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
@@ -31,9 +32,23 @@ gem 'jbuilder', '~> 1.2.0'
 # Twitter Bootstrap
 gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails'
 
+# FontAwesome vector fonts/icons.
 gem 'font-awesome-rails'
 
+# GeoIP library for geolocating by IP.
 gem 'geoip'
+
+# User permissions.
+gem 'cancan'
+
+# User authentication and registration.
+gem 'devise'
+
+# Use Capistrano for deployment
+group :development do
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+end
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -45,9 +60,6 @@ end
 
 # Use unicorn as the app server
 # gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano', group: :development
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
