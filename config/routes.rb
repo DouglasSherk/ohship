@@ -1,4 +1,9 @@
 Ohship::Application.routes.draw do
+  get "photo/show"
+  get "photo/create"
+  get "photo/delete"
+  resources :packages
+
   devise_for :users
   root 'home#index'
 
