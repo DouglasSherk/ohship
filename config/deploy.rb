@@ -16,6 +16,8 @@ set :deploy_to, '/var/www/ohship'
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 # set :keep_releases, 5
 
+set :rvm_bin_path, "/usr/local/rvm/bin/rvm"
+
 set :use_sudo, true
 
 namespace :deploy do
@@ -43,4 +45,6 @@ end
 
 #after :deploy, 'deploy:migrate'
 
+set :rvm_ruby_string, '2.0.0-p197'
+set :rvm_type, :system
 require 'capistrano/bundler'
