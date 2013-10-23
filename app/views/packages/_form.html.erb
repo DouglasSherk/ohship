@@ -1,4 +1,4 @@
-<%= form_for(@package) do |f| %>
+<%= form_for(@package, :html => {:class => 'form-horizontal'}) do |f| %>
   <% if @package.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@package.errors.count, "error") %> prohibited this package from being saved:</h2>
@@ -11,7 +11,78 @@
     </div>
   <% end %>
 
+  <h3>Shipping details</h3>
+
+  <div class="form-group">
+    <%= f.label :ship_to_city, :class => 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.text_field :ship_to_city, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :ship_to_country, :class => 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.select :ship_to_country, ['Canada'], {},  :class => 'form-control' %>
+    </div>
+  </div>
+
+  <br />
+
+  <h3>Package details</h3>
+
+  <div class="form-group">
+    <%= f.label :description, :class => 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.text_field :description, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :value, 'Value', :class => 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.text_field :value, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :length_cm, 'Length (cm)', :class => 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.text_field :length_cm, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :width_cm,  'Width (cm)', :class => 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.text_field :width_cm, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :height_cm, 'Height (cm)', :class => 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.text_field :height_cm, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :weight_kg, 'Weight (kg)', :class => 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.text_field :weight_kg, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-md-2"></label>
+    <div class="col-md-10">
+      <button type="button" class="btn btn-primary">Get shipping estimate from USPS</button>
+    </div>
+  </div>
+
+  <br />
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => 'btn btn-primary' %>
   </div>
 <% end %>

@@ -13,9 +13,10 @@ $(document).ready ->
     target = $(e.target)
     target = target.parent() if e.target.tagName != 'A'
     return if !e.target? || target.attr('href')[0] != '#'
-    $('html, body').animate
-      scrollTop: $("#{target.attr('href')}").offset().top - 170
-    , 500
+    if (target = $("#{target.attr('href')}")).length
+      $('html, body').animate
+        scrollTop: target.offset().top - 170
+      , 500
     e.preventDefault()
 
   $(window).scroll ->

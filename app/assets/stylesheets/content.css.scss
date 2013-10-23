@@ -1,0 +1,35 @@
+body {
+  .content {
+    &.container {
+      margin-top: 80px;
+    }
+
+    .navbar-brand {
+      padding: 5px 15px;
+
+      img {
+        height: 40px;
+      }
+    }
+
+    .page-heading {
+      margin-bottom: 20px;
+
+      div[class*="col-md-"] {
+        padding: 0;
+      }
+    }
+
+    h3 {
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 5px;
+    }
+
+    .actions {
+      float: right;
+    }
+  }
+}

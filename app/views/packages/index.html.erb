@@ -1,25 +1,35 @@
-<h1>Listing packages</h1>
+<div class="page-heading row">
+  <div class="col-md-8">
+    <h2>Packages</h2>
+  </div>
+  <div class="col-md-4 align-right">
+    <%= link_to 'Create Package', new_package_path, :class => 'btn btn-primary' %>
+  </div>
+</div>
 
-<table>
-  <thead>
+<table class="table table-hover table-bordered table-striped">
+  <% if @packages.empty? %>
     <tr>
-      <th></th>
-      <th></th>
-      <th></th>
+      <td>No packages available. Perhaps you'd like to <%= link_to 'ship one?', new_package_path %></td>
     </tr>
-  </thead>
-
-  <tbody>
+  <% else %>
+    <tr>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Last updated</th>
+    </tr>
     <% @packages.each do |package| %>
-      <tr>
-        <td><%= link_to 'Show', package %></td>
-        <td><%= link_to 'Edit', edit_package_path(package) %></td>
-        <td><%= link_to 'Destroy', package, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <tr >
+        <td>
+          <a href="/packages/<%= package.id %>"><%= package.description %></a>
+        </td>
+        <td>
+          <%= package.state_to_s %>
+        </td>
+        <td>
+          <%= package.updated_at.to_formatted_s(:long_ordinal) %>
+        </td>
       </tr>
     <% end %>
-  </tbody>
+  <% end %>
 </table>
-
-<br>
-
-<%= link_to 'New Package', new_package_path %>
