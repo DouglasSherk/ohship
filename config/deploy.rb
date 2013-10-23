@@ -6,7 +6,7 @@ set :repo_url, 'git@github.com:DouglasSherk/ohship.git'
 set :deploy_to, '/var/www/ohship'
 # set :scm, :git
 
-set :ssh_options { :forward_agent => true }
+set :ssh_options, { :forward_agent => true }
 
 # set :format, :pretty
 # set :log_level, :debug
