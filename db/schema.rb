@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131022211258) do
+ActiveRecord::Schema.define(version: 20131023201259) do
 
   create_table "packages", force: true do |t|
     t.integer  "shippee_id"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20131022211258) do
     t.string   "shipper_tracking_carrier"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ship_to_postal_code"
+    t.string   "special_instructions"
   end
 
   create_table "photos", force: true do |t|

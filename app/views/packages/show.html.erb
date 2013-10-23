@@ -6,9 +6,7 @@
 
 <dl class="dl-horizontal">
   <dt>Status</dt>
-  <dd><%= @package.state_to_s %></dd>
-
-  <br />
+  <dd><b><%= @package.state_to_s %></b></dd>
 
   <dt>Description</dt>
   <dd><%= @package.description %></dd>
@@ -21,4 +19,28 @@
 
   <dt>Package weight</dt>
   <dd><%= @package.weight_kg %>kg</dd>
+
+  <dt>Special instructions</dt>
+  <dd><%= @package.special_instructions %></dd>
+</dl>
+
+<h3>Package will be sent to:</h3>
+
+<dl class="dl-horizontal">
+<% if @package.state >= Package::STATE_SHIPPEE_SENT %>
+  <dt>Name</dt>
+  <dd><%= @package.ship_to_name %></dd>
+  <dt>Address</dt>
+  <dd><%= @package.ship_to_address %></dd>
+<% else %>
+  <div class="alert alert-info">
+    <i>Full address details will be available once the shippee has made the payment.</i>
+  </div>
+<% end %>
+  <dt>City</dt>
+  <dd><%= @package.ship_to_city %></dd>
+  <dt>Country</dt>
+  <dd><%= @package.ship_to_country %></dd>
+  <dt>Zip/Postal Code</dt>
+  <dd><%= @package.ship_to_postal_code %></dd>
 </dl>

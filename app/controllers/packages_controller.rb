@@ -1,5 +1,5 @@
 class PackagesController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => [:new, :create]
   before_filter :authenticate_user!
 
   # GET /packages
@@ -14,6 +14,7 @@ class PackagesController < ApplicationController
 
   # GET /packages/new
   def new
+    authorize! :create, Package
     @package = Package.new
   end
 
@@ -24,6 +25,7 @@ class PackagesController < ApplicationController
   # POST /packages
   # POST /packages.json
   def create
+    authorize! :create, Package
     @package = Package.new(package_params)
     @package.shippee = current_user
 
