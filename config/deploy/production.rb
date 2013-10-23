@@ -5,9 +5,9 @@ set :stage, :production
 # Supports bulk-adding hosts to roles, the primary
 # server in each group is considered to be the first
 # unless any hosts have the primary property set.
-role :app, %w{deploy@ec2-54-221-148-71.compute-1.amazonaws.com}
-role :web, %w{deploy@ec2-54-221-148-71.compute-1.amazonaws.com}
-role :db,  %w{deploy@ec2-54-221-148-71.compute-1.amazonaws.com}
+role :app, %w{deploy@ohship.me}
+role :web, %w{deploy@ohship.me}
+role :db,  %w{deploy@ohship.me}
 
 # Extended Server Syntax
 # ======================
@@ -15,7 +15,7 @@ role :db,  %w{deploy@ec2-54-221-148-71.compute-1.amazonaws.com}
 # definition into the server list. The second argument
 # something that quacks like a has can be used to set
 # extended properties on the server.
-server 'ec2-54-221-148-71.compute-1.amazonaws.com', user: 'deploy', roles: %w{web app db}
+server 'ohship.me', user: 'deploy', roles: %w{web app db}
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
