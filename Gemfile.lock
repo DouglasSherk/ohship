@@ -40,6 +40,8 @@ GEM
       sshkit (>= 0.0.23)
     capistrano-bundler (1.0.0)
       capistrano (>= 3.0.0.pre)
+    capistrano-rails (1.0.0)
+      capistrano
     capistrano-rvm (0.0.2)
       capistrano
     coffee-rails (4.0.1)
@@ -156,6 +158,7 @@ DEPENDENCIES
   cancan
   capistrano
   capistrano-bundler
+  capistrano-rails
   capistrano-rvm
   coffee-rails (~> 4.0.0)
   devise

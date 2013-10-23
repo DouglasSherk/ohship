@@ -49,6 +49,7 @@ group :development do
   gem 'capistrano'
   gem 'capistrano-bundler'
   gem 'capistrano-rvm'
+  gem 'capistrano-rails'
 end
 
 group :doc do
