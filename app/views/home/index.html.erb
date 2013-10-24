@@ -4,12 +4,15 @@
       <div class="logo">
         <%= image_tag "../img/ohship-lg.png" %>
       </div>
-      <h3>Ship from anywhere, to anywhere.</h3>
-      <p></p>
-      <p>Ever want to buy something, but it isn't available in <%= country %>?</p>
-      <br>
       <div class="center">
-        <%= link_to 'Sign Up', "#signup", :class => 'btn btn-primary btn-xlg' %>
+        <%#= link_to 'Sign Up', "#signup", :class => 'btn btn-primary btn-xlg' %>
+        <%= form_tag '/presignup', :method => 'post', :role => 'form', :class => 'presignup' do %>
+          <%= label_tag :q, "Get notified when we go live." %>
+          <div class="button-align">
+            <%= text_field_tag :q, nil, :class => 'input-lg form-control', :placeholder => 'yourname@mail.com' %>
+            <%= button_tag raw('<i class="icon-envelope"></i>'), :class => "btn btn-lg btn-primary" %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
@@ -28,7 +31,9 @@
   <div class="row featurette">
     <div class="col-md-7">
       <h2 class="featurette-heading">Buy anything. <span class="text-muted">Ship anywhere.</span></h2>
-      <p class="lead">Tired of not being able to ship to <%= country %>? OhShip! will find you a person who lives </p>
+      <p class="lead">Tired of not being able to ship to <%= country %>? OhShip! will find you a person in a country that your merchandise can
+      be shipped to. You ship to them, then they ship it to you. It's that easy! They are guaranteed to be as close to you as possible to
+      reduce shipping times.</p>
     </div>
     <div class="col-md-5">
       <%= image_tag "../img/slide1.png", class: "featurette-image img-responsive" %>
@@ -41,11 +46,12 @@
 <div class="container">
   <div class="row featurette">
     <div class="col-md-5">
-      <img class="featurette-image img-responsive" src="data:image/png;base64," data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+      <%= image_tag "../img/shipping.png", class: "featurette-image img-responsive" %>
     </div>
     <div class="col-md-7">
       <h2 class="featurette-heading">Pay only for shipping. <span class="text-muted">No hidden fees.</span></h2>
-      <p class="lead"></p>
+      <p class="lead">OhShip! is committed to keeping your fees as low as possible. We broker customs for you at a rate as reduced as 90% of
+      what other customs brokers charge. We also notify you if we think your shipping requests will lead to fees that you don't want.</p>
     </div>
   </div>
 </div>
@@ -55,11 +61,12 @@
 <div class="container">
   <div class="row featurette">
     <div class="col-md-7">
-      <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-      <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+      <h2 class="featurette-heading">Completely insured. <span class="text-muted">No risk.</span></h2>
+      <p class="lead">Every shipment through OhShip! is completely insured. We've got your back if anything comes up. If you've got questions,
+      we're here to answer them.</p>
     </div>
     <div class="col-md-5">
-      <img class="featurette-image img-responsive" src="data:image/png;base64," data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+      <%= image_tag "../img/support.png", class: "featurette-image img-responsive" %>
     </div>
   </div>
 </div>
@@ -78,10 +85,10 @@
         </div>
         <div class="signup-inner">
           <div class="price">
-            $5
+            10%
           </div>
           <div class="renewal">
-            per shipment
+            service charge on shipping
           </div>
           <hr />
           <p>No hidden fees</p>
@@ -89,7 +96,8 @@
           <p>Pay only for shipping</p>
           <br>
           <br>
-          <%= link_to "Sign up for buying", "/users/sign_up", :class => "pure-button button-starter"%>
+          <% #Sign up for buying %>
+          <%= link_to "Coming soon", "#overview", :class => "pure-button button-starter"%>
         </div>
       </div>
       <div class="col-md-5 col-md-offset-1">
@@ -98,10 +106,10 @@
         </div>
         <div class="signup-inner">
           <div class="price">
-            $3
+            50%
           </div>
           <div class="renewal">
-            per package you ship
+            commission on packages you ship
           </div>
           <hr />
           <p>Simple background check</p>
@@ -109,7 +117,8 @@
           <p>Make money easily</p>
           <br>
           <br>
-          <%= link_to "Become an OhShipper", "", :class => "pure-button button-monthly"%>
+          <% #Become an OhShipper %>
+          <%= link_to "Coming soon", "#overview", :class => "pure-button button-monthly"%>
         </div>
       </div>
     </div>

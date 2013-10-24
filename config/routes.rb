@@ -2,9 +2,13 @@ Ohship::Application.routes.draw do
   get "photo/show"
   get "photo/create"
   get "photo/delete"
+
   resources :packages
 
+  post "presignup" => "presignup#index"
+
   devise_for :users
+
   root 'home#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

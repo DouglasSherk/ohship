@@ -183,7 +183,50 @@ body {
       }
     }
 
+    // XXX: This class is garbage and should get cleaned up.
+    .presignup {
+      label {
+        margin-top: 10px;
+        font-size: 18px;
+        font-weight: 100;
+      }
+
+      .button-align {
+        position: relative;
+        height: 60px;
+
+        input {
+          position: absolute;
+          left: 0;
+          right: 0;
+          height: 50px;
+
+          font-size: 18px;
+          line-height: 32px;
+        }
+
+        button {
+          position: absolute;
+          right: 0;
+          height: 50px;
+
+          &.btn {
+            -webkit-border-radius: 0;
+            -webkit-border-top-right-radius: 5px;
+            -webkit-border-bottom-right-radius: 5px;
+            -moz-border-radius: 0;
+            -moz-border-radius-topright: 5px;
+            -moz-border-radius-bottomright: 5px;
+            border-radius: 0;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+          }
+        }
+      }
+    }
+
     .hero-unit {
+      width: 400px;
       color: white;
       @include square(rgba(0, 0, 0, 0.75));
     }

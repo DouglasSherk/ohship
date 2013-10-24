@@ -1,2 +1,24 @@
 $(document).ready ->
-  $('.carousel .item').height($(window).height())
+  presignup = $('.presignup')
+  presignup.submit (e) ->
+    btn = $('.presignup button')
+    icon = btn.find('i')
+    if icon.hasClass 'icon-check'
+      return false
+    icon.removeClass 'icon-envelope'
+    icon.addClass 'icon-spin icon-spinner'
+    $.ajax presignup.attr('action') + '.json',
+      type: 'POST',
+      data: presignup.serialize(),
+      dataType: 'text',
+      success: (data) ->
+        icon.removeClass 'icon-spin icon-spinner icon-remove-sign'
+        icon.addClass 'icon-check'
+        btn.removeClass 'btn-primary'
+        btn.addClass 'btn-success'
+      error: (data, error) ->
+        icon.removeClass 'icon-spin icon-spinner'
+        icon.addClass 'icon-remove-sign'
+        btn.removeClass 'btn-primary'
+        btn.addClass 'btn-danger'
+    false
