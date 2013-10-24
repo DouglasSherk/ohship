@@ -4,6 +4,11 @@
   </div>
 </div>
 
+<div class="action-box alert alert-warning">
+  <%= render 'packages/' + (current_user.user_type == User::SHIPPER ? 'shipper' : 'shippee') +
+             '_actions/' + @package.state_to_s %>
+</div>
+
 <dl class="dl-horizontal">
   <dt>Status</dt>
   <dd><b><%= @package.status(current_user.user_type) %></b></dd>

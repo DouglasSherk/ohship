@@ -7,9 +7,9 @@ class Package < ActiveRecord::Base
   STATE_SHIPPER_MATCHED = 1  # Matched & confirmed by shippee. Shippee sends package & enters tracking
   STATE_SHIPPER_RECEIVED = 2 # Package received by shipper. Shipper updates package details & estimate
   STATE_SHIPPEE_PAID = 3     # Shippee pays fees. Shipper sends package, adds receipt & tracking
-  STATE_RECEIVED = 4         # Shippee confirms delivery.
+  STATE_COMPLETED = 4         # Shippee confirms delivery.
 
-  validates :state, :inclusion => { :in => STATE_SUBMITTED..STATE_RECEIVED }
+  validates :state, :inclusion => { :in => STATE_SUBMITTED..STATE_COMPLETED }
 
   # Fields:
   #   # State of shippee - shipper flow
@@ -47,6 +47,16 @@ class Package < ActiveRecord::Base
     self.value_cents && self.value_cents / 100.0
   end
 
+  def state_to_s
+    return {
+      STATE_SUBMITTED => 'submitted',
+      STATE_SHIPPER_MATCHED => 'matched',
+      STATE_SHIPPER_RECEIVED => 'received',
+      STATE_SHIPPEE_PAID => 'paid',
+      STATE_COMPLETED => 'completed'
+    }[self.state]
+  end
+
   def status(user_type)
     case self.state
     when STATE_SUBMITTED
@@ -73,7 +83,7 @@ class Package < ActiveRecord::Base
       else
         self.shipper_tracking.nil? ? 'Payment received' : 'Package en route to user'
       end
-    when STATE_RECEIVED
+    when STATE_COMPLETED
       'Complete'
     else
       'Unknown'
