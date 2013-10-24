@@ -1,0 +1,39 @@
+<% if @package.shipper_tracking.nil? %>
+  Payment received. Please send the package to the following address:
+  <address>
+    <strong><%= @package.ship_to_name %></strong><br />
+    <%= @package.ship_to_address %><br />
+    <%= @package.ship_to_city %>, <%= @package.ship_to_state%>, <%= @package.ship_to_country %><br />
+    <%= @package.ship_to_postal_code %>
+  </address>
+
+  Please upload the shipping receipt and tracking information for reimbursement.
+
+  <%= form_tag '', :class => 'form-horizontal col-md-12' do %>
+    <div class="form-group">
+      <%= label_tag :photo_upload, 'Upload receipt', :class => 'col-md-2 control-label' %>
+      <div class="col-md-10">
+        <input type="file" name="photo_upload" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group">
+      <%= label_tag :tracking_number, 'Tracking #', :class => 'col-md-2 control-label' %>
+      <div class="col-md-10">
+        <%= text_field_tag :tracking_number, '', :class => 'form-control' %>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= label_tag :tracking_carrier, 'Tracking carrier', :class => 'col-md-2 control-label' %>
+      <div class="col-md-10">
+        <%= text_field_tag :tracking_carrier, '', :class => 'form-control' %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="buttons">
+    <button class="btn btn-primary">Submit</button>
+  </div>
+<% else %>
+  Thank you! The package is en route to the receiver. The tracking number is: <%= @package.shipper_tracking %> (<%= @package.shipper_tracking_carrier %>)<br />
+  You should receive your payment shortly.
+<% end %>

@@ -1,0 +1,29 @@
+<% if @package.shippee_tracking.nil? %>
+  You can now send your package to the shipper's address:
+  <address>
+    <strong><%= @package.shipper.name %></strong><br />
+    <%= @package.shipper.address %><br />
+    <%= @package.shipper.city %>, <%= @package.shipper.state%>, <%= @package.shipper.country %><br />
+    <%= @package.shipper.postal_code %>
+  </address>
+  When the package ships, please enter the tracking information here, if possible.
+  <%= form_tag '', :class => 'form-inline' do %>
+    <div class="form-group">
+      <%= text_field_tag :tracking_number, '', :class => 'form-control', :placeholder => 'Tracking number' %>
+    </div>
+    <div class="form-group">
+      <%= text_field_tag :tracking_carrier, '', :class => 'form-control', :placeholder => 'Carrier' %>
+    </div>
+  <% end %>
+
+  <div class="buttons">
+    <button class="btn btn-primary">Package received</button>
+  </div>
+<% else %>
+  Thanks! We will notify you when the shipper receives the item.
+  <% if @package.shippee_tracking.empty? %>
+    No tracking number was provided.
+  <% else %>
+    Your tracking number was: <%= @package.shippee_tracking %> (<%= @package.shippee_tracking_carrier %>).
+  <% end %>
+<% end %>

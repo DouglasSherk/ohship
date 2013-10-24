@@ -1,0 +1,10 @@
+<% if true # @package.shipping_estimate %>
+  The shipper is ready to send the package to you! First, please pay the required shipping fees.<br />
+  The total cost of the shipment comes to: <strong>$<%= '12.34' || @package.shipping_estimate %></strong>.
+
+  <div class="buttons">
+    <button class="btn btn-primary">Pay with Stripe</button>
+  </div>
+<% else %>
+  The shipper has received the package! We will notify you when it is ready to be shipped to you.
+<% end %>

@@ -1,0 +1,15 @@
+<% if @package.shippee_tracking.nil? %>
+  The user has accepted! We will notify you when the item has shipped.
+<% else %>
+  The item is en route to you!
+  <% if @package.shippee_tracking.empty? %>
+    No tracking number was provided.
+  <% else %>
+    The tracking number is: <%= @package.shippee_tracking %> (<%= @package.shippee_tracking_carrier %>).
+  <% end %>
+  <br />
+  Please notify us when the package reaches you.
+  <div class="buttons">
+    <button class="btn btn-primary">I received the package</button>
+  </div>
+<% end %>

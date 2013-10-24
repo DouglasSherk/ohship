@@ -1,0 +1,10 @@
+<% if @package.shipper_tracking.nil? %>
+  Thank you! We will notify you when the shipper has shipped your package.
+<% else %>
+  Your package is en route! The tracking number is: <%= @package.shipper_tracking %> (<%= @package.shipper_tracking_carrier %>)<br />
+  Please notify us when you receive the package.<br />
+  <div class="buttons">
+    <button class="btn btn-primary">I received the package</button>
+    <button class="btn">View shipping receipt</button>
+  </div>
+<% end %>
