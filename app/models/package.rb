@@ -69,9 +69,9 @@ class Package < ActiveRecord::Base
       end
     when STATE_SHIPPEE_PAID
       if user_type == User::SHIPPEE
-        self.shipper_tracking.nil? : 'Waiting for shipper to send package' : 'Package en route to you'
+        self.shipper_tracking.nil? ? 'Waiting for shipper to send package' : 'Package en route to you'
       else
-        self.shipper_tracking.nil? : 'Payment received' : 'Package en route to user'
+        self.shipper_tracking.nil? ? 'Payment received' : 'Package en route to user'
       end
     when STATE_RECEIVED
       'Complete'
