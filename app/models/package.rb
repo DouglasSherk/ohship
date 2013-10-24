@@ -3,15 +3,13 @@ class Package < ActiveRecord::Base
   belongs_to :shipper, :class_name => 'User'
   has_many :photos
 
-  validates :state, :inclusion => { :in => 0..6 }
+  STATE_SUBMITTED = 0        # Submitted, hasn't been matched with a shipper.
+  STATE_SHIPPER_MATCHED = 1  # Matched & confirmed by shippee. Shippee sends package & enters tracking
+  STATE_SHIPPER_RECEIVED = 2 # Package received by shipper. Shipper updates package details & estimate
+  STATE_SHIPPEE_PAID = 3     # Shippee pays fees. Shipper sends package, adds receipt & tracking
+  STATE_RECEIVED = 4         # Shippee confirms delivery.
 
-  STATE_SUBMITTED = 0
-  STATE_SHIPPER_MATCH = 1
-  STATE_SHIPPEE_SENT = 2
-  STATE_SHIPPER_RECEIVED = 3
-  STATE_SHIPPEE_PAID = 4
-  STATE_SHIPPER_SENT = 5
-  STATE_RECEIVED = 6
+  validates :state, :inclusion => { :in => STATE_SUBMITTED..STATE_RECEIVED }
 
   # Fields:
   #   # State of shippee - shipper flow
@@ -49,20 +47,32 @@ class Package < ActiveRecord::Base
     self.value_cents && self.value_cents / 100.0
   end
 
-  def state_to_s
+  def status(user_type)
     case self.state
     when STATE_SUBMITTED
-      'Waiting for match with shipper'
-    when STATE_SHIPPER_MATCH
-      'Matched with shipper'
-    when STATE_SHIPPEE_SENT
-      'In transit to shipper'
+      if user_type == User::SHIPPEE
+        self.shipper.nil? ? 'Waiting for match with shipper' : 'Matched with shipper'
+      else
+        self.shipper.nil? ? 'Shipper required' : 'Pending user confirmation'
+      end
+    when STATE_SHIPPER_MATCHED
+      if user_type == User::SHIPPEE
+        self.shippee_tracking.nil? ? 'Send package to shipper' : 'En route to shipper'
+      else
+        self.shippee_tracking.nil? ? 'Waiting for user to send package' : 'Package en route to you'
+      end
     when STATE_SHIPPER_RECEIVED
-      'Shipper received'
+      if user_type == User::SHIPPEE
+        'Shipper received package, payment pending'
+      else
+        'Payment pending'
+      end
     when STATE_SHIPPEE_PAID
-      'Waiting for shipper to send'
-    when STATE_SHIPPER_SENT
-      'In transit to you'
+      if user_type == User::SHIPPEE
+        self.shipper_tracking.nil? : 'Waiting for shipper to send package' : 'Package en route to you'
+      else
+        self.shipper_tracking.nil? : 'Payment received' : 'Package en route to user'
+      end
     when STATE_RECEIVED
       'Complete'
     else

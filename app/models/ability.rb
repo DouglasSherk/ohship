@@ -4,10 +4,17 @@ class Ability
   def initialize(user)
     user ||= User.new # guest user (not logged in)
 
-    can :create, Package
-    can :create, Photo
+    if user.user_type == User::SHIPPEE
+      can :create, Package
+      can :manage, Package, :shippee_id => user.id
+    else
+      can :read, Package
+      can :update, Package, :shipper_id => user.id
+    end
 
-    can :manage, Package, :shippee_id => user.id
-    can [:read, :update], Package, :shipper_id => user.id
+    can :create, Photo
+    can :read, Photo do |photo|
+      can? :read, photo.package
+    end
   end
 end

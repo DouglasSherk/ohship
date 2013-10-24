@@ -24,7 +24,7 @@
           <a href="/packages/<%= package.id %>"><%= package.description %></a>
         </td>
         <td>
-          <%= package.state_to_s %>
+          <%= package.status(current_user.user_type) %>
         </td>
         <td>
           <%= package.updated_at.to_formatted_s(:long_ordinal) %>
