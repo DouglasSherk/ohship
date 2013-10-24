@@ -31,5 +31,11 @@ body {
     .actions {
       float: right;
     }
+
+    .action-box {
+      .buttons {
+        margin-top: 10px;
+      }
+    }
   }
 }

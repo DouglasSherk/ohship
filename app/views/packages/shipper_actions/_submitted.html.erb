@@ -1,0 +1,9 @@
+<% if @package.shipper.nil? %>
+  This package currently needs a shipper. Are you willing to accept and re-ship this?
+  <div class="buttons">
+    <button class="btn btn-primary">Accept</button>
+    <button class="btn">Back</button>
+  </div>
+<% else %>
+  You've accepted this package! Currently waiting for the user to confirm...
+<% end %>

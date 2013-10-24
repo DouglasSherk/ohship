@@ -1,0 +1,10 @@
+<% if @package.shipper.nil? %>
+  Package submitted. Please wait for a shipper to accept this package.
+<% else %>
+  A shipper living in <%= @package.shipper.city %>, <%= @package.shipper.state %>, <%= @package.shipper.country %> is willing to re-ship your package.<br />
+  Is this acceptable?
+  <div class="buttons">
+    <button class="btn btn-primary">Accept</button>
+    <button class="btn">Back</button>
+  </div>
+<% end %>

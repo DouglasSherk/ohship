@@ -2,7 +2,7 @@
   <div class="col-md-8">
     <h2>Packages</h2>
   </div>
-  <div class="col-md-4 align-right">
+  <div class="col-md-4 right">
     <%= link_to 'Create Package', new_package_path, :class => 'btn btn-primary' %>
   </div>
 </div>
@@ -15,6 +15,7 @@
   <% else %>
     <tr>
       <th>Description</th>
+      <% if current_user.user_type == User::SHIPPER %><th>Origin Country</th><% end %>
       <th>Status</th>
       <th>Last updated</th>
     </tr>
@@ -23,6 +24,9 @@
         <td>
           <a href="/packages/<%= package.id %>"><%= package.description %></a>
         </td>
+        <% if current_user.user_type == User::SHIPPER %>
+          <td><%= package.origin_country %>
+        <% end %>
         <td>
           <%= package.status(current_user.user_type) %>
         </td>

@@ -11,17 +11,24 @@
     </div>
   <% end %>
 
-  <h3>Shipping details</h3>
+  <h3>Your shipping details</h3>
 
   <div class="form-group">
-    <%= f.label :ship_to_city, :class => 'col-md-2 control-label' %>
+    <%= f.label :ship_to_city, 'City', :class => 'col-md-2 control-label' %>
     <div class="col-md-10">
       <%= f.text_field :ship_to_city, :class => 'form-control' %>
     </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :ship_to_country, :class => 'col-md-2 control-label' %>
+    <%= f.label :ship_to_state, 'State/province', :class => 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.text_field :ship_to_state, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :ship_to_country, 'Country', :class => 'col-md-2 control-label' %>
     <div class="col-md-10">
       <%= f.select :ship_to_country, ['Canada'], {},  :class => 'form-control' %>
     </div>
@@ -37,6 +44,13 @@
   <br />
 
   <h3>Package details</h3>
+
+  <div class="form-group">
+    <%= f.label :origin_country, :class => 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.text_field :origin_country, :class => 'form-control' %>
+    </div>
+  </div>
 
   <div class="form-group">
     <%= f.label :description, :class => 'col-md-2 control-label' %>
@@ -83,7 +97,7 @@
   <div class="form-group">
     <label class="col-md-2"></label>
     <div class="col-md-10">
-      <button type="button" class="btn btn-primary">Get shipping estimate from USPS</button>
+      <button type="button" class="btn btn-primary">Get shipping estimate</button>
     </div>
   </div>
 

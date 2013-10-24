@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131023230021) do
+ActiveRecord::Schema.define(version: 20131024010748) do
 
   create_table "packages", force: true do |t|
     t.integer  "shippee_id"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 20131023230021) do
     t.datetime "updated_at"
     t.string   "ship_to_postal_code"
     t.string   "special_instructions"
+    t.string   "origin_country"
+    t.string   "ship_to_state"
   end
 
   create_table "photos", force: true do |t|
@@ -61,6 +63,12 @@ ActiveRecord::Schema.define(version: 20131023230021) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_type",              default: 0,  null: false
+    t.string   "name"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.string   "postal_code"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
