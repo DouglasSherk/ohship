@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  after_create :send_welcome_email
+
   SHIPPER = 0
   SHIPPEE = 1
 
@@ -8,4 +10,9 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  private
+    def send_welcome_email
+      Mailer.welcome_email(self).deliver
+    end
 end
