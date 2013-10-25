@@ -81,6 +81,11 @@ class PackagesController < ApplicationController
         @package.state += 1
         # TODO: notify shipper package was received
       end
+    when Package::STATE_COMPLETED
+      if @package.feedback.nil? && params[:text] && params[:text] != ''
+        @package.feedback = Feedback.new(:package => @package, :text => params[:text])
+        @package.feedback.save
+      end
     end
 
     if !@package.save

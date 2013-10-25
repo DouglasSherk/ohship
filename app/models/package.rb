@@ -2,6 +2,7 @@ class Package < ActiveRecord::Base
   belongs_to :shippee, :class_name => 'User'
   belongs_to :shipper, :class_name => 'User'
   has_many :photos
+  has_one :feedback
 
   STATE_SUBMITTED = 0        # Submitted, hasn't been matched with a shipper.
   STATE_SHIPPER_MATCHED = 1  # Matched & confirmed by shippee. Shippee sends package & enters tracking
@@ -64,7 +65,11 @@ class Package < ActiveRecord::Base
         self.shipper_tracking.nil? ? 'Payment received' : 'Package en route to user'
       end
     when STATE_COMPLETED
-      'Complete'
+      if user_type == User::SHIPPEE && self.feedback.nil?
+        'Leave feedback'
+      else
+        'Complete'
+      end
     else
       'Unknown'
     end

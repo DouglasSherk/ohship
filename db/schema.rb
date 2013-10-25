@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131025012201) do
+ActiveRecord::Schema.define(version: 20131025012846) do
+
+  create_table "feedback", force: true do |t|
+    t.integer "package_id"
+    t.string  "text"
+  end
 
   create_table "packages", force: true do |t|
     t.integer  "shippee_id"
