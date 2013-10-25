@@ -1,0 +1,11 @@
+Hello <%= @user.name %>,
+
+The package (<%= @package.description %>) has shipped, and is en route to your address!
+<% if !@package.shippee_tracking.empty? %>
+Tracking number: <%= @package.shippee_tracking %>
+Shipping company: <%= @package.shippee_tracking_carrier %>
+<% end %>
+Once you receive the package, please update its information here: <%= package_url @package %>
+
+Regards,
+The OhShip Team

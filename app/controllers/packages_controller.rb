@@ -57,29 +57,29 @@ class PackagesController < ApplicationController
       if !@package.shipper.nil?
         if params[:submit] == 'accept'
           @package.state += 1
-          # TODO: notify shipper that user accepted
+          Mailer.notification_email(@package.shipper, @package, 'User accepted', 'shippee_accepted').deliver
         elsif params[:submit] == 'decline'
           @package.shipper = nil
-          # TODO: notify shipper user declined
+          Mailer.notification_email(@package.shipper, @package, 'User declined', 'shippee_declined').deliver
         end
       end
     when Package::STATE_SHIPPER_MATCHED
       if params[:submit] == 'shipped'
         @package.shippee_tracking = params[:tracking_number]
         @package.shippee_tracking_carrier = params[:tracking_carrier]
-        # TODO: notify shipper that item has shipped
+        Mailer.notification_email(@package.shipper, @package, 'Package sent', 'shippee_sent').deliver
       end
     when Package::STATE_SHIPPER_RECEIVED
       if token = params[:stripeToken]
         # TODO: verify token, add transaction
         @package.transaction_id = 1234
         @package.state += 1
-        # TODO: notify shipper that payment has been made
+        Mailer.notification_email(@package.shipper, @package, 'Payment accepted', 'shippee_paid').deliver
       end
     when Package::STATE_SHIPPEE_PAID
       if !@package.shippee_tracking.nil? && params[:submit] == 'received'
         @package.state += 1
-        # TODO: notify shipper package was received
+        Mailer.notification_email(@package.shippee, @package, 'Package received', 'shippee_received').deliver
       end
     when Package::STATE_COMPLETED
       if @package.feedback.nil? && params[:text] && params[:text] != ''
@@ -103,7 +103,7 @@ class PackagesController < ApplicationController
       if @package.shipper.nil?
         if params[:submit] == 'accept'
           @package.shipper = current_user
-          # TODO: notify shippee that match has been found
+          Mailer.notification_email(@package.shippee, @package, 'Shipper found', 'shipper_found').deliver
         end
       end
     when Package::STATE_SHIPPER_MATCHED
@@ -117,13 +117,14 @@ class PackagesController < ApplicationController
           flash[:shipping_estimate] = 12.34
         elsif params[:submit] == 'accept' && params[:shipping_estimate]
           @package.shipping_estimate = params[:shipping_estimate].to_f
+          Mailer.notification_email(@package.shippee, @package, 'Shipper received package', 'shipper_received').deliver
         end
       end
     when Package::STATE_SHIPPEE_PAID
       if @package.shipper_tracking.nil? && params[:submit] == 'submit'
         @package.shipper_tracking = params[:tracking_number] || ''
         @package.shipper_tracking_carrier = params[:tracking_carrier] || ''
-        # TODO: notify shippee that package was sent
+        Mailer.notification_email(@package.shippee, @package, 'Shipper sent package', 'shipper_sent').deliver
       end
     end
 

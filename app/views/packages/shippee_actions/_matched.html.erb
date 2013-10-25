@@ -25,4 +25,7 @@
   <% else %>
     Your tracking number was: <%= @package.shippee_tracking %> (<%= @package.shippee_tracking_carrier %>).
   <% end %>
+  <br />
+  If the shipper does not respond soon after tracking indicates the package has been received, please email us at
+  <%= link_to 'contact@ohship.me', 'mailto:contact@ohship.me' %>.
 <% end %>

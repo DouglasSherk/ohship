@@ -1,0 +1,17 @@
+Hello <%= @user.name %>,
+
+The recipient for package <%= @package.description %> has paid the shipping fees.
+Please send the package to the following address:
+
+<%= @package.ship_to_name %>
+<%= @package.ship_to_address %>
+<%= @package.ship_to_city %>, <%= @package.ship_to_state %>, <%= @package.ship_to_country %>
+<%= @package.ship_to_postal_code %>
+
+Once you have done so, please upload the shipping receipt and tracking information here:
+<%= package_url @package %>
+
+You will be reimbursed soon after this information is received.
+
+Thanks,
+The OhShip Team
