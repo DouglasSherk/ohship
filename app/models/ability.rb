@@ -8,7 +8,7 @@ class Ability
       can :create, Package
       can :manage, Package, :shippee_id => user.id
     else
-      can :manage, Package do |package|
+      can [:read, :update], Package do |package|
         package.shipper_id.nil? || package.shipper_id == user.id
       end
     end

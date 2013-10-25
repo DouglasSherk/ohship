@@ -17,8 +17,13 @@ class Mailer < PostageApp::Mailer
     devise_mail(record, :unlock_instructions, opts)
   end
 
-  def welcome_email(record)
-    @resource = record
-    mail(to: record.email, subject: 'Welcome to OhShip!')
+  def welcome_email(user)
+    @user = user
+    mail(to: user.email, subject: 'Welcome to OhShip!')
+  end
+
+  def notification_email(user, package, subject, name)
+    @package = package
+    mail(to: user.email, subject: subject, template_name: name)
   end
 end

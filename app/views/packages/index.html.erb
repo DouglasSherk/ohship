@@ -3,19 +3,24 @@
     <h2>Packages</h2>
   </div>
   <div class="col-md-4 right">
-    <%= link_to 'Create Package', new_package_path, :class => 'btn btn-primary' %>
+    <% if is_shippee? %>
+      <%= link_to 'Create Package', new_package_path, :class => 'btn btn-primary' %>
+    <% end %>
   </div>
 </div>
 
 <table class="table table-hover table-bordered table-striped">
   <% if @packages.empty? %>
     <tr>
-      <td>No packages available. Perhaps you'd like to <%= link_to 'ship one?', new_package_path %></td>
+      <td>
+        No packages available.
+        <% if is_shippee? %> Perhaps you'd like to <%= link_to 'ship one?', new_package_path %><% end %>
+      </td>
     </tr>
   <% else %>
     <tr>
       <th>Description</th>
-      <% if current_user.user_type == User::SHIPPER %><th>Origin Country</th><% end %>
+      <% if is_shipper? %><th>Origin Country</th><% end %>
       <th>Status</th>
       <th>Last updated</th>
     </tr>
@@ -24,7 +29,7 @@
         <td>
           <a href="/packages/<%= package.id %>"><%= package.description %></a>
         </td>
-        <% if current_user.user_type == User::SHIPPER %>
+        <% if is_shipper? %>
           <td><%= package.origin_country %>
         <% end %>
         <td>

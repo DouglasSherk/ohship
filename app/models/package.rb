@@ -13,7 +13,7 @@ class Package < ActiveRecord::Base
   validates :state, :inclusion => { :in => STATE_SUBMITTED..STATE_COMPLETED }
 
   def value=(val)
-    self.value_cents = (val * 100).round
+    self.value_cents = val && (val.to_f * 100).round
   end
 
   def value
@@ -21,7 +21,7 @@ class Package < ActiveRecord::Base
   end
 
   def shipping_estimate=(val)
-    self.shipping_estimate_cents = (val * 100).round
+    self.shipping_estimate_cents = val && (val.to_f * 100).round
   end
 
   def shipping_estimate

@@ -11,7 +11,7 @@
 <% end %>
 
 <div class="action-box alert alert-warning">
-  <%= render 'packages/' + (current_user.user_type == User::SHIPPER ? 'shipper' : 'shippee') +
+  <%= render 'packages/' + (is_shipper? ? 'shipper' : 'shippee') +
              '_actions/' + @package.state_to_s %>
 </div>
 
@@ -38,7 +38,7 @@
 <h3>Package will be sent to:</h3>
 
 <dl class="dl-horizontal">
-<% if current_user.user_type == User::SHIPPEE || @package.state >= Package::STATE_SHIPPEE_PAID %>
+<% if is_shippee? || @package.state >= Package::STATE_SHIPPEE_PAID %>
   <dt>Name</dt>
   <dd><%= @package.ship_to_name %></dd>
   <dt>Address</dt>
