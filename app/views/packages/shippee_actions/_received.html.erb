@@ -1,6 +1,6 @@
 <% if !@package.shipping_estimate.nil? %>
   The shipper is ready to send the package to you! First, please pay the required shipping fees.<br />
-  The total cost of the shipment comes to: <strong><%= number_to_currency @package.shipping_estimate %><strong>.
+  The total cost of the shipment comes to: <strong><%= number_to_currency @package.shipping_estimate %></strong>.
 
   <%= form_tag package_path + '/shippee_action' do %>
     <script

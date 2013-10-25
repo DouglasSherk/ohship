@@ -11,16 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131024232459) do
+ActiveRecord::Schema.define(version: 20131025012201) do
 
   create_table "packages", force: true do |t|
     t.integer  "shippee_id"
     t.integer  "shipper_id"
     t.integer  "state",                    default: 0
-    t.float    "length_cm"
-    t.float    "width_cm"
-    t.float    "height_cm"
-    t.float    "weight_kg"
+    t.float    "length_in"
+    t.float    "width_in"
+    t.float    "height_in"
+    t.float    "weight_lb"
     t.integer  "value_cents"
     t.string   "description"
     t.string   "ship_to_name"

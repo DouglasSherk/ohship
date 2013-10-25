@@ -133,9 +133,10 @@ class PackagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def package_params
       params.require(:package).permit [
-        :width_cm,
-        :height_cm,
-        :weight_kg,
+        :length_in,
+        :width_in,
+        :height_in,
+        :weight_lb,
         :value,
         :description,
         :origin_country,
