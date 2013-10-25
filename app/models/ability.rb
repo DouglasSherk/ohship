@@ -8,8 +8,9 @@ class Ability
       can :create, Package
       can :manage, Package, :shippee_id => user.id
     else
-      can :read, Package
-      can :update, Package, :shipper_id => user.id
+      can :manage, Package do |package|
+        package.shipper_id.nil? || package.shipper_id == user.id
+      end
     end
 
     can :create, Photo

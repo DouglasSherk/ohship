@@ -7,18 +7,17 @@
     <%= @package.shipper.postal_code %>
   </address>
   When the package ships, please enter the tracking information here, if possible.
-  <%= form_tag '', :class => 'form-inline' do %>
+  <%= form_tag package_path + '/shippee_action', :class => 'form-inline' do %>
     <div class="form-group">
       <%= text_field_tag :tracking_number, '', :class => 'form-control', :placeholder => 'Tracking number' %>
     </div>
     <div class="form-group">
       <%= text_field_tag :tracking_carrier, '', :class => 'form-control', :placeholder => 'Carrier' %>
     </div>
+    <div class="buttons">
+      <button type="submit" name="submit" value="shipped" class="btn btn-primary">Package has shipped</button>
+    </div>
   <% end %>
-
-  <div class="buttons">
-    <button class="btn btn-primary">Package received</button>
-  </div>
 <% else %>
   Thanks! We will notify you when the shipper receives the item.
   <% if @package.shippee_tracking.empty? %>

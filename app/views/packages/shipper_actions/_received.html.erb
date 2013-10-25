@@ -1,42 +1,64 @@
-Please measure and weigh the package to provide an accurate estimate of the shipping cost.
-<%= form_tag '', :class => 'form-horizontal col-md-12' do %>
-  <div class="form-group">
-    <%= label_tag :length_cm, 'Length (cm)', :class => 'col-md-2 control-label' %>
-    <div class="col-md-10">
-      <%= text_field_tag :length_cm, '', :class => 'form-control' %>
+<% if flash[:shipping_estimate] %>
+  The anticipated cost of shipping is <strong><%= number_to_currency flash[:shipping_estimate] %></strong>.
+  Does that look correct?
+  <%= form_tag package_path + '/shipper_action', :class => 'form-horizontal' do %>
+    <%= hidden_field_tag :shipping_estimate, flash[:shipping_estimate] %>
+    <div class="buttons">
+      <button type="submit" name="submit" value="accept" class="btn btn-primary">Accept</button>
+      <button type="submit" name="submit" value="back" class="btn btn-danger">Back and edit details</button>
     </div>
-  </div>
-  <div class="form-group">
-    <%= label_tag :width_cm, 'Width (cm)', :class => 'col-md-2 control-label' %>
-    <div class="col-md-10">
-      <%= text_field_tag :width_cm, '', :class => 'form-control' %>
+  <% end %>
+<% elsif @package.shipping_estimate.nil? %>
+  Please measure and weigh the package to provide an accurate estimate of the shipping cost.
+  <%= form_tag package_path + '/shipper_action', :class => 'form-horizontal' do %>
+    <div class="col-md-12">
+      <div class="form-group">
+        <%= label_tag :length_cm, 'Length (cm)', :class => 'col-md-2 control-label' %>
+        <div class="col-md-10">
+          <%= text_field_tag :length_cm, '', :class => 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= label_tag :width_cm, 'Width (cm)', :class => 'col-md-2 control-label' %>
+        <div class="col-md-10">
+          <%= text_field_tag :width_cm, '', :class => 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= label_tag :height_cm, 'Height (cm)', :class => 'col-md-2 control-label' %>
+        <div class="col-md-10">
+          <%= text_field_tag :height_cm, '', :class => 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= label_tag :weight_kg, 'Weight (kg)', :class => 'col-md-2 control-label' %>
+        <div class="col-md-10">
+          <%= text_field_tag :weight_kg, '', :class => 'form-control' %>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <%= label_tag :height_cm, 'Height (cm)', :class => 'col-md-2 control-label' %>
-    <div class="col-md-10">
-      <%= text_field_tag :height_cm, '', :class => 'form-control' %>
-    </div>
-  </div>
-  <div class="form-group">
-    <%= label_tag :weight_kg, 'Weight (kg)', :class => 'col-md-2 control-label' %>
-    <div class="col-md-10">
-      <%= text_field_tag :weight_kg, '', :class => 'form-control' %>
-    </div>
-  </div>
-<% end %>
 
-<br />
-Please also upload photos of the package (for your protection, and for the receiver's peace of mind)
-<%= form_tag '', :class => 'form-horizontal col-md-12' do %>
-  <div class="form-group">
-    <%= label_tag :photo_upload, 'Upload file', :class => 'col-md-2 control-label' %>
-    <div class="col-md-10">
-      <input type="file" name="photo_upload" class="form-control" />
-    </div>
-  </div>
-<% end %>
+    <br />
+    Please also upload photos of the package (for your protection, and for the receiver's peace of mind)<br />
+    <br />
 
-<div class="buttons">
-  <button class="btn btn-primary">Submit info</button>
-</div>
+    <div class="col-md-12">
+      <div class="form-group">
+        <%= label_tag :photo_upload, 'Upload file', :class => 'col-md-2 control-label' %>
+        <div class="col-md-10">
+          <input type="file" name="photo_upload" class="form-control" />
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <p><em>You won't be able to update this information after submitting it, so make sure it's accurate.</em></p>
+
+    <div class="buttons">
+      <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit info</button>
+    </div>
+  <% end %>
+<% else %>
+  Thank you! The estimated shipping cost will be <%= number_to_currency @package.shipping_estimate %>.<br />
+  You will be notified when the user makes the required payment.
+<% end %>

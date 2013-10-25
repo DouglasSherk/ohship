@@ -3,8 +3,10 @@
 <% else %>
   A shipper living in <%= @package.shipper.city %>, <%= @package.shipper.state %>, <%= @package.shipper.country %> is willing to re-ship your package.<br />
   Is this acceptable?
-  <div class="buttons">
-    <button class="btn btn-primary">Accept</button>
-    <button class="btn btn-danger">Decline</button>
-  </div>
+  <%= form_tag(package_path + '/shippee_action') do %>
+    <div class="buttons">
+      <button type="submit" name="submit" value="accept" class="btn btn-primary">Accept</button>
+      <button type="submit" name="submit" value="decline" class="btn btn-danger">Decline</button>
+    </div>
+  <% end %>
 <% end %>

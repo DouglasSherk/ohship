@@ -1,8 +1,10 @@
 <% if @package.shipper.nil? %>
   This package currently needs a shipper. Are you willing to accept and re-ship this?
-  <div class="buttons">
-    <button class="btn btn-primary">Accept</button>
-  </div>
+  <%= form_tag(package_path + '/shipper_action') do %>
+    <div class="buttons">
+      <button type="submit" class="btn btn-primary" name="submit" value="accept">Accept package</button>
+    </div>
+  <% end %>
 <% else %>
   You've accepted this package! Currently waiting for the user to confirm...
 <% end %>

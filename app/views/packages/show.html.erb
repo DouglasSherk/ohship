@@ -4,6 +4,12 @@
   </div>
 </div>
 
+<% unless flash[:error].nil? %>
+  <div class="action-box alert alert-danger">
+    Error: <%= flash[:error] %>
+  </div>
+<% end %>
+
 <div class="action-box alert alert-warning">
   <%= render 'packages/' + (current_user.user_type == User::SHIPPER ? 'shipper' : 'shippee') +
              '_actions/' + @package.state_to_s %>
@@ -32,7 +38,7 @@
 <h3>Package will be sent to:</h3>
 
 <dl class="dl-horizontal">
-<% if @package.state >= Package::STATE_SHIPPEE_PAID %>
+<% if current_user.user_type == User::SHIPPEE || @package.state >= Package::STATE_SHIPPEE_PAID %>
   <dt>Name</dt>
   <dd><%= @package.ship_to_name %></dd>
   <dt>Address</dt>

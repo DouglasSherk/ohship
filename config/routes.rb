@@ -3,7 +3,12 @@ Ohship::Application.routes.draw do
   get "photo/create"
   get "photo/delete"
 
-  resources :packages
+  resources :packages do
+    member do
+      post 'shipper_action'
+      post 'shippee_action'
+    end
+  end
 
   post "presignup" => "presignup#index"
 

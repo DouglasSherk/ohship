@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131024023857) do
+ActiveRecord::Schema.define(version: 20131024232459) do
 
   create_table "packages", force: true do |t|
     t.integer  "shippee_id"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20131024023857) do
     t.string   "special_instructions"
     t.string   "origin_country"
     t.string   "ship_to_state"
+    t.integer  "shipping_estimate_cents"
   end
 
   create_table "photos", force: true do |t|
@@ -75,7 +76,7 @@ ActiveRecord::Schema.define(version: 20131024023857) do
     t.string   "postal_code"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

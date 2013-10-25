@@ -9,7 +9,7 @@
 
   Please upload the shipping receipt and tracking information for reimbursement.
 
-  <%= form_tag '', :class => 'form-horizontal col-md-12' do %>
+  <%= form_tag package_path + '/shipper_action', :class => 'form-horizontal col-md-12' do %>
     <div class="form-group">
       <%= label_tag :photo_upload, 'Upload receipt', :class => 'col-md-2 control-label' %>
       <div class="col-md-10">
@@ -28,11 +28,11 @@
         <%= text_field_tag :tracking_carrier, '', :class => 'form-control' %>
       </div>
     </div>
-  <% end %>
 
-  <div class="buttons">
-    <button class="btn btn-primary">Submit</button>
-  </div>
+    <div class="buttons">
+      <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit</button>
+    </div>
+  <% end %>
 <% else %>
   Thank you! The package is en route to the receiver. The tracking number is: <%= @package.shipper_tracking %> (<%= @package.shipper_tracking_carrier %>)<br />
   You should receive your payment shortly.

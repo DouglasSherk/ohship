@@ -1,10 +1,16 @@
-<% if true # @package.shipping_estimate %>
+<% if !@package.shipping_estimate.nil? %>
   The shipper is ready to send the package to you! First, please pay the required shipping fees.<br />
-  The total cost of the shipment comes to: <strong>$<%= '12.34' || @package.shipping_estimate %></strong>.
+  The total cost of the shipment comes to: <strong><%= number_to_currency @package.shipping_estimate %><strong>.
 
-  <div class="buttons">
-    <button class="btn btn-primary">Pay with Stripe</button>
-  </div>
+  <%= form_tag package_path + '/shippee_action' do %>
+    <script
+      src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
+      data-key="pk_test_xhOGDSqkhDTfzW7RqeQ3TFlv"
+      data-amount="<%= @package.shipping_estimate_cents %>"
+      data-name="ohship.me"
+      data-description="Shipping for <%= @package.description %>">
+    </script>
+  <% end %>
 <% else %>
   The shipper has received the package! We will notify you when it is ready to be shipped to you.
 <% end %>

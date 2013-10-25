@@ -11,40 +11,20 @@ class Package < ActiveRecord::Base
 
   validates :state, :inclusion => { :in => STATE_SUBMITTED..STATE_COMPLETED }
 
-  # Fields:
-  #   # State of shippee - shipper flow
-  #   t.integer :state, :default => 0
-
-  #   # Package description
-  #   t.float :length_cm
-  #   t.float :width_cm
-  #   t.float :height_cm
-  #   t.float :weight_kg
-  #   t.integer :value_cents
-  #   t.string :description
-
-  #   # Address to ship to
-  #   t.string :ship_to_name
-  #   t.string :ship_to_address
-  #   t.string :ship_to_city
-  #   t.string :ship_to_country
-
-  #   # Payment from shippee
-  #   t.references :transaction
-
-  #   # Tracking numbers (and carriers)
-  #   t.string :shippee_tracking
-  #   t.string :shippee_tracking_carrier
-  #   t.string :shipper_tracking
-  #   t.string :shipper_tracking_carrier
-
   def value=(val)
-    p val
-    self.value_cents = (val.to_i * 100).round
+    self.value_cents = (val * 100).round
   end
 
   def value
     self.value_cents && self.value_cents / 100.0
+  end
+
+  def shipping_estimate=(val)
+    self.shipping_estimate_cents = (val * 100).round
+  end
+
+  def shipping_estimate
+    self.shipping_estimate_cents && self.shipping_estimate_cents / 100.0
   end
 
   def state_to_s

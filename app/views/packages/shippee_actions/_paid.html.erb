@@ -3,8 +3,11 @@
 <% else %>
   Your package is en route! The tracking number is: <%= @package.shipper_tracking %> (<%= @package.shipper_tracking_carrier %>)<br />
   Please notify us when you receive the package.<br />
-  <div class="buttons">
-    <button class="btn btn-primary">I received the package</button>
-    <button class="btn">View shipping receipt</button>
-  </div>
+
+  <%= form_tag package_path + '/shippee_action' do %>
+    <div class="buttons">
+      <button type="submit" name="submit" value="received" class="btn btn-primary">I received the package</button>
+      <a href="#" class="btn btn-default">View shipping receipt</a>
+    </div>
+  <% end %>
 <% end %>
