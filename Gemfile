@@ -44,6 +44,9 @@ gem 'cancan'
 # User authentication and registration.
 gem 'devise'
 
+gem 'omniauth'
+gem 'omniauth-facebook'
+
 # Use Capistrano for deployment
 group :development do
   gem 'capistrano'

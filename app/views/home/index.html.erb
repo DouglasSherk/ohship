@@ -28,15 +28,37 @@
 <hr class="featurette-divider">
 
 <div id="features" class="section container">
-  <div class="row featurette">
-    <div class="col-md-7">
-      <h2 class="featurette-heading">Buy anything. <span class="text-muted">Ship anywhere.</span></h2>
-      <p class="lead">Tired of not being able to ship to <%= country %>? OhShip! will find you a person in a country that your merchandise can
-      be shipped to. You ship to them, then they ship it to you. It's that easy! They are guaranteed to be as close to you as possible to
-      reduce shipping times.</p>
+  <div class="row-fluid featurette">
+    <div class="col-md-4">
+      <div class="step">
+        <%= image_tag "../img/ribbon1.png", :class => "ribbon" %>
+        <%= image_tag "../img/checkout.png", :class => "process" %>
+        <div class="step-caption">
+          <h2>Buy like usual</h2>
+          <p>Ship it to us instead.</p>
+        </div>
+      </div>
     </div>
-    <div class="col-md-5">
-      <%= image_tag "../img/slide1.png", class: "featurette-image img-responsive" %>
+    <div class="col-md-4">
+      <div class="step">
+        <%= image_tag "../img/ribbon2.png", :class => "ribbon" %>
+        <%#= image_tag "../img/ohship-lg.png", :class => "process", :style => "top: 125px !important;" %>
+        <%= image_tag "../img/warehouse.png", :class => "process" %>
+        <div class="step-caption">
+          <h2>We ship it to you</h2>
+          <p>We'll deal with customs and fees.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="step last">
+        <%= image_tag "../img/ribbon3.png", :class => "ribbon" %>
+        <%= image_tag "../img/house-gift.png", :class => "process" %>
+        <div class="step-caption">
+          <h2>Receive it hassle-free</h2>
+          <p>You get it quickly and without hidden fees.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>

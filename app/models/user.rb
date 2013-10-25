@@ -11,6 +11,11 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  devise :omniauthable, :omniauth_providers => [:facebook]
+
+  # For OmniAuth Facebook authentication.
+  #attr_accessible :provider, :uid, :name
+
   private
     def send_welcome_email
       Mailer.welcome_email(self).deliver

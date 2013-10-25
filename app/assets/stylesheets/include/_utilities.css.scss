@@ -1,5 +1,5 @@
 $break-small: 480px;
-$break-large: 768px;
+$break-large: 992px;
 $break-xlarge: 1200px;
 
 $break-tall: 768px;
@@ -60,10 +60,7 @@ $break-tall: 768px;
   border-radius: $radius;
 }
 
-@mixin ng-scope-hover() {
-  .ng-scope:hover {
-    cursor: pointer;
-    cursor: hand;
-    background-color: $table-hover;
-  }
+@mixin box-shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+  box-shadow: $shadow;
 }

@@ -79,9 +79,11 @@ ActiveRecord::Schema.define(version: 20131025012846) do
     t.string   "state"
     t.string   "country"
     t.string   "postal_code"
+    t.string   "provider"
+    t.string   "uid"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

@@ -13,249 +13,268 @@ body {
     width: 75%;
   }
 
-  .section.expanded {
-    width: 100%;
-    height: 100%;
-    display: table-cell;
-    vertical-align: middle;
-    clear: both;
-    padding: 75px 0;
-
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-
-    @mixin square($color) {
-      padding: 3em;
-      background: $color;
-      display: inline-block;
-    }
-
-    &#overview {
-      background: url(../img/header.png) no-repeat center center;
-      background-size: cover;
-    }
-
+  .section {
     &#features {
       text-align: center;
-      background-color: #333;
       color: #888;
 
-      .wish {
-        margin-right: 20px;
+      .step {
+        @include border-radius(5px);
+
+        h2 {
+          color: #444;
+        }
+
+        position: relative;
+        padding: 0;
+        background-color: white;
+        height: 350px;
+
+        @include respond-to(tablets) {
+          margin-bottom: 100px;
+
+          &.last {
+            margin-bottom: 0;
+          }
+        }
+
+        .ribbon {
+          position: absolute;
+          top: -15px;
+          left: 50%;
+          margin-left: -140px;
+        }
+
+        .process {
+          position: absolute;
+          width: 250px;
+          top: 75px;
+          left: 50%;
+          margin-left: -125px;
+        }
+
+        .step-caption {
+          position: absolute;
+          top: 300px;
+          width: 100%;
+        }
       }
 
       .row {
         margin-bottom: 20px;
+        text-align: center;
+      }
+    }
+
+    &.expanded {
+      width: 100%;
+      height: 100%;
+      display: table-cell;
+      vertical-align: middle;
+      clear: both;
+      padding: 75px 0;
+
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+
+      @mixin square($color) {
+        padding: 3em;
+        background: $color;
+        display: inline-block;
+      }
+
+      &#overview {
+        background: url(../img/header.png) no-repeat center center;
+        background-size: cover;
+      }
+
+      &#mobile {
+        background-color: white;
+
+        h1 {
+          color: #3E94D1;
+          text-transform: uppercase;
+          font-weight: 400;
+          font-size: 30px;
+        }
+
+        h2 {
+          color: #555;
+          font-weight: 400;
+          font-size: 24px;
+        }
+
+        p {
+          color: #777;
+        }
 
         div[class*="col-md-"] {
+          padding-right: 60px;
+
+          &:last-child {
+            padding-right: 0;
+          }
+        }
+      }
+
+      &#signup {
+        background-color: #ccc;
+        margin-top: 50px;
+
+        h1 {
+          color: #666;
+          text-transform: uppercase;
+          font-size: 40px;
+        }
+
+        .row {
+          text-align: center;
+        }
+
+        div[class*="col-md-"] {
+          padding: 0;
+          background-color: white;
+          float: none;
           display: inline-block;
-          padding: 20px 0 20px 20px;
-
-          h2 {
-            text-transform: uppercase;
-            font-size: 26px;
-            font-weight: 400;
-            color: #aaa;
-          }
-
-          p {
-            line-height: 20px;
-            text-align: justify;
-          }
-        }
-      }
-
-      .feature-img {
-        margin-right: 10px;
-      }
-    }
-
-    &#mobile {
-      background-color: white;
-
-      h1 {
-        color: #3E94D1;
-        text-transform: uppercase;
-        font-weight: 400;
-        font-size: 30px;
-      }
-
-      h2 {
-        color: #555;
-        font-weight: 400;
-        font-size: 24px;
-      }
-
-      p {
-        color: #777;
-      }
-
-      div[class*="col-md-"] {
-        padding-right: 60px;
-
-        &:last-child {
-          padding-right: 0;
-        }
-      }
-    }
-
-    &#signup {
-      background-color: #ccc;
-      margin-top: 50px;
-
-      h1 {
-        color: #666;
-        text-transform: uppercase;
-        font-size: 40px;
-      }
-
-      .row {
-        text-align: center;
-      }
-
-      div[class*="col-md-"] {
-        padding: 0;
-        background-color: white;
-        float: none;
-        display: inline-block;
-        height: 490px;
-        margin-bottom: 30px;
-      }
-
-      .signup-inner {
-        padding: 30px;
-      }
-
-      .title {
-        color: white;
-        text-transform: uppercase;
-        padding: 10px;
-
-        &.title-starter {
-          background-color: #ed6c4d;
+          height: 490px;
+          margin-bottom: 30px;
         }
 
-        &.title-monthly {
-          background-color: #3E94D1;
-        }
-      }
-
-      @mixin button($color) {
-        width: 100%;
-        margin-top: 10px;
-        padding: 20px 20px;
-        font-size: 20px;
-        background: $color;
-        color: white;
-        text-transform: uppercase;
-
-        &:hover {
-          background: lighten($color, 10%);
-        }
-      }
-
-      .button-starter {
-        @include button(#ed6c4d);
-      }
-
-      .button-monthly {
-        @include button(#3e94d1);
-      }
-
-      .price {
-        color: #444;
-        text-align: center;
-        font-size: 80px;
-      }
-
-      .renewal {
-        margin-bottom: 30px;
-        color: #666;
-        text-align: center;
-      }
-
-      p {
-        text-transform: uppercase;
-        color: #777;
-        font-size: 20px;
-      }
-    }
-
-    // XXX: This class is garbage and should get cleaned up.
-    .presignup {
-      label {
-        margin-top: 10px;
-        font-size: 18px;
-        font-weight: 100;
-      }
-
-      .button-align {
-        position: relative;
-        height: 60px;
-
-        input {
-          position: absolute;
-          left: 0;
-          right: 0;
-          height: 50px;
-
-          font-size: 18px;
-          line-height: 32px;
+        .signup-inner {
+          padding: 30px;
         }
 
-        button {
-          position: absolute;
-          right: 0;
-          height: 50px;
-
-          &.btn {
-            -webkit-border-radius: 0;
-            -webkit-border-top-right-radius: 5px;
-            -webkit-border-bottom-right-radius: 5px;
-            -moz-border-radius: 0;
-            -moz-border-radius-topright: 5px;
-            -moz-border-radius-bottomright: 5px;
-            border-radius: 0;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-          }
-        }
-      }
-    }
-
-    .hero-unit {
-      width: 400px;
-      color: white;
-      @include square(rgba(0, 0, 0, 0.75));
-    }
-
-    .features {
-      float: right;
-      margin-right: 10%;
-      color: white;
-      @include square(rgba(255, 120, 0, 0.75));
-    }
-
-    .next-caret {
-      position: absolute;
-      left: 50%;
-      bottom: 5%;
-      text-shadow: 1px 1px 3px black;
-
-      a {
-        &, &:link, &:visited, &:hover, &:active {
+        .title {
           color: white;
-          text-decoration: none;
+          text-transform: uppercase;
+          padding: 10px;
+
+          &.title-starter {
+            background-color: #ed6c4d;
+          }
+
+          &.title-monthly {
+            background-color: #3E94D1;
+          }
+        }
+
+        @mixin button($color) {
+          width: 100%;
+          margin-top: 10px;
+          padding: 20px 20px;
+          font-size: 20px;
+          background: $color;
+          color: white;
+          text-transform: uppercase;
+
+          &:hover {
+            background: lighten($color, 10%);
+          }
+        }
+
+        .button-starter {
+          @include button(#ed6c4d);
+        }
+
+        .button-monthly {
+          @include button(#3e94d1);
+        }
+
+        .price {
+          color: #444;
+          text-align: center;
+          font-size: 80px;
+        }
+
+        .renewal {
+          margin-bottom: 30px;
+          color: #666;
+          text-align: center;
+        }
+
+        p {
+          text-transform: uppercase;
+          color: #777;
+          font-size: 20px;
         }
       }
-    }
 
-    .next-caret-darken {
-      padding: 0 10px;
-      background-color: rgba(0, 0, 0, 0.75);
-      border-radius: 100px;
+      // XXX: This class is garbage and should get cleaned up.
+      .presignup {
+        label {
+          margin-top: 10px;
+          font-size: 18px;
+          font-weight: 100;
+        }
+
+        .button-align {
+          position: relative;
+          height: 60px;
+
+          input {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 50px;
+
+            font-size: 18px;
+            line-height: 32px;
+          }
+
+          button {
+            position: absolute;
+            right: 0;
+            height: 50px;
+
+            &.btn {
+              -webkit-border-radius: 0;
+              -webkit-border-top-right-radius: 5px;
+              -webkit-border-bottom-right-radius: 5px;
+              -moz-border-radius: 0;
+              -moz-border-radius-topright: 5px;
+              -moz-border-radius-bottomright: 5px;
+              border-radius: 0;
+              border-top-right-radius: 5px;
+              border-bottom-right-radius: 5px;
+            }
+          }
+        }
+      }
+
+      .hero-unit {
+        width: 400px;
+        color: white;
+        @include square(rgba(0, 0, 0, 0.75));
+      }
+
+      .features {
+        float: right;
+        margin-right: 10%;
+        color: white;
+        @include square(rgba(255, 120, 0, 0.75));
+      }
+
+      .next-caret {
+        position: absolute;
+        left: 50%;
+        bottom: 5%;
+        text-shadow: 1px 1px 3px black;
+
+        a {
+          &, &:link, &:visited, &:hover, &:active {
+            color: white;
+            text-decoration: none;
+          }
+        }
+      }
+
+      .next-caret-darken {
+        padding: 0 10px;
+        background-color: rgba(0, 0, 0, 0.75);
+        border-radius: 100px;
+      }
     }
   }
 

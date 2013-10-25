@@ -229,9 +229,15 @@ Devise.setup do |config|
   config.sign_out_via = :delete
 
   # ==> OmniAuth
+  require 'omniauth-facebook'
+
+  # Disable SSL verification in development only.
+  OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE if Rails.env.development?
+
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
+  config.omniauth :facebook, '603996286324606', '4aafc146bd6cc69239573b3601aabe57'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
