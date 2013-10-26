@@ -39,10 +39,12 @@ module USPS
     length, width, height = pkg_dims = [package.length_in, package.width_in, height].sort.reverse
 
     machinable = true
-    if length > 34 || width > 17 || height > 17 ||
-       length < 6  || width < 3  || height < 0.25 ||
-       package.weight_lb < 6.0/16 || package.weight_lb > 35
-      machinable = false
+    if package.is_envelope == 0
+      if length > 34 || width > 17 || height > 17 ||
+         length < 6  || width < 3  || height < 0.25 ||
+         package.weight_lb < 6.0/16 || package.weight_lb > 35
+        machinable = false
+      end
     end
 
     url = URI.parse(API_URL)
@@ -80,7 +82,7 @@ module USPS
       cost = service.at_xpath('Postage').content.to_f
       dims = service.at_xpath('MaxDimensions').content
 
-      if is_envelope = name.ends_with?('Envelope')
+      if is_envelope = (name.ends_with?('Envelope') || name.ends_with?('Letter'))
         # Packages don't fit in envelopes (but vice versa is fine)
         next if package.is_envelope == 0
 

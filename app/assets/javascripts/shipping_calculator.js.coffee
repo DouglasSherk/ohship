@@ -7,13 +7,17 @@ $(document).ready ->
     display.html('Loading...')
 
     data = {}
-    for elem in form.find('input, select')
-      data[$(elem).attr('name')] = $(elem).val()
+    for raw_elem in form.find('input, select')
+      elem = $(raw_elem)
+      if elem.attr('type') == 'checkbox'
+        data[elem.attr('name')] = if elem.is(':checked') then 1 else 0
+      else
+        data[elem.attr('name')] = elem.val()
 
     $.ajax('/packages/shipping_estimate', {data: data}).done((data) ->
       select = $('<select id="shipping-estimate-dropdown" />')
       for ship_class, cost of data
-        select.append($("<option>#{ship_class}: #{cost}</option>"))
+        select.append($("<option>#{ship_class}: $#{cost.toFixed(2)}</option>"))
       if select.children().length == 0
         display.html("No shipping options available. Please double-check your dimensions.")
       else

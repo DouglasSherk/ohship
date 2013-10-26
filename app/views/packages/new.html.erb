@@ -48,7 +48,8 @@
   <div class="form-group">
     <%= f.label :ship_to_country, 'Country', :class => 'col-md-2 control-label' %>
     <div class="col-md-10">
-      <%= f.select :ship_to_country, ['Canada'], {},  :class => 'form-control' %>
+      <% #TODO: ACTUAL COUNTRY LIST %>
+      <%= f.select :ship_to_country, ['Canada', 'United Kingdom'], {},  :class => 'form-control' %>
     </div>
   </div>
 
