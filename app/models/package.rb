@@ -1,3 +1,9 @@
+if Rails.env == 'development'
+  require_dependency 'usps'
+else
+  require 'usps'
+end
+
 class Package < ActiveRecord::Base
   before_save :order_dimensions
 
@@ -23,6 +29,7 @@ class Package < ActiveRecord::Base
   validates :length_in, :width_in, :weight_lb, :value_cents,
             presence: true, numericality: { greater_than: 0 }
   validates :height_in, presence: true, numericality: { greater_than: 0 }, :if => "is_envelope == 0"
+  validate :check_shippable, :on => :create
 
   def value=(val)
     if val = (Float(val) rescue nil)
@@ -61,6 +68,16 @@ class Package < ActiveRecord::Base
   def order_dimensions
     self.length_in, self.width_in, self.height_in =
       [self.length_in || 0, self.width_in || 0, self.height_in || 0].sort.reverse
+  end
+
+  def check_shippable
+    est = USPS.get_shipping_estimate(self)
+    if est.empty?
+      errors[:package] << 'cannot be shipped. (Is this an error? email <a href="mailto:hello@ohship.me">hello@ohship.me</a>)'
+      return false
+    end
+
+    return true
   end
 
   def status(user_type)
