@@ -39,6 +39,11 @@ module USPS
     length, width, height = pkg_dims = [package.length_in, package.width_in, height].sort.reverse
 
     machinable = true
+    if length > 34 || width > 17 || height > 17 ||
+       length < 6  || width < 3  || height < 0.25 ||
+       package.weight_lb < 6.0/16 || package.weight_lb > 35
+      machinable = false
+    end
 
     url = URI.parse(API_URL)
     req = Net::HTTP::Get.new(url.path + '?API=IntlRateV2&XML=' + URI.encode_www_form_component(
@@ -73,8 +78,6 @@ module USPS
       next if name[/box/i] || name['GXG'] # we don't want these
 
       cost = service.at_xpath('Postage').content.to_f
-      p cost.to_s + ': ' + name
-
       dims = service.at_xpath('MaxDimensions').content
 
       if is_envelope = name.ends_with?('Envelope')
@@ -85,8 +88,8 @@ module USPS
         max_lengths = parse_dimensions(dims)
 
         ok = true
-        max_lengths.each_with_index do |length, i|
-          if pkg_dims[i] > length+1e-9
+        max_lengths.each_with_index do |len, i|
+          if pkg_dims[i] > len+1e-9
             ok = false
           end
         end
@@ -94,12 +97,15 @@ module USPS
         next if !ok
       end
 
-      if name.starts_with?('Priority Mail International')
-        type = 'priority'
-      elsif name.starts_with?('Priority Mail Express International')
+      if name.starts_with?('Priority Mail Express International')
         type = 'priority_express'
+        next if length > 42 || length + (height + width)*2 > 79
+      elsif name.starts_with?('Priority Mail International')
+        type = 'priority'
+        next if length > 79 || length + (height + width)*2 > 108
       elsif name.starts_with?('First-Class')
         type = 'first_class'
+        next if length > 24 || length + height + width > 36
       else
         next # don't recognize this class
       end

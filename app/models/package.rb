@@ -13,9 +13,9 @@ class Package < ActiveRecord::Base
   STATE_COMPLETED = 4         # Shippee confirms delivery.
 
   SHIPPING_CLASSES = {
-    'first_class' => 'First Class (up to 11+ days)',
-    'priority' => 'Priority (6-10 days)',
-    'priority_express' => 'Priority Express (3-5 days)',
+    'first_class' => 'USPS First Class (up to 11+ days)',
+    'priority' => 'USPS Priority (6-10 days)',
+    'priority_express' => 'USPS Priority Express (3-5 days)',
   }
 
   validates :state, :inclusion => { :in => STATE_SUBMITTED..STATE_COMPLETED }

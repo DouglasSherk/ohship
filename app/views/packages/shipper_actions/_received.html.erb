@@ -2,7 +2,7 @@
   Thank you! You will be notified when the user pays the shipping fees.
 <% elsif flash[:estimates] %>
   <% if flash[:estimates].empty? %>
-    No options available for this package. Are you sure you entered the details correctly?
+    No shipping options available for this package. Are you sure you entered the details correctly?
   <% else %>
     The following shipping options will be available for this package:
     <ul>
@@ -21,7 +21,9 @@
 
   <%= form_tag package_path + '/shipper_action', :class => 'form-horizontal' do %>
     <div class="buttons">
-      <button type="submit" name="submit" value="accept" class="btn btn-primary">Accept</button>
+      <% if !flash[:estimates].empty? %>
+        <button type="submit" name="submit" value="accept" class="btn btn-primary">Accept</button>
+      <% end %>
       <button type="submit" name="submit" value="back" class="btn btn-danger">Back and edit details</button>
     </div>
   <% end %>
