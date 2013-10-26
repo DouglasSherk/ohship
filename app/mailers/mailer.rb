@@ -1,6 +1,6 @@
 class Mailer < PostageApp::Mailer
   include Devise::Mailers::Helpers
-  default from: 'OhShip <no-reply@ohship.me>'
+  default from: 'OhShip <hello@ohship.me>'
 
   def confirmation_instructions(record, token, opts = {})
     @token = token
