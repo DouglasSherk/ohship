@@ -1,20 +1,34 @@
 <% if @package.shipping_estimate_confirmed %>
-  The shipper is ready to send the package to you! First, verify the updated package dimensions and photos below.<br />
-  The total cost of the shipment comes to: <strong><%= number_to_currency @package.shipping_estimate %></strong>.<br />
-  The shipper will be able to send the package to you once your payment is received.
+  <% if @package.shipping_estimate.nil? %>
+    The shipper is ready to send the package to you! First, verify the updated package dimensions and photos.<br />
+    Then, choose a shipping option from the list below:<br />
 
-  <%= form_tag package_path + '/shippee_action' do %>
-    <script
-      src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
-      data-key="pk_test_xhOGDSqkhDTfzW7RqeQ3TFlv"
-      data-amount="<%= @package.shipping_estimate_cents %>"
-      data-name="ohship.me"
-      data-description="Shipping for <%= @package.description %>">
-    </script>
+    <%= form_tag package_path + '/shippee_action' do %>
+      <%= select_tag :shipping_class, options_for_select(flash[:estimates].map { |type, cost|
+            [Package::SHIPPING_CLASSES[type] + ': ' + number_to_currency(cost), type]
+          }.reverse) %>
 
-    <br />
+      <div class="buttons">
+        <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit</button>
+      </div>
+    <% end %>
+  <% else %>
+    The total cost of the shipment comes to: <strong><%= number_to_currency @package.shipping_estimate %></strong>.<br />
+    The shipper will be able to send the package to you once your payment is received.<br />
     If you have any concerns about the accuracy of the shipping cost, please contact us at
     <%= link_to 'hello@ohship.me', 'mailto:hello@ohship.me' %>.
+
+    <%= form_tag package_path + '/shippee_action' do %>
+      <script
+        src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
+        data-key="pk_test_xhOGDSqkhDTfzW7RqeQ3TFlv"
+        data-amount="<%= @package.shipping_estimate_cents %>"
+        data-name="ohship.me"
+        data-description="Shipping for <%= @package.description %>">
+      </script>
+
+      <% # TODO: STYLE STRIPE BUTTON; ADD BACK BUTTON HERE %>
+    <% end %>
   <% end %>
 <% else %>
   The shipper has received the package! We will notify you when it is ready to be shipped to you.

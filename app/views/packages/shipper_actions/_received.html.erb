@@ -1,46 +1,61 @@
 <% if @package.shipping_estimate_confirmed %>
-  Thank you! The estimated shipping cost will be <%= number_to_currency @package.shipping_estimate %>.<br />
-  You will be notified when the user makes the required payment.
-<% elsif @package.shipping_estimate %>
-  The anticipated cost of shipping is <strong><%= number_to_currency @package.shipping_estimate %></strong>.
-  Does that look correct?
+  Thank you! You will be notified when the user pays the shipping fees.
+<% elsif flash[:estimates] %>
+  <% if flash[:estimates].empty? %>
+    No options available for this package. Are you sure you entered the details correctly?
+  <% else %>
+    The following shipping options will be available for this package:
+    <ul>
+      <% Package::SHIPPING_CLASSES.each do |id, name| %>
+        <% if flash[:estimates][id] %>
+          <li><strong><%= name %></strong>: <%= number_to_currency flash[:estimates][id] %></li>
+        <% end %>
+      <% end %>
+    </ul>
+  <% end %>
+  <br />
+  If the above information seems wrong, please contact us at <%= link_to 'hello@ohship.me', 'mailto:hello@ohship.me' %>
+  with the package ID.
+
+  <p><em>You won't be able to update the package information after submitting this, so make sure it's accurate.</em></p>
+
   <%= form_tag package_path + '/shipper_action', :class => 'form-horizontal' do %>
     <div class="buttons">
       <button type="submit" name="submit" value="accept" class="btn btn-primary">Accept</button>
       <button type="submit" name="submit" value="back" class="btn btn-danger">Back and edit details</button>
     </div>
   <% end %>
-<% elsif @package.shipping_estimate.nil? %>
+<% else %>
   Please measure and weigh the package to provide an accurate estimate of the shipping cost.
   <%= form_tag package_path + '/shipper_action', :class => 'form-horizontal' do %>
     <div class="col-md-12">
       <div class="form-group">
         <%= label_tag :length_in, 'Length (in)', :class => 'col-md-2 control-label' %>
         <div class="col-md-10">
-          <%= text_field_tag :length_in, '', :class => 'form-control' %>
+          <%= text_field_tag :length_in, @package.length_in, :class => 'form-control' %>
         </div>
       </div>
       <div class="form-group">
         <%= label_tag :width_in, 'Width (in)', :class => 'col-md-2 control-label' %>
         <div class="col-md-10">
-          <%= text_field_tag :width_in, '', :class => 'form-control' %>
+          <%= text_field_tag :width_in, @package.width_in, :class => 'form-control' %>
         </div>
       </div>
       <div class="form-group">
         <%= label_tag :height_in, 'Height (in)', :class => 'col-md-2 control-label' %>
         <div class="col-md-2">
           <div class="checkbox">
-            <%= check_box_tag :is_envelope %> Envelope
+            <%= check_box_tag :is_envelope, '1', @package.is_envelope == 1 %> Envelope
           </div>
         </div>
         <div class="col-md-8">
-          <%= text_field_tag :height_in, '', :class => 'form-control' %>
+          <%= text_field_tag :height_in, @package.height_in, :class => 'form-control' %>
         </div>
       </div>
       <div class="form-group">
         <%= label_tag :weight_lb, 'Weight (lb)', :class => 'col-md-2 control-label' %>
         <div class="col-md-10">
-          <%= text_field_tag :weight_lb, '', :class => 'form-control' %>
+          <%= text_field_tag :weight_lb, @package.weight_lb, :class => 'form-control' %>
         </div>
       </div>
     </div>
@@ -59,7 +74,6 @@
     </div>
 
     <br />
-    <p><em>You won't be able to update this information after submitting it, so make sure it's accurate.</em></p>
 
     <div class="buttons">
       <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit info</button>

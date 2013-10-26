@@ -1,10 +1,10 @@
 class User < ActiveRecord::Base
   after_create :send_welcome_email
 
-  SHIPPER = 0
-  SHIPPEE = 1
+  SHIPPEE = 0
+  SHIPPER = 1
 
-  validates :user_type, :inclusion => { :in => SHIPPER..SHIPPEE }
+  validates :user_type, :inclusion => { :in => [SHIPPEE, SHIPPER] }
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

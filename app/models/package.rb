@@ -1,4 +1,6 @@
 class Package < ActiveRecord::Base
+  before_save :order_dimensions
+
   belongs_to :shippee, :class_name => 'User'
   belongs_to :shipper, :class_name => 'User'
   has_many :photos
@@ -17,7 +19,7 @@ class Package < ActiveRecord::Base
   }
 
   validates :state, :inclusion => { :in => STATE_SUBMITTED..STATE_COMPLETED }
-  validates :shipping_class, :inclusion => { :in => SHIPPING_CLASSES.keys }
+  validates :shipping_class, :allow_blank => true, :inclusion => { :in => SHIPPING_CLASSES.keys }
   validates :length_in, :width_in, :weight_lb, :value_cents,
             presence: true, numericality: { greater_than: 0 }
   validates :height_in, presence: true, numericality: { greater_than: 0 }, :if => "is_envelope == 0"
@@ -56,6 +58,11 @@ class Package < ActiveRecord::Base
     }[self.state]
   end
 
+  def order_dimensions
+    self.length_in, self.width_in, self.height_in =
+      [self.length_in || 0, self.width_in || 0, self.height_in || 0].sort.reverse
+  end
+
   def status(user_type)
     case self.state
     when STATE_SUBMITTED
@@ -74,7 +81,7 @@ class Package < ActiveRecord::Base
       if user_type == User::SHIPPEE
         'Shipper received package'
       else
-        'Payment pending'
+        self.shipping_estimate_confirmed ? 'Payment pending' : 'Package details required'
       end
     when STATE_SHIPPEE_PAID
       if user_type == User::SHIPPEE

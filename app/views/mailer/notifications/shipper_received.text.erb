@@ -1,7 +1,6 @@
 Hello <%= @user.name %>,
 
 Your shipper for package <%= @package.description %> has received your package!
-The shipping cost will be <%= number_to_currency @package.shipping_estimate %>.
 
 Once you pay the required fees, the shipper will send the package to you.
 You can do this here: <%= package_url @package %>

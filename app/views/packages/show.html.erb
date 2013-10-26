@@ -31,8 +31,10 @@
   <dt>Package weight</dt>
   <dd><%= @package.weight_lb %>lb</dd>
 
-  <dt>Requested shipping</dt>
-  <dd><%= Package::SHIPPING_CLASSES[@package.shipping_class] %></dd>
+  <% if @package.shipping_class %>
+    <dt>Requested shipping</dt>
+    <dd><%= Package::SHIPPING_CLASSES[@package.shipping_class] %></dd>
+  <% end %>
 
   <dt>Special instructions</dt>
   <dd><%= @package.special_instructions %></dd>

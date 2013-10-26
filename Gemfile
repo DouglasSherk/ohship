@@ -67,6 +67,9 @@ gem 'cancan'
 # Emails
 gem 'postageapp'
 
+# XML parsing (USPS api)
+gem 'nokogiri'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
