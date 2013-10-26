@@ -12,7 +12,7 @@ Ohship::Application.routes.draw do
 
   post "presignup" => "presignup#index"
 
-  devise_for :users
+  devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks"}
 
   root 'home#index'
 
