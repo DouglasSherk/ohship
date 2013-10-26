@@ -21,3 +21,12 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      package:
+        length_in: Length
+        width_in: Width
+        height_in: Height
+        weight_lb: Weight
+        value_cents: Value
+        shipping_estimate_cents: Shipping Estimate

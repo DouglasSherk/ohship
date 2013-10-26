@@ -28,7 +28,12 @@
       </div>
       <div class="form-group">
         <%= label_tag :height_in, 'Height (in)', :class => 'col-md-2 control-label' %>
-        <div class="col-md-10">
+        <div class="col-md-2">
+          <div class="checkbox">
+            <%= check_box_tag :is_envelope %> Envelope
+          </div>
+        </div>
+        <div class="col-md-8">
           <%= text_field_tag :height_in, '', :class => 'form-control' %>
         </div>
       </div>
@@ -56,7 +61,7 @@
     <br />
     <p><em>You won't be able to update this information after submitting it, so make sure it's accurate.</em></p>
 
-    <div class="buttons col-md-12">
+    <div class="buttons">
       <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit info</button>
     </div>
   <% end %>

@@ -1,6 +1,6 @@
 Hello <%= @user.name %>,
 
-A shipper at <%= @package.shipper.city %>, <%= @package.shipper.state %>, <%= @package.shipper.country %> is willing to ship your package (<%= @package.description %>)
+A shipper in <%= @package.shipper.city %>, <%= @package.shipper.state %>, <%= @package.shipper.country %> is willing to ship your package (<%= @package.description %>)
 
 Please accept or decline here: <%= package_url @package %>
 

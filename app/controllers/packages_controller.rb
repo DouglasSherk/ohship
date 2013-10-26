@@ -1,7 +1,50 @@
-if Rails.env == 'development'
-  require_dependency 'usps'
-else
-  require 'usps'
+require 'net/http'
+
+module USPS
+  API_URL = 'http://production.shippingapis.com/ShippingAPI.dll'
+  USER_ID = '868SCIGI7323'
+
+  def self.get_shipping_estimate(package)
+    pounds = package.weight_lb.to_i
+    ounces = ((package.weight_lb - pounds) * 16).round
+    if ounces == 16
+      pounds += 1
+      ounces = 0
+    end
+
+    height = package.is_envelope == 1 ? 0.5 : package.height_in
+    length, width, height = [package.length_in, package.width_in, height].sort.reverse
+
+    machinable = true
+
+    url = URI.parse(API_URL)
+    req = Net::HTTP::Get.new(url.path + '?API=IntlRateV2&XML=' + URI.encode_www_form_component(
+     "<IntlRateV2Request USERID='#{USER_ID}'>
+        <Revision>2</Revision>
+        <Package ID='0'>
+          <Pounds>#{pounds}</Pounds>
+          <Ounces>#{ounces}</Ounces>
+          <Machinable>#{machinable.to_s}</Machinable>
+          <MailType>all</MailType>
+          <ValueOfContents>#{package.value}</ValueOfContents>
+          <Country>#{package.ship_to_country}</Country>
+          <Container>RECTANGULAR</Container>
+          <Size>Regular</Size>
+          <Width>#{width}</Width>
+          <Length>#{length}</Length>
+          <Height>#{height}</Height>
+          <Girth>#{(width + height) * 2}</Girth>
+          <CommercialFlag>n</CommercialFlag>
+        </Package>
+      </IntlRateV2Request>".delete("  ", "\n")))
+
+    res = Net::HTTP.start(url.host, url.port) do |http|
+      http.request(req)
+    end
+
+    raise res.body
+    return nil
+  end
 end
 
 class PackagesController < ApplicationController
@@ -119,10 +162,11 @@ class PackagesController < ApplicationController
     when Package::STATE_SHIPPER_RECEIVED
       if !@package.shipping_estimate_confirmed
         if params[:submit] == 'submit'
-          @package.shipping_estimate = USPS::get_shipping_estimate(
-            @package.length_in, @package.width_in, @package.height_in, @package.weight_lb,
-            @package.is_envelope, @package.shipping_class
-          )
+          params[:is_envelope] ||= 0
+          @package.update(params.permit :length_in, :width_in, :height_in, :is_envelope, :weight_lb)
+          if @package.valid?
+            @package.shipping_estimate = USPS.get_shipping_estimate(@package)
+          end
         elsif params[:submit] == 'accept'
           @package.shipping_estimate_confirmed = true
           Mailer.notification_email(@package.shippee, @package, 'Shipper received package', 'shipper_received').deliver
@@ -139,7 +183,7 @@ class PackagesController < ApplicationController
     end
 
     if !@package.save
-      flash[:error] = 'Error processing your request.'
+      flash[:error] = '<br />' + @package.errors.full_messages.map { |m| ' - ' + m }.join('<br />')
     end
 
     redirect_to package_path
