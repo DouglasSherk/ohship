@@ -62,7 +62,7 @@
   <div class="form-group">
     <%= f.label :origin_country, :class => 'col-md-2 control-label' %>
     <div class="col-md-10">
-      <%= f.text_field :origin_country, :class => 'form-control' %>
+      <%= f.select :origin_country, ['United States'], {},  :class => 'form-control' %>
     </div>
   </div>
 
@@ -96,7 +96,12 @@
 
   <div class="form-group">
     <%= f.label :height_in, 'Height (in)', :class => 'col-md-2 control-label' %>
-    <div class="col-md-10">
+    <div class="col-md-2">
+      <div class="checkbox">
+        <%= f.check_box :is_envelope %> Is an envelope
+      </div>
+    </div>
+    <div class="col-md-8">
       <%= f.text_field :height_in, :class => 'form-control' %>
     </div>
   </div>
@@ -105,6 +110,13 @@
     <%= f.label :weight_lb, 'Weight (lb)', :class => 'col-md-2 control-label' %>
     <div class="col-md-10">
       <%= f.text_field :weight_lb, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :shipping_class, 'Shipping class', :class => 'col-md-2 control-label' %>
+    <div class="col-md-10">
+      <%= f.select :shipping_class, Package::SHIPPING_CLASSES.invert.to_a, {}, :class => 'form-control' %>
     </div>
   </div>
 

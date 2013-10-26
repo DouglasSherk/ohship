@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131025012846) do
+ActiveRecord::Schema.define(version: 20131026010249) do
 
   create_table "feedback", force: true do |t|
     t.integer "package_id"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20131025012846) do
   create_table "packages", force: true do |t|
     t.integer  "shippee_id"
     t.integer  "shipper_id"
-    t.integer  "state",                    default: 0
+    t.integer  "state",                       default: 0
     t.float    "length_in"
     t.float    "width_in"
     t.float    "height_in"
@@ -44,6 +44,9 @@ ActiveRecord::Schema.define(version: 20131025012846) do
     t.string   "origin_country"
     t.string   "ship_to_state"
     t.integer  "shipping_estimate_cents"
+    t.integer  "is_envelope",                 default: 0
+    t.string   "shipping_class"
+    t.boolean  "shipping_estimate_confirmed", default: false
   end
 
   create_table "photos", force: true do |t|
@@ -83,7 +86,7 @@ ActiveRecord::Schema.define(version: 20131025012846) do
     t.string   "uid"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

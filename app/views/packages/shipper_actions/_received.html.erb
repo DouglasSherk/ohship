@@ -1,8 +1,10 @@
-<% if flash[:shipping_estimate] %>
-  The anticipated cost of shipping is <strong><%= number_to_currency flash[:shipping_estimate] %></strong>.
+<% if @package.shipping_estimate_confirmed %>
+  Thank you! The estimated shipping cost will be <%= number_to_currency @package.shipping_estimate %>.<br />
+  You will be notified when the user makes the required payment.
+<% elsif @package.shipping_estimate %>
+  The anticipated cost of shipping is <strong><%= number_to_currency @package.shipping_estimate %></strong>.
   Does that look correct?
   <%= form_tag package_path + '/shipper_action', :class => 'form-horizontal' do %>
-    <%= hidden_field_tag :shipping_estimate, flash[:shipping_estimate] %>
     <div class="buttons">
       <button type="submit" name="submit" value="accept" class="btn btn-primary">Accept</button>
       <button type="submit" name="submit" value="back" class="btn btn-danger">Back and edit details</button>
@@ -58,7 +60,4 @@
       <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit info</button>
     </div>
   <% end %>
-<% else %>
-  Thank you! The estimated shipping cost will be <%= number_to_currency @package.shipping_estimate %>.<br />
-  You will be notified when the user makes the required payment.
 <% end %>

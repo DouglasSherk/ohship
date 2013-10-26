@@ -1,4 +1,4 @@
-<% if !@package.shipping_estimate.nil? %>
+<% if !@package.shipping_estimate_confirmed %>
   The shipper is ready to send the package to you! First, please pay the required shipping fees.<br />
   The total cost of the shipment comes to: <strong><%= number_to_currency @package.shipping_estimate %></strong>.
 

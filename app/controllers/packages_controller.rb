@@ -1,3 +1,9 @@
+if Rails.env == 'development'
+  require_dependency 'usps'
+else
+  require 'usps'
+end
+
 class PackagesController < ApplicationController
   load_and_authorize_resource :except => [:index, :new, :create]
   skip_authorize_resource :only => [:shippee_action, :shipper_action]
@@ -111,13 +117,17 @@ class PackagesController < ApplicationController
         @package.state += 1
       end
     when Package::STATE_SHIPPER_RECEIVED
-      if @package.shipping_estimate.nil?
+      if !@package.shipping_estimate_confirmed
         if params[:submit] == 'submit'
-          # TODO: verify & get shipping estimate
-          flash[:shipping_estimate] = 12.34
-        elsif params[:submit] == 'accept' && params[:shipping_estimate]
-          @package.shipping_estimate = params[:shipping_estimate].to_f
+          @package.shipping_estimate = USPS::get_shipping_estimate(
+            @package.length_in, @package.width_in, @package.height_in, @package.weight_lb,
+            @package.is_envelope, @package.shipping_class
+          )
+        elsif params[:submit] == 'accept'
+          @package.shipping_estimate_confirmed = true
           Mailer.notification_email(@package.shippee, @package, 'Shipper received package', 'shipper_received').deliver
+        elsif params[:submit] == 'back'
+          @package.shipping_estimate = nil
         end
       end
     when Package::STATE_SHIPPEE_PAID
@@ -144,6 +154,8 @@ class PackagesController < ApplicationController
         :height_in,
         :weight_lb,
         :value,
+        :is_envelope,
+        :shipping_class,
         :description,
         :origin_country,
         :ship_to_name,

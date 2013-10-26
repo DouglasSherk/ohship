@@ -10,10 +10,24 @@ class Package < ActiveRecord::Base
   STATE_SHIPPEE_PAID = 3     # Shippee pays fees. Shipper sends package, adds receipt & tracking
   STATE_COMPLETED = 4         # Shippee confirms delivery.
 
+  SHIPPING_CLASSES = {
+    'first_class' => 'First Class (up to 11+ days)',
+    'priority' => 'Priority (6-10 days)',
+    'priority_express' => 'Priority Express (3-5 days)',
+  }
+
   validates :state, :inclusion => { :in => STATE_SUBMITTED..STATE_COMPLETED }
+  validates :shipping_class, :inclusion => { :in => SHIPPING_CLASSES.keys }
+  validates :length_in, :width_in, :weight_lb, :value_cents,
+            presence: true, numericality: { greater_than: 0 }
+  validates :height_in, presence: true, numericality: { greater_than: 0 }, :if => "is_envelope == 0"
 
   def value=(val)
-    self.value_cents = val && (val.to_f * 100).round
+    if val = (Float(val) rescue nil)
+      self.value_cents = (val * 100).round
+    else
+      self.value_cents = nil
+    end
   end
 
   def value
@@ -21,7 +35,11 @@ class Package < ActiveRecord::Base
   end
 
   def shipping_estimate=(val)
-    self.shipping_estimate_cents = val && (val.to_f * 100).round
+    if val = (Float(val) rescue nil)
+      self.shipping_estimate_cents = (val * 100).round
+    else
+      self.shipping_estimate_cents = nil
+    end
   end
 
   def shipping_estimate
@@ -54,7 +72,7 @@ class Package < ActiveRecord::Base
       end
     when STATE_SHIPPER_RECEIVED
       if user_type == User::SHIPPEE
-        'Shipper received package, payment pending'
+        'Shipper received package'
       else
         'Payment pending'
       end
