@@ -1,7 +1,7 @@
 <% if @package.shipper_tracking.nil? %>
   Thank you! We will notify you when the shipper has shipped your package.<br />
   If you do not receive an update with in 1-2 business days, please email us at
-  <%= link_to 'contact@ohship.me', 'mailto:contact@ohship.me' %>
+  <%= link_to 'hello@ohship.me', 'mailto:hello@ohship.me' %>
 <% else %>
   Your package is en route! The tracking number is: <%= @package.shipper_tracking %> (<%= @package.shipper_tracking_carrier %>)<br />
   Please notify us when you receive the package.<br />
