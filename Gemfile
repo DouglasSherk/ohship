@@ -33,7 +33,7 @@ gem 'jbuilder', '~> 1.2.0'
 gem 'anjlab-bootstrap-rails', :require => 'bootstrap-rails'
 
 # FontAwesome vector fonts/icons.
-gem 'font-awesome-rails'
+gem 'font-awesome-rails', github: 'bokmann/font-awesome-rails'
 
 # GeoIP library for geolocating by IP.
 gem 'geoip'
