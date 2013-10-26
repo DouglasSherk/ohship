@@ -4,6 +4,9 @@ Ohship::Application.routes.draw do
   get "photo/delete"
 
   resources :packages do
+    collection do
+      get 'shipping_estimate'
+    end
     member do
       post 'shipper_action'
       post 'shippee_action'

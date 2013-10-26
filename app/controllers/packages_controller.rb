@@ -62,6 +62,21 @@ class PackagesController < ApplicationController
     end
   end
 
+  # GET /packages/shipping_estimate.json
+  def shipping_estimate
+    p = Package.new(package_params)
+    # HACKHACKHACK: don't validate shipping estimate (as we're doing that here)
+    p.instance_variable_set('@new_record', false)
+
+    if p.valid?
+      # Get estimates, rename with display names
+      render json: Hash[USPS.get_shipping_estimate(p).map { |k, v| [Package::SHIPPING_CLASSES[k], v] }.reverse]
+    else
+      head :unprocessable_entity
+    end
+  end
+
+  # POST /packages/1/shippee_action
   def shippee_action
     authorize! :update, @package
 
@@ -113,6 +128,7 @@ class PackagesController < ApplicationController
     redirect_to package_path
   end
 
+  # POST /packages/1/shipper_action
   def shipper_action
     authorize! :update, @package
 

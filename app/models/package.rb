@@ -25,6 +25,8 @@ class Package < ActiveRecord::Base
   }
 
   validates :state, :inclusion => { :in => STATE_SUBMITTED..STATE_COMPLETED }
+  validates :ship_to_name, :ship_to_address, :ship_to_city, :ship_to_state, :ship_to_country, :ship_to_postal_code,
+            :origin_country, :description, presence: true
   validates :shipping_class, :allow_blank => true, :inclusion => { :in => SHIPPING_CLASSES.keys }
   validates :length_in, :width_in, :weight_lb, :value_cents,
             presence: true, numericality: { greater_than: 0 }
@@ -71,6 +73,8 @@ class Package < ActiveRecord::Base
   end
 
   def check_shippable
+    return false if errors.count > 0
+
     est = USPS.get_shipping_estimate(self)
     if est.empty?
       errors[:package] << 'cannot be shipped. (Is this an error? email <a href="mailto:hello@ohship.me">hello@ohship.me</a>)'
