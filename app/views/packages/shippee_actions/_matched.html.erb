@@ -27,5 +27,5 @@
   <% end %>
   <br />
   If the shipper does not respond soon after tracking indicates the package has been received, please email us at
-  <%= link_to 'hello@ohship.me', 'mailto:hello@ohship.me' %>.
+  <%= mail_to Mailer::EMAIL %>.
 <% end %>

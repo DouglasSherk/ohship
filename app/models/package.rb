@@ -82,7 +82,7 @@ class Package < ActiveRecord::Base
 
     est = USPS.get_shipping_estimate(self)
     if est.empty?
-      errors[:package] << 'cannot be shipped. (Is this an error? email <a href="mailto:hello@ohship.me">hello@ohship.me</a>)'
+      errors[:package] << 'cannot be shipped - package may be oversized or overweight.'
       return false
     end
 

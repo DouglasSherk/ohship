@@ -28,6 +28,9 @@ class PackagesController < ApplicationController
        @package.shipping_estimate.nil?
       flash[:estimates] ||= USPS.get_shipping_estimate(@package)
     end
+
+    @photos = @package.photos.where(:photo_type => 'photo')
+    @receipt = @package.photos.where(:photo_type => 'receipt').first
   end
 
   # GET /packages/new
@@ -191,9 +194,9 @@ class PackagesController < ApplicationController
           shipping_cost_cents = ((shipping_cost||0) * 100).round
           if shipping_cost.nil? || shipping_cost_cents < @package.transaction.preauth_charge_cents/2 ||
              shipping_cost_cents > @package.transaction.preauth_charge_cents
-            flash[:error] = 'Invalid shipping cost. If this is indeed correct, please contact <a href="mailto:hello@ohship.me">hello@ohship.me</a>.'
+            flash[:error] = "Invalid shipping cost provided."
           elsif params[:receipt_upload].nil? || !create_photo(params[:receipt_upload], 'receipt')
-            flash[:error] = 'Invalid receipt proivded. Make sure you selected the right file.'
+            flash[:error] = 'Invalid receipt provided. Make sure you selected the right file.'
           else
             if txn = finish_transaction(shipping_cost_cents)
               @package.shipping_estimate_cents = shipping_cost_cents
@@ -237,7 +240,8 @@ class PackagesController < ApplicationController
     end
 
     def create_photo(data, type = 'photo')
-      return nil if !data.content_type['image/']
+      # Check if it's an image with a valid extension
+      return nil if !data.content_type['image/'] || !data.original_filename['.']
 
       p = Photo.new(
         :package => @package,
@@ -280,7 +284,7 @@ class PackagesController < ApplicationController
         err  = body[:error]
         flash[:error] = "Card was declined (#{err[:message]})"
       rescue => e
-        flash[:error] = "Error connecting to Stripe. Please try again. Please contact <a href='mailto:hello@ohship.me'>hello@ohship.me</a> if this persists."
+        flash[:error] = "Error connecting to Stripe. Please try again."
         Mailer.error_email(current_user, request.original_url, e.message).deliver
       end
 
@@ -299,7 +303,7 @@ class PackagesController < ApplicationController
         txn.final_charge_cents = amount
         return txn
       rescue => e
-        flash[:error] = "Error processing shipping cost (#{e.message}). Please try again. Please contact <a href='mailto:hello@ohship.me'>hello@ohship.me</a> if this persists."
+        flash[:error] = "Error processing shipping cost (#{e.message}). Please try again."
         Mailer.error_email(current_user, request.original_url, e.message).deliver
       end
 

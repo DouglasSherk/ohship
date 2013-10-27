@@ -14,7 +14,8 @@
 
 <% unless flash[:error].nil? %>
   <div class="action-box alert alert-danger">
-    Error: <%= raw flash[:error] %>
+    Error: <%= raw flash[:error] %><br />
+    If you think this is an error on our part, please contact <%= mail_to Mailer::EMAIL %>.
   </div>
 <% end %>
 
@@ -42,9 +43,25 @@
   <dt>Package weight</dt>
   <dd><%= @package.weight_lb %>lb</dd>
 
+  <% if !@photos.empty? %>
+    <dt>Package photos</dt>
+    <dd>
+      <ul class="list-inline no-bottom-margin">
+        <% @photos.each_with_index do |photo, i| %>
+          <li><a href="<%= photo_path photo %>">Photo <%= i+1 %></a></li>
+        <% end %>
+      </ul>
+    </dd>
+  <% end %>
+
   <% if @package.shipping_class %>
     <dt>Requested shipping</dt>
     <dd><%= Package::SHIPPING_CLASSES[@package.shipping_class] %></dd>
+  <% end %>
+
+  <% if @receipt %>
+    <dt>Shipping receipt</dt>
+    <dd><a href="<%= photo_path @receipt %>">View receipt</a></dd>
   <% end %>
 
   <dt>Special instructions</dt>

@@ -1,8 +1,4 @@
 Ohship::Application.routes.draw do
-  get "photo/show"
-  get "photo/create"
-  get "photo/delete"
-
   resources :packages do
     collection do
       get 'shipping_estimate'
@@ -12,6 +8,8 @@ Ohship::Application.routes.draw do
       post 'shippee_action'
       post 'cancel'
     end
+
+    resources :photos
   end
 
   post "presignup" => "presignup#index"

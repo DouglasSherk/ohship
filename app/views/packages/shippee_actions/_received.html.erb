@@ -16,7 +16,7 @@
     The total cost of the shipment comes to: <strong><%= number_to_currency @package.shipping_estimate %></strong>.<br />
     The shipper will be able to send the package to you once your payment is received.<br />
     If you have any concerns about the accuracy of the shipping cost, please contact us at
-    <%= link_to 'hello@ohship.me', 'mailto:hello@ohship.me' %>.<br />
+    <%= mail_to Mailer::EMAIL %>.<br />
     <br />
     <em>We are <strong>pre-authorizing</strong> 50% more, for a total of <%= number_to_currency @package.shipping_estimate*1.5 %>, in case any additional charges are incurred.<br />
     You will only actually be charged for the true cost of shipping once the shipper has sent the package.</em>

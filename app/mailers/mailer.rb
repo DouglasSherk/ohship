@@ -1,6 +1,7 @@
 class Mailer < PostageApp::Mailer
   include Devise::Mailers::Helpers
-  default from: 'OhShip <hello@ohship.me>'
+  EMAIL = 'hello@ohship.me'
+  default from: "OhShip <#{EMAIL}>"
 
   def confirmation_instructions(record, token, opts = {})
     @token = token
@@ -26,7 +27,7 @@ class Mailer < PostageApp::Mailer
     @user = user
     @url = url
     @message = error_message
-    mail to: 'hello@ohship.me', subject: 'An unhandled error occurred'
+    mail to: EMAIL, subject: 'An unhandled error occurred'
   end
 
   def notification_email(user, package, subject, name)
