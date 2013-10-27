@@ -24,7 +24,7 @@
           <a class="navbar-brand" href="#"><%= image_tag "../img/ohship.png" %></a>
         </div>
         <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
+          <ul class="nav navbar-nav navbar-right">
             <li class="active"><%= link_to "Packages", packages_path %></li>
             <li><a href="/users/profile">My Profile</a></li>
             <li><%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>

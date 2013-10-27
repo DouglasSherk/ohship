@@ -13,6 +13,8 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
+    <%= render "devise/sessions/new_modal" %>
+
     <div class="landing navbar-wrapper">
       <div class="navbar navbar-inverse navbar-static-top">
         <div class="container">
@@ -29,7 +31,9 @@
               <li class="active"><a href="#overview">Overview</a></li>
               <li><a href="#features">How it Works</a></li>
               <li><a href="#signup">Signup</a></li>
-              <!--<li><a class="btn btn-primary" href="/users/sign_in">Login</a></li>-->
+              <% unless current_user %>
+                <li><%= link_to "Login", "#loginModal", :class => "btn btn-primary", :data => {:toggle => "modal"} %></li>
+              <% end %>
             </ul>
           </div>
         </div>
