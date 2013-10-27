@@ -4,6 +4,8 @@ else
   require 'usps'
 end
 
+require 'stripe'
+
 class PackagesController < ApplicationController
   load_and_authorize_resource :except => [:index, :new, :create]
   skip_authorize_resource :only => [:shippee_action, :shipper_action]
@@ -103,10 +105,11 @@ class PackagesController < ApplicationController
           @package.shipping_class = params[:shipping_class]
           @package.shipping_estimate = flash[:estimates][@package.shipping_class]
         elsif !@package.shipping_estimate.nil? && (token = params[:stripeToken])
-          # TODO: verify token, add transaction
-          @package.transaction_id = 1234
-          @package.state += 1
-          Mailer.notification_email(@package.shipper, @package, 'Payment accepted', 'shippee_paid').deliver
+          if txn = create_transaction(token, @package.shipping_estimate_cents)
+            @package.state += 1
+            Mailer.notification_email(@package.shipper, @package, 'Payment accepted', 'shippee_paid').deliver
+            txn.save
+          end
         end
       end
     when Package::STATE_SHIPPEE_PAID
@@ -161,9 +164,24 @@ class PackagesController < ApplicationController
       end
     when Package::STATE_SHIPPEE_PAID
       if @package.shipper_tracking.nil? && params[:submit] == 'submit'
-        @package.shipper_tracking = params[:tracking_number] || ''
-        @package.shipper_tracking_carrier = params[:tracking_carrier] || ''
-        Mailer.notification_email(@package.shippee, @package, 'Shipper sent package', 'shipper_sent').deliver
+        if params[:shipping_cost].blank? || params[:tracking_number].blank? || params[:tracking_carrier].blank?
+          flash[:error] = 'All fields below must be filled out.'
+        else
+          shipping_cost = Float(params[:shipping_cost]) rescue nil
+          shipping_cost_cents = ((shipping_cost||0) * 100).round
+          if shipping_cost.nil? || shipping_cost_cents < 0 ||
+             shipping_cost_cents > @package.transaction.preauth_charge_cents
+            flash[:error] = 'Invalid shipping cost. If this is indeed correct, please contact <a href="mailto:hello@ohship.me">hello@ohship.me</a>.'
+          else
+            if txn = finish_transaction(shipping_cost_cents)
+              @package.shipping_estimate_cents = shipping_cost_cents
+              @package.shipper_tracking = params[:tracking_number] || ''
+              @package.shipper_tracking_carrier = params[:tracking_carrier] || ''
+              Mailer.notification_email(@package.shippee, @package, 'Shipper sent package', 'shipper_sent').deliver
+              txn.save
+            end
+          end
+        end
       end
     end
 
@@ -194,5 +212,53 @@ class PackagesController < ApplicationController
         :ship_to_postal_code,
         :special_instructions
       ]
+    end
+
+    # Accept payment with Stripe
+    def create_transaction(card_token, amount)
+      # TODO: Put the real token in an environment variable
+      Stripe.api_key = 'sk_test_1G0fj6LjMEBRCkvGQvg70meT'
+
+      begin
+        # Add 50% (with rounding)
+        preauth_amount = (amount*3 + 1)/2
+        charge = Stripe::Charge.create(
+          :amount => preauth_amount,
+          :currency => 'usd',
+          :card => card_token,
+          :capture => false,
+          :metadata => { 'package_id' => @package.id }
+        )
+        return Transaction.new(:package => @package, :charge_id => charge.id, :preauth_charge_cents => preauth_amount)
+      rescue Stripe::CardError => e
+        # Card was declined
+        body = e.json_body
+        err  = body[:error]
+        flash[:error] = "Card was declined (#{err[:message]})"
+      rescue => e
+        flash[:error] = "Error connecting to Stripe. Please try again. Please contact <a href='mailto:hello@ohship.me'>hello@ohship.me</a> if this persists."
+        Mailer.error_email(current_user, request.original_url, e.message).deliver
+      end
+
+      return nil
+    end
+
+    # Retrieve previous pre-authorized payment; actually charge it.
+    def finish_transaction(amount)
+      # TODO: Put the real token in an environment variable
+      Stripe.api_key = 'sk_test_1G0fj6LjMEBRCkvGQvg70meT'
+
+      begin
+        charge = Stripe::Charge.retrieve(@package.transaction.charge_id)
+        charge.capture(:amount => amount)
+        txn = @package.transaction
+        txn.final_charge_cents = amount
+        return txn
+      rescue => e
+        flash[:error] = "Error processing shipping cost (#{e.message}). Please try again. Please contact <a href='mailto:hello@ohship.me'>hello@ohship.me</a> if this persists."
+        Mailer.error_email(current_user, request.original_url, e.message).deliver
+      end
+
+      return nil
     end
 end

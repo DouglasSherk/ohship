@@ -11,6 +11,7 @@ class Package < ActiveRecord::Base
   belongs_to :shipper, :class_name => 'User'
   has_many :photos
   has_one :feedback
+  has_one :transaction
 
   STATE_SUBMITTED = 0        # Submitted, hasn't been matched with a shipper.
   STATE_SHIPPER_MATCHED = 1  # Matched & confirmed by shippee. Shippee sends package & enters tracking

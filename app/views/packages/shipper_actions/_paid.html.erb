@@ -7,7 +7,7 @@
     <%= @package.ship_to_postal_code %>
   </address>
 
-  Use <strong><%= Package::SHIPPING_CLASSES[@package.shipping_class] %></strong> shipping; the cost should be <%= number_to_currency @package.shipping_estimate %>.<br />
+  Use <strong><%= Package::SHIPPING_CLASSES[@package.shipping_class] %></strong> shipping; the cost should be about <%= number_to_currency @package.shipping_estimate %>.<br />
   Please upload the shipping receipt and tracking information for reimbursement.
 
   <%= form_tag package_path + '/shipper_action', :class => 'form-horizontal col-md-12' do %>
@@ -15,6 +15,12 @@
       <%= label_tag :photo_upload, 'Upload receipt', :class => 'col-md-2 control-label' %>
       <div class="col-md-10">
         <input type="file" name="photo_upload" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group">
+      <%= label_tag :shipping_cost, 'Actual shipping cost', :class => 'col-md-2 control-label' %>
+      <div class="col-md-10">
+        <%= text_field_tag :shipping_cost, '', :class => 'form-control' %>
       </div>
     </div>
     <div class="form-group">

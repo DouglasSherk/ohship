@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131026010249) do
+ActiveRecord::Schema.define(version: 20131027003411) do
 
   create_table "feedback", force: true do |t|
     t.integer "package_id"
@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(version: 20131026010249) do
     t.string   "ship_to_address"
     t.string   "ship_to_city"
     t.string   "ship_to_country"
-    t.integer  "transaction_id"
     t.string   "shippee_tracking"
     t.string   "shippee_tracking_carrier"
     t.string   "shipper_tracking"
@@ -62,6 +61,15 @@ ActiveRecord::Schema.define(version: 20131026010249) do
     t.string "email"
   end
 
+  create_table "transactions", force: true do |t|
+    t.string  "charge_id"
+    t.integer "preauth_charge_cents"
+    t.integer "final_charge_cents"
+    t.integer "package_id"
+  end
+
+  add_index "transactions", ["package_id"], name: "index_transactions_on_package_id"
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -86,7 +94,7 @@ ActiveRecord::Schema.define(version: 20131026010249) do
     t.string   "uid"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end

@@ -1,6 +1,8 @@
 Hello <%= @user.name %>,
 
 The package (<%= @package.description %>) has shipped, and is en route to your address!
+The actual shipping cost charged to your card was <%= number_to_currency @package.shipping_estimate %>.
+
 <% if !@package.shipper_tracking.empty? %>
 Tracking number: <%= @package.shipper_tracking %>
 Shipping company: <%= @package.shipper_tracking_carrier %>

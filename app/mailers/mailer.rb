@@ -22,6 +22,13 @@ class Mailer < PostageApp::Mailer
     mail to: user.email, subject: 'Welcome to OhShip!'
   end
 
+  def error_email(user, url, error_message)
+    @user = user
+    @url = url
+    @message = error_message
+    mail to: 'hello@ohship.me', subject: 'An unhandled error occurred'
+  end
+
   def notification_email(user, package, subject, name)
     @user = user
     @package = package

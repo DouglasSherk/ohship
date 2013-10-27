@@ -70,6 +70,8 @@ gem 'postageapp'
 # XML parsing (USPS api)
 gem 'nokogiri'
 
+gem 'stripe'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
