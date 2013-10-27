@@ -29,7 +29,7 @@
   <% end %>
 <% else %>
   Please measure and weigh the package to provide an accurate estimate of the shipping cost.
-  <%= form_tag package_path + '/shipper_action', :class => 'form-horizontal' do %>
+  <%= form_tag package_path + '/shipper_action', :multipart => true, :class => 'form-horizontal' do %>
     <div class="col-md-12">
       <div class="form-group">
         <%= label_tag :length_in, 'Length (in)', :class => 'col-md-2 control-label' %>
@@ -62,18 +62,20 @@
       </div>
     </div>
 
-    <br />
-    Please also upload photos of the package (for your protection, and for the receiver's peace of mind)<br />
-    <br />
+    <% if @package.photos.empty? %>
+      <br />
+      Please also upload a photo of the package with the shipping label visible:<br />
+      <br />
 
-    <div class="col-md-12">
-      <div class="form-group">
-        <%= label_tag :photo_upload, 'Upload file', :class => 'col-md-2 control-label' %>
-        <div class="col-md-10">
-          <input type="file" name="photo_upload" class="form-control" />
+      <div class="col-md-12">
+        <div class="form-group">
+          <%= label_tag :photo_upload, 'Upload file', :class => 'col-md-2 control-label' %>
+          <div class="col-md-10">
+            <%= file_field_tag :photo_upload, :class => 'form-control' %>
+          </div>
         </div>
       </div>
-    </div>
+    <% end %>
 
     <br />
 

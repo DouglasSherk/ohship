@@ -111,8 +111,12 @@ class PackagesController < ApplicationController
     when Package::STATE_SHIPPER_RECEIVED
       if @package.shipping_estimate_confirmed
         if @package.shipping_class.nil? && params[:submit] == 'submit' && flash[:estimates]
-          @package.shipping_class = params[:shipping_class]
-          @package.shipping_estimate = flash[:estimates][@package.shipping_class]
+          if flash[:estimates][@package.shipping_class].nil?
+            flash[:error] = 'Invalid shipping class.'
+          else
+            @package.shipping_class = params[:shipping_class]
+            @package.shipping_estimate = flash[:estimates][@package.shipping_class]
+          end
         elsif !@package.shipping_estimate.nil? && (token = params[:stripeToken])
           if txn = create_transaction(token, @package.shipping_estimate_cents)
             @package.state += 1
@@ -162,7 +166,11 @@ class PackagesController < ApplicationController
           params[:is_envelope] ||= 0
           @package.update(params.permit :length_in, :width_in, :height_in, :is_envelope, :weight_lb)
           if @package.valid?
-            flash[:estimates] = USPS.get_shipping_estimate(@package)
+            if params[:photo_upload].nil? || create_photo(params[:photo_upload])
+              flash[:estimates] = USPS.get_shipping_estimate(@package)
+            else
+              flash[:error] = 'Invalid photo provided. Make sure you selected the right file.'
+            end
           end
         elsif params[:submit] == 'accept'
           @package.shipping_estimate_confirmed = true
@@ -173,6 +181,9 @@ class PackagesController < ApplicationController
       end
     when Package::STATE_SHIPPEE_PAID
       if @package.shipper_tracking.nil? && params[:submit] == 'submit'
+        flash[:shipping_cost] = params[:shipping_cost]
+        flash[:tracking_number] = params[:tracking_number]
+        flash[:tracking_carrier] = params[:tracking_carrier]
         if params[:shipping_cost].blank? || params[:tracking_number].blank? || params[:tracking_carrier].blank?
           flash[:error] = 'All fields below must be filled out.'
         else
@@ -181,6 +192,8 @@ class PackagesController < ApplicationController
           if shipping_cost.nil? || shipping_cost_cents < @package.transaction.preauth_charge_cents/2 ||
              shipping_cost_cents > @package.transaction.preauth_charge_cents
             flash[:error] = 'Invalid shipping cost. If this is indeed correct, please contact <a href="mailto:hello@ohship.me">hello@ohship.me</a>.'
+          elsif params[:receipt_upload].nil? || !create_photo(params[:receipt_upload], 'receipt')
+            flash[:error] = 'Invalid receipt proivded. Make sure you selected the right file.'
           else
             if txn = finish_transaction(shipping_cost_cents)
               @package.shipping_estimate_cents = shipping_cost_cents
@@ -221,6 +234,28 @@ class PackagesController < ApplicationController
         :ship_to_postal_code,
         :special_instructions
       ]
+    end
+
+    def create_photo(data, type = 'photo')
+      return nil if !data.content_type['image/']
+
+      p = Photo.new(
+        :package => @package,
+        :photo_type => type,
+        :file_type => data.original_filename.split('.').last
+      )
+      p.save # generate new ID
+
+      begin
+        File.open(Rails.root.join('uploads', p.id.to_s + '.' + p.file_type), 'wb') do |file|
+          file.write(data.read)
+        end
+      rescue => e
+        p.delete
+        return nil
+      end
+
+      return p
     end
 
     # Accept payment with Stripe
