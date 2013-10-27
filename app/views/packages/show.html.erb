@@ -15,7 +15,7 @@
 <% unless flash[:error].nil? %>
   <div class="action-box alert alert-danger">
     Error: <%= raw flash[:error] %><br />
-    If you think this is an error on our part, please contact <%= mail_to Mailer::EMAIL %>.
+    If you think this is an error on our part, please contact <%= mail_to Mailer::EMAIL %> with the package ID (#<%= @package.id %>).
   </div>
 <% end %>
 

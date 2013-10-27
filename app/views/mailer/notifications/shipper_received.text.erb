@@ -5,7 +5,7 @@ Your shipper for package <%= @package.description %> has received your package!
 Once you pay the required fees, the shipper will send the package to you.
 You can do this here: <%= package_url @package %>
 
-If the shipper does not respond 1-2 business days after payment, please email <%= Mailer::EMAIL %> with the package ID.
+If the shipper does not respond 1-2 business days after payment, please email <%= Mailer::EMAIL %> with the package ID (#<%= @package.id %>).
 
 Regards,
 The OhShip Team
