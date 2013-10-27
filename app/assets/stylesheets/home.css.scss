@@ -30,7 +30,7 @@ body {
         background-color: white;
         height: 350px;
 
-        @include respond-to(tablets) {
+        @include respond-to(handhelds, tablets) {
           margin-bottom: 100px;
 
           &.last {
