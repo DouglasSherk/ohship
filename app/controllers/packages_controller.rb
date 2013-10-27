@@ -8,7 +8,7 @@ require 'stripe'
 
 class PackagesController < ApplicationController
   load_and_authorize_resource :except => [:index, :new, :create]
-  skip_authorize_resource :only => [:shippee_action, :shipper_action]
+  skip_authorize_resource :only => [:cancel, :shippee_action, :shipper_action]
 
   before_filter :authenticate_user!
 
@@ -54,10 +54,19 @@ class PackagesController < ApplicationController
     end
   end
 
-  # DELETE /packages/1
-  # DELETE /packages/1.json
-  def destroy
+  # POST /packages/1/cancel
+  def cancel
+    authorize! :delete, @package
+
+    if !@package.cancelable?
+      return head :bad_request
+    end
+
+    if @package.shipper
+      Mailer.notification_email(@package.shipper, @package, 'Package canceled', 'shippee_canceled').deliver
+    end
     @package.destroy
+
     respond_to do |format|
       format.html { redirect_to packages_url }
       format.json { head :no_content }
@@ -169,7 +178,7 @@ class PackagesController < ApplicationController
         else
           shipping_cost = Float(params[:shipping_cost]) rescue nil
           shipping_cost_cents = ((shipping_cost||0) * 100).round
-          if shipping_cost.nil? || shipping_cost_cents < 0 ||
+          if shipping_cost.nil? || shipping_cost_cents < @package.transaction.preauth_charge_cents/2 ||
              shipping_cost_cents > @package.transaction.preauth_charge_cents
             flash[:error] = 'Invalid shipping cost. If this is indeed correct, please contact <a href="mailto:hello@ohship.me">hello@ohship.me</a>.'
           else

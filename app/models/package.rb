@@ -68,6 +68,10 @@ class Package < ActiveRecord::Base
     }[self.state]
   end
 
+  def cancelable?
+    return self.state <= STATE_SHIPPER_MATCHED && self.shippee_tracking.nil?
+  end
+
   def order_dimensions
     self.length_in, self.width_in, self.height_in =
       [self.length_in || 0, self.width_in || 0, self.height_in || 0].sort.reverse

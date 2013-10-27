@@ -2,6 +2,14 @@
   <div class="col-md-8">
     <h2>Package Details</h2>
   </div>
+  <div class="col-md-4 right">
+    <% if is_shippee? && @package.cancelable? %>
+      <%= form_tag package_path + '/cancel' do %>
+        <% # TODO: Confirmation %>
+        <button type="submit" class="btn btn-danger">Cancel Package</button>
+      <% end %>
+    <% end %>
+  </div>
 </div>
 
 <% unless flash[:error].nil? %>
