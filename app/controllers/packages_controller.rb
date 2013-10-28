@@ -113,15 +113,15 @@ class PackagesController < ApplicationController
 
     case @package.state
     when Package::STATE_SUBMITTED
-      if !@package.shipper.nil?
-        if params[:submit] == 'accept'
-          @package.state += 1
-          Mailer.notification_email(@package.shipper, @package, 'User accepted', 'shippee_accepted').deliver
-        elsif params[:submit] == 'decline'
-          @package.shipper = nil
-          Mailer.notification_email(@package.shipper, @package, 'User declined', 'shippee_declined').deliver
-        end
-      end
+      # if !@package.shipper.nil?
+      #   if params[:submit] == 'accept'
+      #     @package.state += 1
+      #     Mailer.notification_email(@package.shipper, @package, 'User accepted', 'shippee_accepted').deliver
+      #   elsif params[:submit] == 'decline'
+      #     @package.shipper = nil
+      #     Mailer.notification_email(@package.shipper, @package, 'User declined', 'shippee_declined').deliver
+      #   end
+      # end
     when Package::STATE_SHIPPER_MATCHED
       if params[:submit] == 'shipped'
         if params[:tracking_number].blank? || params[:tracking_carrier].blank?
@@ -179,6 +179,7 @@ class PackagesController < ApplicationController
       if @package.shipper.nil?
         if params[:submit] == 'accept'
           @package.shipper = current_user
+          @package.state += 1
           Mailer.notification_email(@package.shippee, @package, 'Shipper found', 'shipper_found').deliver
         end
       end
