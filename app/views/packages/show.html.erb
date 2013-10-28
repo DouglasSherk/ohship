@@ -5,10 +5,8 @@
   </div>
 <% end %>
 
-<div class="action-box alert alert-warning">
-  <%= render 'packages/' + (is_shipper? ? 'shipper' : 'shippee') +
-             '_actions/' + @package.state_to_s %>
-</div>
+<%= render 'packages/' + (is_shipper? ? 'shipper' : 'shippee') +
+           '_actions/' + @package.state_to_s %>
 
 <div class="page-heading row">
   <div class="col-md-8">

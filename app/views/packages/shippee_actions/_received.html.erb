@@ -1,37 +1,41 @@
 <% if @package.shipping_estimate_confirmed %>
-  <% if @package.shipping_estimate.nil? %>
-    The shipper is ready to send the package to you! First, verify the updated package dimensions and photos.<br />
-    Then, choose a shipping option from the list below:<br />
+  <div class="action-box alert alert-info">
+    <% if @package.shipping_estimate.nil? %>
+      The shipper is ready to send the package to you! First, verify the updated package dimensions and photos.<br />
+      Then, choose a shipping option from the list below:<br />
 
-    <%= form_tag package_path + '/shippee_action' do %>
-      <%= select_tag :shipping_class, options_for_select(flash[:estimates].map { |type, cost|
-            [Package::SHIPPING_CLASSES[type] + ': ' + number_to_currency(cost), type]
-          }.reverse) %>
+      <%= form_tag package_path + '/shippee_action' do %>
+        <%= select_tag :shipping_class, options_for_select(flash[:estimates].map { |type, cost|
+              [Package::SHIPPING_CLASSES[type] + ': ' + number_to_currency(cost), type]
+            }.reverse) %>
 
-      <div class="buttons">
-        <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit</button>
-      </div>
+        <div class="buttons">
+          <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit</button>
+        </div>
+      <% end %>
+    <% else %>
+      The total cost of the shipment comes to: <strong><%= number_to_currency @package.shipping_estimate %></strong>.<br />
+      The shipper will be able to send the package to you once your payment is received.<br />
+      If you have any concerns about the accuracy of the shipping cost, please contact us at
+      <%= mail_to Mailer::EMAIL %>.<br />
+      <br />
+      <em>We are <strong>pre-authorizing</strong> 50% more, for a total of <%= number_to_currency @package.shipping_estimate*1.5 %>, in case any additional charges are incurred.<br />
+      You will only actually be charged for the true cost of shipping once the shipper has sent the package.</em>
+
+      <%= form_tag package_path + '/shippee_action' do %>
+        <div id="buttons">
+          <button id="stripe-checkout" class="btn btn-primary" type="button"
+                  data-amount="<%= (@package.shipping_estimate_cents*3+1)/2 %>"
+                  data-description="Shipping for <%= @package.description %>">
+            Pay with card
+          </button>
+          <button type="submit" value="back" class="btn btn-danger">Back</button>
+        </div>
+      <% end %>
     <% end %>
-  <% else %>
-    The total cost of the shipment comes to: <strong><%= number_to_currency @package.shipping_estimate %></strong>.<br />
-    The shipper will be able to send the package to you once your payment is received.<br />
-    If you have any concerns about the accuracy of the shipping cost, please contact us at
-    <%= mail_to Mailer::EMAIL %>.<br />
-    <br />
-    <em>We are <strong>pre-authorizing</strong> 50% more, for a total of <%= number_to_currency @package.shipping_estimate*1.5 %>, in case any additional charges are incurred.<br />
-    You will only actually be charged for the true cost of shipping once the shipper has sent the package.</em>
-
-    <%= form_tag package_path + '/shippee_action' do %>
-      <div id="buttons">
-        <button id="stripe-checkout" class="btn btn-primary" type="button"
-                data-amount="<%= (@package.shipping_estimate_cents*3+1)/2 %>"
-                data-description="Shipping for <%= @package.description %>">
-          Pay with card
-        </button>
-        <button type="submit" value="back" class="btn btn-danger">Back</button>
-      </div>
-    <% end %>
-  <% end %>
+  </div>
 <% else %>
-  The shipper has received the package! We will notify you when it is ready to be shipped to you.
+  <div class="action-box alert alert-success">
+    The shipper has received the package! We will notify you when it is ready to be shipped to you.
+  </div>
 <% end %>

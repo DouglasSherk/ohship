@@ -1,12 +1,16 @@
 <% if @package.shipper.nil? %>
-  Package submitted. Please wait for a shipper to accept this package.
+  <div class="action-box alert alert-success">
+    Package submitted. Please wait for a shipper to accept this package.
+  </div>
 <% else %>
-  A shipper living in <%= @package.shipper.city %>, <%= @package.shipper.state %>, <%= @package.shipper.country %> is willing to re-ship your package.<br />
-  Is this acceptable?
-  <%= form_tag(package_path + '/shippee_action') do %>
-    <div class="buttons">
-      <button type="submit" name="submit" value="accept" class="btn btn-primary">Accept</button>
-      <button type="submit" name="submit" value="decline" class="btn btn-danger">Decline</button>
-    </div>
-  <% end %>
+  <div class="action-box alert alert-info">
+    A shipper living in <%= @package.shipper.city %>, <%= @package.shipper.state %>, <%= @package.shipper.country %> is willing to re-ship your package.<br />
+    Is this acceptable?
+    <%= form_tag(package_path + '/shippee_action') do %>
+      <div class="buttons">
+        <button type="submit" name="submit" value="accept" class="btn btn-primary">Accept</button>
+        <button type="submit" name="submit" value="decline" class="btn btn-danger">Decline</button>
+      </div>
+    <% end %>
+  </div>
 <% end %>

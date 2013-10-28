@@ -1,85 +1,92 @@
 <% if @package.shipping_estimate_confirmed %>
-  Thank you! You will be notified when the user pays the shipping fees.
+  <div class="action-box alert alert-success">
+    Thank you! You will be notified when the user pays the shipping fees.
+  </div>
 <% elsif flash[:estimates] %>
   <% if flash[:estimates].empty? %>
-    No shipping options available for this package. Are you sure you entered the details correctly?
+    <div class="action-box alert alert-danger">
+      No shipping options available for this package. Are you sure you entered the details correctly?
   <% else %>
-    The following shipping options will be available for this package:
-    <ul>
-      <% Package::SHIPPING_CLASSES.each do |id, name| %>
-        <% if flash[:estimates][id] %>
-          <li><strong><%= name %></strong>: <%= number_to_currency flash[:estimates][id] %></li>
+    <div class="action-box alert alert-info">
+      The following shipping options will be available for this package:
+      <ul>
+        <% Package::SHIPPING_CLASSES.each do |id, name| %>
+          <% if flash[:estimates][id] %>
+            <li><strong><%= name %></strong>: <%= number_to_currency flash[:estimates][id] %></li>
+          <% end %>
         <% end %>
-      <% end %>
-    </ul>
+      </ul>
   <% end %>
-  <br />
-  If the above information seems wrong, please contact us at <%= mail_to Mailer::EMAIL %> with the package ID (#<%= @package.id %>).
+    <br />
+    If the above information seems wrong, please contact us at <%= mail_to Mailer::EMAIL %> with the package ID (#<%= @package.id %>).
 
-  <p><em>You won't be able to update the package information after submitting this, so make sure it's accurate.</em></p>
+    <p><em>You won't be able to update the package information after submitting this, so make sure it's accurate.</em></p>
 
-  <%= form_tag package_path + '/shipper_action', :class => 'form-horizontal' do %>
-    <div class="buttons">
-      <% if !flash[:estimates].empty? %>
-        <button type="submit" name="submit" value="accept" class="btn btn-primary">Accept</button>
-      <% end %>
-      <button type="submit" name="submit" value="back" class="btn btn-danger">Back and edit details</button>
-    </div>
-  <% end %>
-<% else %>
-  Please measure and weigh the package to provide an accurate estimate of the shipping cost.
-  <%= form_tag package_path + '/shipper_action', :multipart => true, :class => 'form-horizontal' do %>
-    <div class="col-md-12">
-      <div class="form-group">
-        <%= label_tag :length_in, 'Length (in)', :class => 'col-md-2 control-label' %>
-        <div class="col-md-10">
-          <%= text_field_tag :length_in, @package.length_in, :class => 'form-control' %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= label_tag :width_in, 'Width (in)', :class => 'col-md-2 control-label' %>
-        <div class="col-md-10">
-          <%= text_field_tag :width_in, @package.width_in, :class => 'form-control' %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= label_tag :height_in, 'Height (in)', :class => 'col-md-2 control-label' %>
-        <div class="col-md-2">
-          <div class="checkbox">
-            <%= check_box_tag :is_envelope, '1', @package.is_envelope == 1, :id => 'packageIsAnEnvelope' %> Envelope
-          </div>
-        </div>
-        <div class="col-md-8">
-          <%= text_field_tag :height_in, @package.height_in, :id => 'packageHeight', :class => 'form-control' %>
-        </div>
-      </div>
-      <div class="form-group">
-        <%= label_tag :weight_lb, 'Weight (lb)', :class => 'col-md-2 control-label' %>
-        <div class="col-md-10">
-          <%= text_field_tag :weight_lb, @package.weight_lb, :class => 'form-control' %>
-        </div>
-      </div>
-    </div>
-
-    <% if @package.photos.empty? %>
-      <br />
-      Please also upload a photo of the package with the shipping label visible:<br />
-      <br />
-
-      <div class="col-md-12">
-        <div class="form-group">
-          <%= label_tag :photo_upload, 'Upload file', :class => 'col-md-2 control-label' %>
-          <div class="col-md-10">
-            <%= file_field_tag :photo_upload, :class => 'form-control' %>
-          </div>
-        </div>
+    <%= form_tag package_path + '/shipper_action', :class => 'form-horizontal' do %>
+      <div class="buttons">
+        <% if !flash[:estimates].empty? %>
+          <button type="submit" name="submit" value="accept" class="btn btn-primary">Accept</button>
+        <% end %>
+        <button type="submit" name="submit" value="back" class="btn btn-danger">Back and edit details</button>
       </div>
     <% end %>
+  </div>
+<% else %>
+  <div class="action-box alert alert-info">
+    Please measure and weigh the package to provide an accurate estimate of the shipping cost.
+    <%= form_tag package_path + '/shipper_action', :multipart => true, :class => 'form-horizontal' do %>
+      <div class="col-md-12">
+        <div class="form-group">
+          <%= label_tag :length_in, 'Length (in)', :class => 'col-md-2 control-label' %>
+          <div class="col-md-10">
+            <%= text_field_tag :length_in, @package.length_in, :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= label_tag :width_in, 'Width (in)', :class => 'col-md-2 control-label' %>
+          <div class="col-md-10">
+            <%= text_field_tag :width_in, @package.width_in, :class => 'form-control' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= label_tag :height_in, 'Height (in)', :class => 'col-md-2 control-label' %>
+          <div class="col-md-2">
+            <div class="checkbox">
+              <%= check_box_tag :is_envelope, '1', @package.is_envelope == 1, :id => 'packageIsAnEnvelope' %> Envelope
+            </div>
+          </div>
+          <div class="col-md-8">
+            <%= text_field_tag :height_in, @package.height_in, :class => 'form-control', :id => 'packageHeight' %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= label_tag :weight_lb, 'Weight (lb)', :class => 'col-md-2 control-label' %>
+          <div class="col-md-10">
+            <%= text_field_tag :weight_lb, @package.weight_lb, :class => 'form-control' %>
+          </div>
+        </div>
+      </div>
 
-    <br />
+      <% if @package.photos.empty? %>
+        <br />
+        Please also upload a photo of the package with the shipping label visible:<br />
+        <br />
 
-    <div class="buttons">
-      <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit info</button>
-    </div>
-  <% end %>
+        <div class="col-md-12">
+          <div class="form-group">
+            <%= label_tag :photo_upload, 'Upload file', :class => 'col-md-2 control-label' %>
+            <div class="col-md-10">
+              <%= file_field_tag :photo_upload, :class => 'form-control' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <br />
+
+      <div class="buttons">
+        <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit info</button>
+      </div>
+    <% end %>
+  </div>
 <% end %>
