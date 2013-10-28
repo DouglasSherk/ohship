@@ -41,6 +41,17 @@ class PackagesController < ApplicationController
   def new
     authorize! :create, Package
     @package = Package.new
+
+    @geoip ||= GeoIP.new("#{Rails.root}/db/GeoIP.dat")
+    remote_ip = request.remote_ip
+    if remote_ip != "127.0.0.1"
+      location = @geoip.country(remote_ip)
+      if location != nil
+        @country = location.country_name
+      end
+    else
+      @country = 'Canada'
+    end
   end
 
   # POST /packages

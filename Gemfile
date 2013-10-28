@@ -72,8 +72,8 @@ gem 'nokogiri'
 
 gem 'stripe'
 
-# Countries + states/provinces
-gem 'carmen'
+# Countries
+gem 'country_select'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

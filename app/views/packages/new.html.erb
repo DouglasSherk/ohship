@@ -1,5 +1,3 @@
-<% require 'carmen' %>
-
 <div class="page-heading">
   <h2>New Package</h2>
 </div>
@@ -50,8 +48,7 @@
   <div class="form-group">
     <%= f.label :ship_to_country, 'Country', :class => 'col-md-2 control-label' %>
     <div class="col-md-10">
-      <% #TODO: ACTUAL COUNTRY LIST %>
-      <%= f.select :ship_to_country, Carmen::Country.all.map(&:name), {},  :class => 'form-control' %>
+      <%= f.country_select :ship_to_country, [@country], {}, :class => 'form-control' %>
     </div>
   </div>
 
