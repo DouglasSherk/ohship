@@ -46,11 +46,11 @@
         <%= label_tag :height_in, 'Height (in)', :class => 'col-md-2 control-label' %>
         <div class="col-md-2">
           <div class="checkbox">
-            <%= check_box_tag :is_envelope, '1', @package.is_envelope == 1 %> Envelope
+            <%= check_box_tag :is_envelope, '1', @package.is_envelope == 1, :id => 'packageIsAnEnvelope' %> Envelope
           </div>
         </div>
         <div class="col-md-8">
-          <%= text_field_tag :height_in, @package.height_in, :class => 'form-control' %>
+          <%= text_field_tag :height_in, @package.height_in, :id => 'packageHeight', :class => 'form-control' %>
         </div>
       </div>
       <div class="form-group">

@@ -25,9 +25,9 @@ body {
       margin-bottom: 15px;
     }
 
-    //.form-group {
-    //  margin-bottom: 5px;
-    //}
+    .checkbox {
+      height: 34px; // match form-control
+    }
 
     .actions {
       float: right;
