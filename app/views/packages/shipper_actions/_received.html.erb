@@ -13,7 +13,7 @@
       <% end %>
     </ul>
   <% end %>
-  <br />
+
   If the above information seems wrong, please contact us at <%= mail_to Mailer::EMAIL %> with the package ID (#<%= @package.id %>).
 
   <p><em>You won't be able to update the package information after submitting this, so make sure it's accurate.</em></p>
@@ -23,7 +23,7 @@
       <% if !flash[:estimates].empty? %>
         <button type="submit" name="submit" value="accept" class="btn btn-primary">Accept</button>
       <% end %>
-      <button type="submit" name="submit" value="back" class="btn btn-danger">Back and edit details</button>
+      <button type="submit" name="submit" value="back" class="btn btn-default">Back and edit details</button>
     </div>
   <% end %>
 <% else %>
@@ -61,20 +61,18 @@
       </div>
     </div>
 
-    <% if @package.photos.empty? %>
-      <br />
-      Please also upload a photo of the package with the shipping label visible:<br />
-      <br />
+    <br />
+    Please also upload a photo of the package with the shipping label visible:<br />
+    <br />
 
-      <div class="row">
-        <div class="form-group">
-          <%= label_tag :photo_upload, 'Upload file', :class => 'col-md-2 control-label' %>
-          <div class="col-md-10">
-            <%= file_field_tag :photo_upload, :class => 'form-control' %>
-          </div>
+    <div class="row">
+      <div class="form-group">
+        <%= label_tag :photo_upload, 'Upload file', :class => 'col-md-2 control-label' %>
+        <div class="col-md-10">
+          <%= file_field_tag :photo_upload, :class => 'form-control' %>
         </div>
       </div>
-    <% end %>
+    </div>
 
     <div class="buttons">
       <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit info</button>

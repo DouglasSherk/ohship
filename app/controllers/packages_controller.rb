@@ -195,10 +195,13 @@ class PackagesController < ApplicationController
           if @package.valid?
             if params[:photo_upload].nil?
               flash[:error] = 'You must provide a photo.'
-            elsif create_photo(params[:photo_upload])
-              flash[:estimates] = USPS.get_shipping_estimate(@package)
             else
-              flash[:error] = 'Invalid photo provided. Make sure you selected the right file.'
+              Photo.where(:package => @package, :photo_type => 'photo').destroy_all
+              if create_photo(params[:photo_upload])
+                flash[:estimates] = USPS.get_shipping_estimate(@package)
+              else
+                flash[:error] = 'Invalid photo provided. Make sure you selected the right file.'
+              end
             end
           end
         elsif params[:submit] == 'accept'
@@ -279,7 +282,7 @@ class PackagesController < ApplicationController
       p.save # generate new ID
 
       begin
-        File.open(Rails.root.join('uploads', p.id.to_s + '.' + p.file_type), 'wb') do |file|
+        File.open(p.file_name, 'wb') do |file|
           file.write(data.read)
         end
       rescue => e
