@@ -1,14 +1,12 @@
 <% if @package.shipper.nil? %>
-  <div class="action-box alert alert-info">
-    This package currently needs a shipper. Are you willing to accept and re-ship this?
-    <%= form_tag(package_path + '/shipper_action') do %>
-      <div class="buttons">
-        <button type="submit" class="btn btn-primary" name="submit" value="accept">Accept package</button>
-      </div>
-    <% end %>
-  </div>
+  This package currently needs a shipper. Are you willing to accept and re-ship this?
+  <%= form_tag(package_path + '/shipper_action') do %>
+    <div class="buttons">
+      <button type="submit" class="btn btn-primary" name="submit" value="accept">Accept package</button>
+    </div>
+  <% end %>
 <% else %>
-  <div class="action-box alert alert-success">
+  <div class="alert alert-success">
     You've accepted this package! Currently waiting for the user to confirm...
   </div>
 <% end %>

@@ -1,24 +1,22 @@
 <% if @package.feedback.nil? %>
-  <div class="action-box alert alert-info">
-    Thanks for using <strong>ohship</strong>!
-    <br />
-    Please take a moment to leave some feedback about the shipping process.<br />
-    (e.g. Was the package damaged in transit, were there excessive delays, etc.)<br />
+  Thanks for using <strong>ohship</strong>!
+  <br />
+  Please take a moment to leave some feedback about the shipping process.<br />
+  (e.g. Was the package damaged in transit, were there excessive delays, etc.)<br />
 
-    <%= form_tag package_path + '/shippee_action', :class => 'form-horizontal' do %>
-      <div class="form-group">
-        <div class="col-md-12">
-          <%= text_area_tag :text, '', :class => 'form-control' %>
-        </div>
+  <%= form_tag package_path + '/shippee_action', :class => 'form-horizontal' do %>
+    <div class="form-group">
+      <div class="col-md-12">
+        <%= text_area_tag :text, '', :class => 'form-control' %>
       </div>
+    </div>
 
-      <div class="buttons">
-        <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit feedback</button>
-      </div>
-    <% end %>
-  </div>
+    <div class="buttons">
+      <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit feedback</button>
+    </div>
+  <% end %>
 <% else %>
-  <div class="action-box alert alert-success">
+  <div class="alert alert-success">
     Thanks for leaving feedback!
   </div>
 <% end %>

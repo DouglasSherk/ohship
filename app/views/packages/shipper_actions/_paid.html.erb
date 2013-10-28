@@ -42,6 +42,8 @@
     </div>
   <% end %>
 <% else %>
-  Thank you! The package is en route to the receiver. The tracking number is: <%= @package.shipper_tracking %> (<%= @package.shipper_tracking_carrier %>)<br />
-  You should receive your payment shortly.
+  <div class="alert alert-success">
+    Thank you! The package is en route to the receiver. The tracking number is: <%= @package.shipper_tracking %> (<%= @package.shipper_tracking_carrier %>)<br />
+    You should receive your payment shortly.
+  </div>
 <% end %>

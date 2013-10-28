@@ -1,21 +1,19 @@
 <% if @package.shippee_tracking.nil? %>
-  <div class="action-box alert alert-success">
+  <div class="alert alert-success">
     Thanks! The user will now send the item to you. We will notify you when it has shipped.
   </div>
 <% else %>
-  <div class="action-box alert alert-info">
-    The item is en route to you!
-    <% if @package.shippee_tracking.empty? %>
-      No tracking number was provided.
-    <% else %>
-      The tracking number is: <%= @package.shippee_tracking %> (<%= @package.shippee_tracking_carrier %>).
-    <% end %>
-    <br />
-    Please notify us when the package reaches you.
-    <%= form_tag package_path + '/shipper_action' do %>
-      <div class="buttons">
-        <button type="submit" name="submit" value="received" class="btn btn-primary">I received the package</button>
-      </div>
-    <% end %>
-  </div>
+  The item is en route to you!
+  <% if @package.shippee_tracking.empty? %>
+    No tracking number was provided.
+  <% else %>
+    The tracking number is: <%= @package.shippee_tracking %> (<%= @package.shippee_tracking_carrier %>).
+  <% end %>
+  <br />
+  Please notify us when the package reaches you.
+  <%= form_tag package_path + '/shipper_action' do %>
+    <div class="buttons">
+      <button type="submit" name="submit" value="received" class="btn btn-primary">I received the package</button>
+    </div>
+  <% end %>
 <% end %>

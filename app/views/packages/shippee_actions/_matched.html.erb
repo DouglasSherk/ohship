@@ -25,13 +25,15 @@
     </div>
   <% end %>
 <% else %>
-  Thanks! We will notify you when the shipper receives the item.
-  <% if @package.shippee_tracking.empty? %>
-    No tracking number was provided.
-  <% else %>
-    Your tracking number was: <%= @package.shippee_tracking %> (<%= @package.shippee_tracking_carrier %>).
-  <% end %>
-  <br />
-  If the shipper does not respond soon after tracking indicates the package has been received, please email us at
-  <%= mail_to Mailer::EMAIL %>.
+  <div class="alert alert-success">
+    Thanks! We will notify you when the shipper receives the item.
+    <% if @package.shippee_tracking.empty? %>
+      No tracking number was provided.
+    <% else %>
+      Your tracking number was: <%= @package.shippee_tracking %> (<%= @package.shippee_tracking_carrier %>).
+    <% end %>
+    <br />
+    If the shipper does not respond soon after tracking indicates the package has been received, please email us at
+    <%= mail_to Mailer::EMAIL %>.
+  </div>
 <% end %>

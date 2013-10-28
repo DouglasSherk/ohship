@@ -33,7 +33,7 @@
     </ul>
     <div id="package-actions">
       <% unless flash[:error].nil? %>
-        <div class="action-box alert alert-danger">
+        <div class="alert alert-danger">
           Error: <%= raw flash[:error] %><br />
           If you think this is an error on our part, please contact <%= mail_to Mailer::EMAIL %> with the package ID (#<%= @package.id %>).
         </div>
