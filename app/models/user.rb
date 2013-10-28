@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   after_create :send_welcome_email
 
+  attr_accessor :is_new
+
   SHIPPEE = 0
   SHIPPER = 1
 
@@ -24,6 +26,7 @@ class User < ActiveRecord::Base
                          uid: auth.uid,
                          email: auth.info.email,
                          password: Devise.friendly_token[0,20])
+      user.is_new = true
     end
     user
   end

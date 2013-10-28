@@ -15,6 +15,7 @@ class PackagesController < ApplicationController
   # GET /packages
   # GET /packages.json
   def index
+    @signup = params[:signup]
     @packages = Package.all.select { |package| can? :read, package }
 
     if current_user.user_type == User::SHIPPER

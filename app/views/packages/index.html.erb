@@ -1,3 +1,11 @@
+<% if @signup %>
+  <div class="alert alert-info">
+    Welcome to OhShip! To get started, you can <%= link_to "create a package", new_package_path %>. You can
+    buy your product normally from any retailer, then instead of having it shipped to them, you ship it to us.
+    We'll provide you with an address to have the product shipped to.
+  </div>
+<% end %>
+
 <div class="page-heading row">
   <div class="col-md-8">
     <h2>Packages</h2>
