@@ -42,8 +42,6 @@
     <em>We are <strong>pre-authorizing</strong> 50% more, for a total of <%= number_to_currency @package.shipping_estimate*1.5 %>, in case any additional charges are incurred.<br />
     You will only actually be charged for the true cost of shipping once the shipper has sent the package.</em><br />
 
-    <br />
-
     <%= form_tag package_path + '/shippee_action' do %>
       <div class="buttons">
         <button id="stripe-checkout" class="btn btn-primary" type="button"

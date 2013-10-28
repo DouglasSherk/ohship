@@ -10,8 +10,6 @@
   The actual shipping cost came to <strong><%= number_to_currency @package.shipping_estimate %></strong>. Please contact
   us at <%= mail_to Mailer::EMAIL %> if this is incorrect (see receipt).<br />
 
-  <br />
-
   <%= form_tag package_path + '/shippee_action' do %>
     <div class="buttons">
       <a href="<%= photo_path @receipt %>" target="_blank" class="btn btn-default">View shipping receipt</a>
