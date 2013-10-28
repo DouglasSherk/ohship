@@ -96,6 +96,10 @@ body {
     }
   }
 
+  table tr[data-href]:hover {
+    cursor: pointer;
+  }
+
   .no-top-margin {
     margin-top: 0;
   }

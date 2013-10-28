@@ -33,7 +33,7 @@
       <th>Last updated</th>
     </tr>
     <% @packages.each do |package| %>
-      <tr >
+      <tr data-href="<%= package_path(package) %>">
         <td>
           <a href="/packages/<%= package.id %>"><%= package.description %></a>
         </td>
