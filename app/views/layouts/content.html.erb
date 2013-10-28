@@ -9,6 +9,7 @@
     <title>OhShip - <%= yield :title %></title>
 
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <script src="https://checkout.stripe.com/v2/checkout.js"></script>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
   </head>

@@ -130,6 +130,8 @@ class PackagesController < ApplicationController
             Mailer.notification_email(@package.shipper, @package, 'Payment accepted', 'shippee_paid').deliver
             txn.save
           end
+        else
+          @package.shipping_class = @package.shipping_estimate = nil
         end
       end
     when Package::STATE_SHIPPEE_PAID
@@ -173,7 +175,9 @@ class PackagesController < ApplicationController
           params[:is_envelope] ||= 0
           @package.update(params.permit :length_in, :width_in, :height_in, :is_envelope, :weight_lb)
           if @package.valid?
-            if params[:photo_upload].nil? || create_photo(params[:photo_upload])
+            if params[:photo_upload].nil?
+              flash[:error] = 'You must provide a photo.'
+            elsif create_photo(params[:photo_upload])
               flash[:estimates] = USPS.get_shipping_estimate(@package)
             else
               flash[:error] = 'Invalid photo provided. Make sure you selected the right file.'
@@ -199,7 +203,9 @@ class PackagesController < ApplicationController
           if shipping_cost.nil? || shipping_cost_cents < @package.transaction.preauth_charge_cents/2 ||
              shipping_cost_cents > @package.transaction.preauth_charge_cents
             flash[:error] = "Invalid shipping cost provided."
-          elsif params[:receipt_upload].nil? || !create_photo(params[:receipt_upload], 'receipt')
+          elsif params[:receipt_upload].nil?
+            flash[:error] = 'You must provide a receipt.'
+          elsif !create_photo(params[:receipt_upload], 'receipt')
             flash[:error] = 'Invalid receipt provided. Make sure you selected the right file.'
           else
             if txn = finish_transaction(shipping_cost_cents)

@@ -22,15 +22,14 @@
     You will only actually be charged for the true cost of shipping once the shipper has sent the package.</em>
 
     <%= form_tag package_path + '/shippee_action' do %>
-      <script
-        src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
-        data-key="pk_test_xhOGDSqkhDTfzW7RqeQ3TFlv"
-        data-amount="<%= (@package.shipping_estimate_cents*3+1)/2 %>"
-        data-name="ohship.me"
-        data-description="Shipping for <%= @package.description %>">
-      </script>
-
-      <% # TODO: STYLE STRIPE BUTTON; ADD BACK BUTTON HERE %>
+      <div id="buttons">
+        <button id="stripe-checkout" class="btn btn-primary" type="button"
+                data-amount="<%= (@package.shipping_estimate_cents*3+1)/2 %>"
+                data-description="Shipping for <%= @package.description %>">
+          Pay with card
+        </button>
+        <button type="submit" value="back" class="btn btn-danger">Back</button>
+      </div>
     <% end %>
   <% end %>
 <% else %>
