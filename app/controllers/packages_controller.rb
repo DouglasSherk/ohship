@@ -111,9 +111,13 @@ class PackagesController < ApplicationController
       end
     when Package::STATE_SHIPPER_MATCHED
       if params[:submit] == 'shipped'
-        @package.shippee_tracking = params[:tracking_number]
-        @package.shippee_tracking_carrier = params[:tracking_carrier]
-        Mailer.notification_email(@package.shipper, @package, 'Package sent', 'shippee_sent').deliver
+        if params[:tracking_number].blank? || params[:tracking_carrier].blank?
+          flash[:error] = 'Please provide a tracking number/carrier. Type N/A if you are sure neither is available.'
+        else
+          @package.shippee_tracking = params[:tracking_number]
+          @package.shippee_tracking_carrier = params[:tracking_carrier]
+          Mailer.notification_email(@package.shipper, @package, 'Package sent', 'shippee_sent').deliver
+        end
       end
     when Package::STATE_SHIPPER_RECEIVED
       if @package.shipping_estimate_confirmed
@@ -140,7 +144,7 @@ class PackagesController < ApplicationController
         Mailer.notification_email(@package.shippee, @package, 'Package received', 'shippee_received').deliver
       end
     when Package::STATE_COMPLETED
-      if @package.feedback.nil? && params[:text] && params[:text] != ''
+      if @package.feedback.nil? && !params[:text].blank?
         @package.feedback = Feedback.new(:package => @package, :text => params[:text])
         @package.feedback.save
       end

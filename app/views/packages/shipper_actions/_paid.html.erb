@@ -32,7 +32,7 @@
     <div class="form-group">
       <%= label_tag :tracking_carrier, 'Tracking carrier', :class => 'col-md-2 control-label' %>
       <div class="col-md-10">
-        <%= text_field_tag :tracking_carrier, flash[:tracking_carrier], :class => 'form-control' %>
+        <%= select_tag :tracking_carrier, options_for_select(['USPS'], flash[:tracking_carrier]), :class => 'form-control' %>
       </div>
     </div>
 
