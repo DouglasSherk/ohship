@@ -16,6 +16,10 @@ class PackagesController < ApplicationController
   # GET /packages.json
   def index
     @packages = Package.all.select { |package| can? :read, package }
+
+    if current_user.user_type == User::SHIPPER
+      @packages = @packages.select { |package| package.origin_country == current_user.country }
+    end
   end
 
   # GET /packages/1

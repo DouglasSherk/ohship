@@ -31,6 +31,9 @@
   <dt>Package ID</dt>
   <dd><%= @package.id %></dd>
 
+  <dt>Origin Country</dt>
+  <dd><%= @package.origin_country %></dd>
+
   <dt>Description</dt>
   <dd><%= @package.description %></dd>
 
@@ -48,7 +51,7 @@
     <dd>
       <ul class="list-inline no-bottom-margin">
         <% @photos.each_with_index do |photo, i| %>
-          <li><a href="<%= photo_path photo %>">Photo <%= i+1 %></a></li>
+          <li><a href="<%= photo_path photo %>" target="_blank">Photo <%= i+1 %></a></li>
         <% end %>
       </ul>
     </dd>
@@ -61,7 +64,7 @@
 
   <% if @receipt %>
     <dt>Shipping receipt</dt>
-    <dd><a href="<%= photo_path @receipt %>">View receipt</a></dd>
+    <dd><a href="<%= photo_path @receipt %>" target="_blank">View receipt</a></dd>
   <% end %>
 
   <dt>Special instructions</dt>

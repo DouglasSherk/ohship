@@ -41,5 +41,12 @@ body {
         margin-bottom: 5px;
       }
     }
+
+    .list-inline {
+      li {
+        padding-left: 0;
+        padding-right: 10px;
+      }
+    }
   }
 }

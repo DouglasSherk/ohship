@@ -13,7 +13,7 @@
   <%= form_tag package_path + '/shippee_action' do %>
     <div class="buttons">
       <button type="submit" name="submit" value="received" class="btn btn-primary">I received the package</button>
-      <a href="<%= photo_path @receipt %>" class="btn btn-default">View shipping receipt</a>
+      <a href="<%= photo_path @receipt %>" target="_blank" class="btn btn-default">View shipping receipt</a>
     </div>
   <% end %>
 <% end %>
