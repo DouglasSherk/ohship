@@ -1,16 +1,6 @@
-<% unless flash[:error].nil? %>
-  <div class="action-box alert alert-danger">
-    Error: <%= raw flash[:error] %><br />
-    If you think this is an error on our part, please contact <%= mail_to Mailer::EMAIL %> with the package ID (#<%= @package.id %>).
-  </div>
-<% end %>
-
-<%= render 'packages/' + (is_shipper? ? 'shipper' : 'shippee') +
-           '_actions/' + @package.state_to_s %>
-
 <div class="page-heading row">
   <div class="col-md-8">
-    <h2>Package Details</h2>
+    <h2>Package: <%= @package.description %></h2>
   </div>
   <div class="col-md-4 right">
     <% if is_shippee? && @package.cancelable? %>
@@ -22,72 +12,110 @@
   </div>
 </div>
 
-<dl class="dl-horizontal">
-  <dt>Status</dt>
-  <dd><b><%= @package.status(current_user.user_type) %></b></dd>
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#overview" data-toggle="tab">Package Overview</a></li>
+  <li><a href="#details" data-toggle="tab">Package Details</a></li>
+</ul>
 
-  <dt>Package ID</dt>
-  <dd><%= @package.id %></dd>
+<div class="tab-content">
+  <div class="tab-pane active" id="overview">
+    <ul id="package-steps" class="nav nav-pills nav-stacked">
+      <% steps = [['Find a shipper', 'Send to shipper', 'Pay shipping costs', 'Receive package', 'Leave feedback'],
+                  ['Accept package', 'Receive package', 'Update details', 'Ship package', 'Complete']] %>
+      <% steps[current_user.user_type].each_with_index do |step, i| %>
+        <li class="<%= i == @package.state ? 'active' : 'disabled' %>">
+          <a href="#">
+            <% if i < @package.state %><i class="fa fa-check"></i><% end %>
+            <b>Step <%= i+1 %></b>: <%= step %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+    <div id="package-actions">
+      <% unless flash[:error].nil? %>
+        <div class="action-box alert alert-danger">
+          Error: <%= raw flash[:error] %><br />
+          If you think this is an error on our part, please contact <%= mail_to Mailer::EMAIL %> with the package ID (#<%= @package.id %>).
+        </div>
+      <% end %>
 
-  <dt>Origin Country</dt>
-  <dd><%= @package.origin_country %></dd>
-
-  <dt>Description</dt>
-  <dd><%= @package.description %></dd>
-
-  <dt>Value (USD)</dt>
-  <dd><%= @package.value_cents.nil? ? '-' : sprintf('$%.02f', @package.value_cents/100.0) %></dd>
-
-  <dt>Package dimensions</dt>
-  <dd><%= @package.length_in %>in x <%= @package.width_in %>in <% if @package.is_envelope == 1 %>(envelope)<% else %>x <%= @package.height_in %>in<% end %></dd>
-
-  <dt>Package weight</dt>
-  <dd><%= @package.weight_lb %>lb</dd>
-
-  <% if !@photos.empty? %>
-    <dt>Package photos</dt>
-    <dd>
-      <ul class="list-inline no-bottom-margin">
-        <% @photos.each_with_index do |photo, i| %>
-          <li><a href="<%= photo_path photo %>" target="_blank">Photo <%= i+1 %></a></li>
-        <% end %>
-      </ul>
-    </dd>
-  <% end %>
-
-  <% if @package.shipping_class %>
-    <dt>Requested shipping</dt>
-    <dd><%= Package::SHIPPING_CLASSES[@package.shipping_class] %></dd>
-  <% end %>
-
-  <% if @receipt %>
-    <dt>Shipping receipt</dt>
-    <dd><a href="<%= photo_path @receipt %>" target="_blank">View receipt</a></dd>
-  <% end %>
-
-  <dt>Special instructions</dt>
-  <dd><%= @package.special_instructions %></dd>
-</dl>
-
-<h3>Package will be sent to:</h3>
-
-<dl class="dl-horizontal">
-<% if is_shippee? || @package.state >= Package::STATE_SHIPPEE_PAID %>
-  <dt>Name</dt>
-  <dd><%= @package.ship_to_name %></dd>
-  <dt>Address</dt>
-  <dd><%= @package.ship_to_address %></dd>
-<% else %>
-  <div class="alert alert-info">
-    <i>Full address details will be available once the shippee has made the payment.</i>
+      <h3><%= @package.status(current_user.user_type) %></h3>
+      <div class="action-box">
+        <%= render 'packages/' + (is_shipper? ? 'shipper' : 'shippee') +
+                   '_actions/' + @package.state_to_s %>
+      </div>
+    </div>
   </div>
-<% end %>
-  <dt>City</dt>
-  <dd><%= @package.ship_to_city %></dd>
-  <dt>State/Province</dt>
-  <dd><%= @package.ship_to_state %></dd>
-  <dt>Country</dt>
-  <dd><%= @package.ship_to_country %></dd>
-  <dt>Zip/Postal Code</dt>
-  <dd><%= @package.ship_to_postal_code %></dd>
-</dl>
+
+  <div class="tab-pane" id="details">
+    <dl class="dl-horizontal">
+      <dt>Status</dt>
+      <dd><b><%= @package.status(current_user.user_type) %></b></dd>
+
+      <dt>Package ID</dt>
+      <dd><%= @package.id %></dd>
+
+      <dt>Origin Country</dt>
+      <dd><%= @package.origin_country %></dd>
+
+      <dt>Description</dt>
+      <dd><%= @package.description %></dd>
+
+      <dt>Value (USD)</dt>
+      <dd><%= @package.value_cents.nil? ? '-' : sprintf('$%.02f', @package.value_cents/100.0) %></dd>
+
+      <dt>Package dimensions</dt>
+      <dd><%= @package.length_in %>in x <%= @package.width_in %>in <% if @package.is_envelope == 1 %>(envelope)<% else %>x <%= @package.height_in %>in<% end %></dd>
+
+      <dt>Package weight</dt>
+      <dd><%= @package.weight_lb %>lb</dd>
+
+      <% if !@photos.empty? %>
+        <dt>Package photos</dt>
+        <dd>
+          <ul class="list-inline no-bottom-margin">
+            <% @photos.each_with_index do |photo, i| %>
+              <li><a href="<%= photo_path photo %>" target="_blank">Photo <%= i+1 %></a></li>
+            <% end %>
+          </ul>
+        </dd>
+      <% end %>
+
+      <% if @package.shipping_class %>
+        <dt>Requested shipping</dt>
+        <dd><%= Package::SHIPPING_CLASSES[@package.shipping_class] %></dd>
+      <% end %>
+
+      <% if @receipt %>
+        <dt>Shipping receipt</dt>
+        <dd><a href="<%= photo_path @receipt %>" target="_blank">View receipt</a></dd>
+      <% end %>
+
+      <dt>Special instructions</dt>
+      <dd><%= @package.special_instructions %></dd>
+    </dl>
+
+    <h3>Package will be sent to:</h3>
+
+    <dl class="dl-horizontal">
+    <% if is_shippee? || @package.state >= Package::STATE_SHIPPEE_PAID %>
+      <dt>Name</dt>
+      <dd><%= @package.ship_to_name %></dd>
+      <dt>Address</dt>
+      <dd><%= @package.ship_to_address %></dd>
+    <% else %>
+      <div class="alert alert-info">
+        <i>Full address details will be available once the shippee has made the payment.</i>
+      </div>
+    <% end %>
+      <dt>City</dt>
+      <dd><%= @package.ship_to_city %></dd>
+      <dt>State/Province</dt>
+      <dd><%= @package.ship_to_state %></dd>
+      <dt>Country</dt>
+      <dd><%= @package.ship_to_country %></dd>
+      <dt>Zip/Postal Code</dt>
+      <dd><%= @package.ship_to_postal_code %></dd>
+    </dl>
+  </div>
+</div>
