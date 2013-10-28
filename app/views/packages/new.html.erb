@@ -78,9 +78,9 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :value, 'Value', :class => 'col-md-2 control-label' %>
+    <%= f.label :value, 'Value (USD)', :class => 'col-md-2 control-label' %>
     <div class="col-md-10">
-      <%= f.text_field :value, :class => 'form-control' %>
+      <%= f.text_field :value, :value => @package.value && format('%.2f', @package.value), :class => 'form-control' %>
     </div>
   </div>
 

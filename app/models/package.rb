@@ -34,7 +34,16 @@ class Package < ActiveRecord::Base
   validates :height_in, presence: true, numericality: { greater_than: 0 }, :if => "is_envelope == 0"
   validate :check_shippable, :on => :create
 
+  def sanitize_number(str)
+    if str.class == String
+      str.delete('$,\'"')
+    else
+      str
+    end
+  end
+
   def value=(val)
+    val = sanitize_number(val)
     if val = (Float(val) rescue nil)
       self.value_cents = (val * 100).round
     else
@@ -47,6 +56,7 @@ class Package < ActiveRecord::Base
   end
 
   def shipping_estimate=(val)
+    val = sanitize_number(val)
     if val = (Float(val) rescue nil)
       self.shipping_estimate_cents = (val * 100).round
     else
