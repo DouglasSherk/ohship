@@ -23,7 +23,7 @@
       <% steps = [['Find a shipper', 'Send to shipper', 'Pay shipping costs', 'Receive package', 'Leave feedback'],
                   ['Accept package', 'Receive package', 'Update details', 'Ship package', 'Complete']] %>
       <% steps[current_user.user_type].each_with_index do |step, i| %>
-        <li class="<%= i == @package.state ? 'active' : 'disabled' %>">
+        <li class="<%= i == @package.state ? 'active' : 'disabled' %> <%= i > @package.state && 'future' %>">
           <a href="#">
             <% if i < @package.state %><i class="fa fa-check"></i><% end %>
             <b>Step <%= i+1 %></b>: <%= step %>

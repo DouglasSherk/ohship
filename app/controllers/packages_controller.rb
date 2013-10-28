@@ -31,7 +31,8 @@ class PackagesController < ApplicationController
        @package.state == Package::STATE_SHIPPER_RECEIVED &&
        @package.shipping_estimate_confirmed &&
        @package.shipping_estimate.nil?
-      flash[:estimates] ||= USPS.get_shipping_estimate(@package)
+      # Can't use ||= here; we need to set it to something no matter what to refresh it.
+      flash[:estimates] = flash[:estimates] || USPS.get_shipping_estimate(@package)
     end
 
     @photos = @package.photos.where(:photo_type => 'photo')
@@ -156,7 +157,7 @@ class PackagesController < ApplicationController
         Mailer.notification_email(@package.shippee, @package, 'Package received', 'shippee_received').deliver
       end
     when Package::STATE_COMPLETED
-      if @package.feedback.nil? && !params[:text].blank?
+      if @package.feedback.nil?
         @package.feedback = Feedback.new(:package => @package, :text => params[:text])
         @package.feedback.save
       end
