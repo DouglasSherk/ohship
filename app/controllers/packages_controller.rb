@@ -114,7 +114,7 @@ class PackagesController < ApplicationController
     when Package::STATE_SHIPPER_RECEIVED
       if @package.shipping_estimate_confirmed
         if @package.shipping_class.nil? && params[:submit] == 'submit' && flash[:estimates]
-          if flash[:estimates][@package.shipping_class].nil?
+          if flash[:estimates][params[:shipping_class]].nil?
             flash[:error] = 'Invalid shipping class.'
           else
             @package.shipping_class = params[:shipping_class]
