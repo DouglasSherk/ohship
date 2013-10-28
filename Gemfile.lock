@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/bokmann/font-awesome-rails.git
-  revision: bc00fbdc695412649771e6a5b2d151df7e03a607
+  revision: f09de0955a0f4ca485b99045dbf5d4dfec78ec9a
   specs:
-    font-awesome-rails (4.0.0.0)
+    font-awesome-rails (4.0.1.0)
       railties (>= 3.2, < 5.0)
 
 GEM

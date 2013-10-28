@@ -28,6 +28,12 @@ class Package < ActiveRecord::Base
   validates :state, :inclusion => { :in => STATE_SUBMITTED..STATE_COMPLETED }
   validates :ship_to_name, :ship_to_address, :ship_to_city, :ship_to_state, :ship_to_country, :ship_to_postal_code,
             :origin_country, :description, presence: true
+  validates :ship_to_name, :ship_to_city, :ship_to_state, :ship_to_country, :origin_country,
+            length: { in: 1..80 }
+  validates :ship_to_address,
+            length: { in: 1..255 }
+  validates :ship_to_postal_code,
+            length: { in: 1..10 }
   validates :shipping_class, :allow_blank => true, :inclusion => { :in => SHIPPING_CLASSES.keys }
   validates :length_in, :width_in, :weight_lb, :value_cents,
             presence: true, numericality: { greater_than: 0 }
