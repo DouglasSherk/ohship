@@ -102,11 +102,11 @@
     <%= f.label :height_in, 'Height (in)', :class => 'col-md-2 control-label' %>
     <div class="col-md-2">
       <div class="checkbox">
-        <%= f.check_box :is_envelope %> Is an envelope
+        <%= f.check_box :is_envelope, :id => "packageIsAnEnvelope" %> Is an envelope
       </div>
     </div>
     <div class="col-md-8">
-      <%= f.text_field :height_in, :class => 'form-control' %>
+      <%= f.text_field :height_in, :class => 'form-control', :id => "packageHeight" %>
     </div>
   </div>
 

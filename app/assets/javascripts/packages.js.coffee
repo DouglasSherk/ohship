@@ -16,3 +16,7 @@ $(document).ready ->
         form = button.parents('form')
         form.append($input).submit()
     )
+
+  # XXX: Should be using change event, but it doesn't work.
+  $('#packageIsAnEnvelope').click (e) ->
+    $('#packageHeight').css 'display', if this.checked then 'none' else 'block'
