@@ -1,4 +1,6 @@
 body {
+  overflow-y: scroll;
+
   .content {
     &.container {
       margin-top: 80px;
@@ -33,13 +35,70 @@ body {
       float: right;
     }
 
-    .action-box {
-      address, form, .buttons {
-        margin-top: 10px;
+    #overview {
+      &.active {
+        display: table;
+        width: 100%;
       }
 
-      .form-group {
-        margin-bottom: 5px;
+      #package-steps {
+        display: table-cell;
+        width: 275px;
+        padding-top: 15px;
+        padding-right: 20px;
+        border-right: 1px solid #dddddd;
+
+        .fa {
+          float: right;
+          &.fa-check {
+            color: limegreen;
+          }
+        }
+
+        a {
+          cursor: default;
+        }
+      }
+
+      #package-actions {
+        display: table-cell;
+        padding-left: 20px;
+        padding-top: 15px;
+        margin-top: 10px;
+
+        .action-box {
+          address, form, .buttons {
+            margin-top: 10px;
+          }
+
+          .buttons {
+            text-align: right;
+          }
+
+          .form-group {
+            margin-bottom: 5px;
+          }
+        }
+      }
+    }
+
+    #details {
+      // Bootstrap makes these responsive; we don't want this
+      dt {
+        float: left;
+        width: 160px;
+        clear: left;
+        text-align: right;
+      }
+
+      dd {
+        margin-left: 180px;
+      }
+
+      dd:after {
+        clear: both;
+        content: " ";
+        display: table;
       }
     }
 
