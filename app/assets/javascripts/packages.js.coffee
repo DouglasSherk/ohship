@@ -20,3 +20,7 @@ $(document).ready ->
   # XXX: Should be using change event, but it doesn't work.
   $('#packageIsAnEnvelope').click (e) ->
     $('#packageHeight').css 'display', if this.checked then 'none' else 'block'
+
+  $('#new_package').submit (e) ->
+    btnSubmit = $('#new_package button[type="submit"]')
+    btnSubmit.html '<i class="fa fa-spinner fa-spin"></i> ' + btnSubmit.html()
