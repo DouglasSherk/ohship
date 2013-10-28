@@ -1,3 +1,15 @@
+<% unless flash[:error].nil? %>
+  <div class="action-box alert alert-danger">
+    Error: <%= raw flash[:error] %><br />
+    If you think this is an error on our part, please contact <%= mail_to Mailer::EMAIL %> with the package ID (#<%= @package.id %>).
+  </div>
+<% end %>
+
+<div class="action-box alert alert-warning">
+  <%= render 'packages/' + (is_shipper? ? 'shipper' : 'shippee') +
+             '_actions/' + @package.state_to_s %>
+</div>
+
 <div class="page-heading row">
   <div class="col-md-8">
     <h2>Package Details</h2>
@@ -10,18 +22,6 @@
       <% end %>
     <% end %>
   </div>
-</div>
-
-<% unless flash[:error].nil? %>
-  <div class="action-box alert alert-danger">
-    Error: <%= raw flash[:error] %><br />
-    If you think this is an error on our part, please contact <%= mail_to Mailer::EMAIL %> with the package ID (#<%= @package.id %>).
-  </div>
-<% end %>
-
-<div class="action-box alert alert-warning">
-  <%= render 'packages/' + (is_shipper? ? 'shipper' : 'shippee') +
-             '_actions/' + @package.state_to_s %>
 </div>
 
 <dl class="dl-horizontal">
