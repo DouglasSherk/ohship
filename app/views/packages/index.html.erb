@@ -6,6 +6,13 @@
     buy your product normally from any retailer, then instead of having it shipped to them, you ship it to us.
     We'll provide you with an address to have the product shipped to.
   </div>
+<% elsif is_shippee? %>
+  <div class="alert alert-info">
+    <h3>Limited time offer!</h3>
+    Refer a friend to OhShip, and if they ship a package, we will waive our fees for your next order. Give them this link:<br />
+    <% url = new_user_registration_url + '?referrer_id=' + current_user.id.to_s %>
+    <strong><%= link_to url, url %></strong><br />
+  </div>
 <% end %>
 
 <div class="page-heading row">
