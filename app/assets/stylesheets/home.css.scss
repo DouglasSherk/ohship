@@ -86,6 +86,23 @@ body {
 
       &#overview {
         background: url(../img/header_tile.png) center center;
+        vertical-align: top;
+        padding-top: 200px;
+        @include respond-to(handhelds, tablets) {
+          padding-top: 130px;
+        }
+
+        h1 {
+          color: white;
+          text-transform: uppercase;
+          font-weight: 400;
+          font-size: 36px;
+        }
+
+        h2 {
+          color: white;
+          font-weight: 200;
+        }
       }
 
       &#mobile {
@@ -251,6 +268,7 @@ body {
         }
 
         color: white;
+        @include border-radius(5px);
         @include square(rgba(0, 0, 0, 0.75));
       }
 
