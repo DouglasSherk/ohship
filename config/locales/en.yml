@@ -30,3 +30,9 @@ en:
         weight_lb: Weight
         value_cents: Value
         shipping_estimate_cents: Shipping Estimate
+        ship_to_name: Shipping name
+        ship_to_address: Shipping address
+        ship_to_city: Shipping city
+        ship_to_state: Shipping state/province
+        ship_to_country: Shipping country
+        ship_to_postal_code: Shipping postal/zip code

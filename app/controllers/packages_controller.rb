@@ -120,11 +120,13 @@ class PackagesController < ApplicationController
 
   def set_package_dimensions
     size_group = true
-    if package_params['size_group'] != "custom"
-      size_group = Package::SHIPPING_SIZES[package_params['size_group']]
+    if package_params['size_group'] != "custom" &&
+       size_group = Package::SHIPPING_SIZES[package_params['size_group']]
       @package[:length_in] = size_group[:length_in]
-      @package[:width_in] = size_group[:width_in]
+      @package[:width_in]  = size_group[:width_in]
       @package[:height_in] = size_group[:height_in]
+    else
+      @package.errors[:package_size] << 'is required'
     end
     return !size_group.nil?
   end
