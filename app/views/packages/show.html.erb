@@ -5,8 +5,8 @@
   <div class="col-xs-4 right">
     <% if is_shippee? && @package.cancelable? %>
       <%= form_tag package_path + '/cancel' do %>
-        <% # TODO: Confirmation %>
-        <button type="submit" class="btn btn-danger">Cancel Package</button>
+        <button data-confirm="Are you sure you want to cancel this package? This cannot be undone."
+                type="submit" class="btn btn-danger">Cancel Package</button>
       <% end %>
     <% end %>
   </div>
