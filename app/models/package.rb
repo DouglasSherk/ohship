@@ -13,6 +13,8 @@ class Package < ActiveRecord::Base
   has_one :feedback
   has_one :transaction
 
+  attr_accessor :size_group
+
   STATE_SUBMITTED = 0        # Submitted, hasn't been matched with a shipper.
   STATE_SHIPPER_MATCHED = 1  # Matched & confirmed by shippee. Shippee sends package & enters tracking
   STATE_SHIPPER_RECEIVED = 2 # Package received by shipper. Shipper updates package details & estimate

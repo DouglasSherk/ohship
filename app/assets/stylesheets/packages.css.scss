@@ -3,5 +3,21 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #shipping-estimate-display {
-  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.sizes {
+  div[class*="col-md-"] {
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: contain;
+    height: 200px;
+  }
+}
+
+.size-names {
+  div[class*="col-md-"] {
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
 }

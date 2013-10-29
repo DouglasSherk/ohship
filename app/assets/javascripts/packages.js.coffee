@@ -27,3 +27,9 @@ $(document).ready ->
 
   $('tr[data-href]').click (e) ->
     window.location.href = $(@).data('href')
+
+  $('input[type="radio"][name="package[size_group]"]').change (e) ->
+    if $(@).val() == 'custom'
+      $('.dimensions').removeClass('hidden')
+    else
+      $('.dimensions').addClass('hidden')
