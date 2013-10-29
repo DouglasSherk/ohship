@@ -83,7 +83,7 @@ class PackagesController < ApplicationController
     end
 
     respond_to do |format|
-      if @package.save
+      if set_package_dimensions && @package.save
         format.html { redirect_to @package, notice: 'Package was successfully created.' }
         format.json { render action: 'show', status: :created, location: @package }
       else
@@ -114,16 +114,27 @@ class PackagesController < ApplicationController
 
   # GET /packages/shipping_estimate.json
   def shipping_estimate
-    p = Package.new(package_params)
+    @package = Package.new(package_params)
     # HACKHACKHACK: don't validate shipping estimate (as we're doing that here)
-    p.instance_variable_set('@new_record', false)
+    @package.instance_variable_set('@new_record', false)
 
-    if p.valid?
+    if set_package_dimensions && @package.valid?
       # Get estimates, rename with display names
-      render json: Hash[USPS.get_shipping_estimate(p).map { |k, v| [Package::SHIPPING_CLASSES[k], v] }.reverse]
+      render json: Hash[USPS.get_shipping_estimate(@package).map { |k, v| [Package::SHIPPING_CLASSES[k], v] }.reverse]
     else
       head :unprocessable_entity
     end
+  end
+
+  def set_package_dimensions
+    size_group = true
+    if package_params['size_group'] != "custom"
+      size_group = Package::SHIPPING_SIZES[package_params['size_group']]
+      @package[:length_in] = size_group[:length_in]
+      @package[:width_in] = size_group[:width_in]
+      @package[:height_in] = size_group[:height_in]
+    end
+    return !size_group.nil?
   end
 
   # POST /packages/1/shippee_action
@@ -285,7 +296,8 @@ class PackagesController < ApplicationController
         :ship_to_city,
         :ship_to_country,
         :ship_to_postal_code,
-        :special_instructions
+        :special_instructions,
+        :size_group,
       ]
     end
 

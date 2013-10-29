@@ -27,6 +27,13 @@ class Package < ActiveRecord::Base
     'priority_express' => 'USPS Priority Express (3-5 days)',
   }
 
+  SHIPPING_SIZES = {
+    'envelope' => { :length_in => 12, :width_in => 12, :height_in => 0.75 },
+    'small' => { :length_in => 12, :width_in => 12, :height_in => 3 },
+    'medium' => { :length_in => 12, :width_in => 12, :height_in => 5 },
+    'large' => { :length_in => 15, :width_in => 15, :height_in => 10 },
+  }
+
   validates :state, :inclusion => { :in => STATE_SUBMITTED..STATE_COMPLETED }
   validates :ship_to_name, :ship_to_address, :ship_to_city, :ship_to_state, :ship_to_country, :ship_to_postal_code,
             :origin_country, :description, presence: true
