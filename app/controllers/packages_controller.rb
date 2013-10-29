@@ -52,16 +52,7 @@ class PackagesController < ApplicationController
     @package.ship_to_country = current_user.country
     @package.ship_to_postal_code = current_user.postal_code
 
-    @geoip ||= GeoIP.new("#{Rails.root}/db/GeoIP.dat")
-    remote_ip = request.remote_ip
-    if remote_ip != "127.0.0.1"
-      location = @geoip.country(remote_ip)
-      if location != nil
-        @country = location.country_name
-      end
-    else
-      @country = 'Canada'
-    end
+    @country = current_user.country || User.guess_user_country
   end
 
   # POST /packages

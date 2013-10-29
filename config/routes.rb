@@ -15,6 +15,7 @@ Ohship::Application.routes.draw do
   post "presignup" => "presignup#index"
 
   get "users/profile" => "users#profile"
+  patch "users/profile" => "users#update"
   devise_for :users, :controllers => {:omniauth_callbacks => "users/omniauth_callbacks"}
 
   root 'home#index'

@@ -1,35 +1,103 @@
-<%= form_for(current_user, :as => "user", :url => registration_path(current_user)) do |f| %>
-  <div class="form-group"><%= f.label :name %><br />
-  <%= f.text_field :name, :autofocus => true, :class => "form-control" %></div>
+<div class="page-heading">
+  <h2>Profile</h2>
+</div>
 
-  <div class="form-group"><%= f.label :email %><br />
-  <%= f.email_field :email, :class => "form-control" %></div>
+<%= form_for(@user, :url => registration_path(@user) + '/profile', :html => {:class => 'form-horizontal'}) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited your profile from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= raw msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if flash[:notice] %>
+    <div class="alert alert-success">
+      <%= raw flash[:notice] %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
+      <%= f.text_field :name, :autofocus => true, :class => "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :email, :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
+      <%= f.email_field :email, :class => "form-control" %>
+    </div>
+  </div>
 
   <% unless @signup %>
-    <div class="form-group"><%= f.label :address %><br />
-    <%= f.text_field :address, :class => "form-control" %></div>
+    <div class="form-group">
+      <%= f.label :address, :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
+        <%= f.text_field :address, :class => "form-control" %>
+      </div>
+    </div>
 
-    <div class="form-group"><%= f.label :city %><br />
-    <%= f.text_field :city, :class => "form-control" %></div>
+    <div class="form-group">
+      <%= f.label :city, :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
+        <%= f.text_field :city, :class => "form-control" %>
+      </div>
+    </div>
 
-    <div class="form-group"><%= f.label :state, "State/Province" %><br />
-    <%= f.text_field :state, :class => "form-control" %></div>
+    <div class="form-group">
+      <%= f.label :state, 'State/Province', :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
+        <%= f.text_field :state, :class => "form-control" %>
+      </div>
+    </div>
 
-    <div class="form-group"><%= f.label :country %><br />
-    <%= f.text_field :country, :class => "form-control" %></div>
+    <div class="form-group">
+      <%= f.label :country, :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
+        <%= f.country_select :country, [@country], {}, :class => "form-control" %>
+      </div>
+    </div>
 
-    <div class="form-group"><%= f.label :postal_code, "Postal/ZIP Code" %><br />
-    <%= f.text_field :postal_code, :class => "form-control" %></div>
+    <div class="form-group">
+      <%= f.label :postal_code, 'Postal/ZIP code', :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
+        <%= f.text_field :postal_code, :class => "form-control" %>
+      </div>
+    </div>
 
-    <div class="form-group"><%= f.label :current_password %><br />
-    <%= f.password_field :current_password, :class => "form-control" %></div>
+    <hr />
 
-    <div class="form-group"><%= f.label :password %><br />
-    <%= f.password_field :password, :class => "form-control" %></div>
+    <h3>Change Password</h3>
 
-    <div class="form-group"><%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, :class => "form-control" %></div>
+    <div class="form-group">
+      <%= f.label :current_password, :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
+        <%= f.password_field :current_password, :class => "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password, 'New password', :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
+        <%= f.password_field :password, :class => "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password_confirmation, 'Confirm password', :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
+        <%= f.password_field :password_confirmation, :class => "form-control" %>
+      </div>
+    </div>
   <% end %>
+
+  <br />
 
   <div class="form-group"><%= f.submit "Save", :class => "btn btn-primary" %></div>
 <% end %>

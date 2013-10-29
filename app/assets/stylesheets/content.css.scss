@@ -1,3 +1,5 @@
+@import 'include/utilities';
+
 body {
   overflow-y: scroll;
 
@@ -18,7 +20,7 @@ body {
     .page-heading {
       margin-bottom: 20px;
 
-      div[class*="col-md-"] {
+      div[class*="col-"] {
         padding: 0;
       }
     }
@@ -48,6 +50,10 @@ body {
         padding-right: 20px;
         border-right: 1px solid #dddddd;
 
+        @include respond-to(handhelds) {
+          display: none;
+        }
+
         .fa {
           float: right;
           &.fa-check {
@@ -71,6 +77,7 @@ body {
         padding-left: 20px;
         padding-top: 15px;
         margin-top: 10px;
+        height: 400px;
 
         .action-box {
           address, form {

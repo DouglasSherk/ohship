@@ -39,6 +39,19 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.guess_user_country
+    geoip = GeoIP.new("#{Rails.root}/db/GeoIP.dat")
+    remote_ip = request.remote_ip
+    if remote_ip != "127.0.0.1"
+      location = geoip.country(remote_ip)
+      if location != nil
+        return location.country_name
+      end
+    else
+      return 'Canada'
+    end
+  end
+
   private
     def send_welcome_email
       Mailer.welcome_email(self).deliver
