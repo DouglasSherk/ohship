@@ -44,6 +44,14 @@ class PackagesController < ApplicationController
     authorize! :create, Package
     @package = Package.new
 
+    # Load user's address as the default
+    @package.ship_to_name = current_user.name
+    @package.ship_to_address = current_user.address
+    @package.ship_to_city = current_user.city
+    @package.ship_to_state = current_user.state
+    @package.ship_to_country = current_user.country
+    @package.ship_to_postal_code = current_user.postal_code
+
     @geoip ||= GeoIP.new("#{Rails.root}/db/GeoIP.dat")
     remote_ip = request.remote_ip
     if remote_ip != "127.0.0.1"
@@ -62,6 +70,17 @@ class PackagesController < ApplicationController
     authorize! :create, Package
     @package = Package.new(package_params)
     @package.shippee = current_user
+
+    if params[:save_address].to_s == '1'
+      current_user.update_attributes(
+        :name => @package.ship_to_name,
+        :address => @package.ship_to_address,
+        :city => @package.ship_to_city,
+        :state => @package.ship_to_state,
+        :country => @package.ship_to_country,
+        :postal_code => @package.ship_to_postal_code,
+      )
+    end
 
     respond_to do |format|
       if @package.save
