@@ -374,7 +374,7 @@ class PackagesController < ApplicationController
 
     # Retrieve previous pre-authorized payment; actually charge it.
     def finish_transaction(amount)
-      Stripe.api_key = 'sk_test_1G0fj6LjMEBRCkvGQvg70meT'
+      Stripe.api_key = STRIPE_CONFIG["SECRET_KEY"]
 
       begin
         charge = Stripe::Charge.retrieve(@package.transaction.charge_id)
