@@ -45,5 +45,13 @@ ready = ->
   # tooltips for action required
   $('.packages-table .fa-exclamation').tooltip(title: 'Action required')
 
+  # other dropdown for tracking carrier
+  carrier = $('#tracking_carrier')
+  setOtherVisibility = ->
+    $('#tracking_carrier_other').css('display', if carrier.val() == 'Other' then '' else 'none')
+  setOtherVisibility()
+  carrier.change ->
+    setOtherVisibility()
+
 $(document).ready ready
 $(document).on 'page:load', ready

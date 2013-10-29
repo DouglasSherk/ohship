@@ -163,6 +163,11 @@ class PackagesController < ApplicationController
       # end
     when Package::STATE_SHIPPER_MATCHED
       if params[:submit] == 'shipped'
+        if params[:tracking_carrier] == 'Other'
+          params[:tracking_carrier] = params[:tracking_carrier_other]
+        end
+        flash[:tracking_number] = params[:tracking_number]
+        flash[:tracking_carrier] = params[:tracking_carrier]
         if params[:tracking_number].blank? || params[:tracking_carrier].blank?
           flash[:error] = 'Please provide a tracking number/carrier. Type N/A if you are sure neither is available.'
         else

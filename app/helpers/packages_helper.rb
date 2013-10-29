@@ -57,6 +57,10 @@ module PackagesHelper
     end
   end
 
+  def get_shipping_companies
+    ['USPS', 'UPS', 'FedEx', 'DHL', 'Other']
+  end
+
   def get_package_tabs
     if is_shippee?
       {'' => 'My Packages', 'complete' => 'Received Packages', 'all' => 'All Packages'}

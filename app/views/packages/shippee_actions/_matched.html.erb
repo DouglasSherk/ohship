@@ -16,8 +16,15 @@
     </div>
     <div class="form-group">
       <%= label_tag :tracking_carrier, 'Carrier', :class => 'col-sm-3 control-label' %>
-      <div class="col-xs-9">
-        <%= text_field_tag :tracking_carrier, flash[:tracking_carrier], :class => 'form-control' %>
+      <% if flash[:tracking_carrier] %>
+        <% tracking_carrier = get_shipping_companies.include?(flash[:tracking_carrier]) ? flash[:tracking_carrier] : 'Other' %>
+        <% tracking_carrier_other = (tracking_carrier == 'Other' ? flash[:tracking_carrier] : '') %>
+      <% end %>
+      <div class="col-xs-3">
+        <%= select_tag :tracking_carrier, options_for_select(get_shipping_companies, tracking_carrier), :class => 'form-control' %>
+      </div>
+      <div class="col-xs-6">
+        <%= text_field_tag :tracking_carrier_other, tracking_carrier_other, :class => 'form-control' %>
       </div>
     </div>
     <div class="buttons">
