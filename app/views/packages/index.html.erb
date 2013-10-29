@@ -1,5 +1,13 @@
 <% content_for :title do %>Packages<% end %>
 
+<% if current_user.referral_credits > 0 %>
+  <div class="alert alert-success">
+    Congratulations! You have <strong><%= current_user.referral_credits %></strong> <%= "credit".pluralize(current_user.referral_credits) %>
+    available for referring friends to OhShip. Each credit gives you a shipment with our fees waived. That's <strong>10%</strong> of the fees
+    back for free! You will automatically claim a credit the next time you make a payment with OhShip.
+  </div>
+<% end %>
+
 <% if @signup %>
   <div class="alert alert-info">
     Welcome to OhShip! To get started, you can <%= link_to "create a package", new_package_path %>. You can
