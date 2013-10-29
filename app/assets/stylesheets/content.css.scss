@@ -41,6 +41,10 @@ body {
       float: right;
     }
 
+    .packages-table {
+      margin-top: 15px;
+    }
+
     #overview {
       &.active {
         display: table;

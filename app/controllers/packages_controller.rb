@@ -18,6 +18,21 @@ class PackagesController < ApplicationController
     @signup = params[:signup]
     @packages = Package.all.select { |package| can? :read, package }
 
+    @show = params[:show] || ''
+    if current_user.user_type == User::SHIPPER
+      if @show.blank? # default: my packages
+        @packages = @packages.select { |package| package.shipper == current_user }
+      elsif @show == 'open'
+        @packages = @packages.select { |package| package.shipper.nil? }
+      end
+    end
+
+    if @show == 'complete'
+      @packages = @packages.select { |package| package.state == Package::STATE_COMPLETED }
+    elsif @show != 'all'
+      @packages = @packages.select { |package| package.state != Package::STATE_COMPLETED }
+    end
+
     if current_user.user_type == User::SHIPPER
       @packages = @packages.select { |package| package.origin_country == current_user.country }
     end

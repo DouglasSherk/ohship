@@ -17,7 +17,15 @@
   </div>
 </div>
 
-<table class="table table-hover table-bordered table-striped">
+<ul class="nav nav-tabs">
+  <% get_package_tabs.each do |id, name| %>
+    <li class="<%= 'active' if id == @show %>">
+      <a href="<%= packages_path + '?show=' + id %>"><%= name %></a>
+    </li>
+  <% end %>
+</ul>
+
+<table class="packages-table table table-hover table-bordered table-striped">
   <% if @packages.empty? %>
     <tr>
       <td>
