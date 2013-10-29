@@ -1,14 +1,17 @@
 Hello <%= @user.name %>,
 
 The package (<%= @package.description %>) has shipped, and is en route to your address!
-The actual shipping cost charged to your card was <%= number_to_currency @package.shipping_estimate %>.
+The final shipping cost was <%= number_to_currency @package.shipping_estimate %>.
+The total amount charged to your card was <%= number_to_currency @package.transaction.final_charge_cents/100.0 %>.
 
 <% if !@package.shipper_tracking.empty? %>
 Tracking number: <%= @package.shipper_tracking %>
 Shipping company: <%= @package.shipper_tracking_carrier %>
 Link: https://tools.usps.com/go/TrackConfirmAction.action?tLabels=<%= @package.shipper_tracking %>
 <% end %>
-After you receive the package, please confirm and leave feedback here: <%= package_url @package %>
+
+Details, including the shipping receipt, are available here: <%= package_url @package %>
+When you receive the package, please confirm so using the same link.
 
 Thanks,
 The OhShip Team

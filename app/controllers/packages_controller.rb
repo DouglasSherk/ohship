@@ -192,10 +192,15 @@ class PackagesController < ApplicationController
             @package.shipping_estimate = flash[:estimates][@package.shipping_class]
           end
         elsif !@package.shipping_estimate.nil? && (token = params[:stripeToken])
-          if txn = create_transaction(token, @package.shipping_estimate_cents)
+          total_cost = @package.shipping_estimate_cents
+          # Add 20% handling costs if no credits are available
+          if current_user.referral_credits == 0
+            total_cost = (total_cost*6 + 1) / 5
+          end
+          if txn = create_transaction(token, total_cost)
             @package.state += 1
-            Mailer.notification_email(@package.shipper, @package, 'Payment accepted', 'shippee_paid').deliver
             txn.save
+            Mailer.notification_email(@package.shipper, @package, 'Payment accepted', 'shippee_paid').deliver
           end
         else
           @package.shipping_class = @package.shipping_estimate = nil
@@ -205,6 +210,12 @@ class PackagesController < ApplicationController
       if !@package.shippee_tracking.nil? && params[:submit] == 'received'
         @package.state += 1
         Mailer.notification_email(@package.shippee, @package, 'Package received', 'shippee_received').deliver
+
+        if current_user.referrer
+          ref = current_user.referrer
+          ref.update_attributes(:referral_credits => ref.referral_credits + 1)
+          Mailer.notification_email(ref, @package, 'New referral credit', 'referral_credit', false).deliver
+        end
       end
     when Package::STATE_COMPLETED
       if @package.feedback.nil?
@@ -271,20 +282,32 @@ class PackagesController < ApplicationController
         else
           shipping_cost = Float(params[:shipping_cost]) rescue nil
           shipping_cost_cents = ((shipping_cost||0) * 100).round
-          if shipping_cost.nil? || shipping_cost_cents < @package.transaction.preauth_charge_cents/2 ||
-             shipping_cost_cents > @package.transaction.preauth_charge_cents
+
+          actual_charge = shipping_cost_cents
+          if @package.shippee.referral_credits == 0
+            actual_charge = (actual_charge*6 + 1) / 5
+          end
+
+          if shipping_cost.nil? || actual_charge < @package.transaction.preauth_charge_cents/2 ||
+             actual_charge > @package.transaction.preauth_charge_cents
             flash[:error] = "Invalid shipping cost provided."
           elsif params[:receipt_upload].nil?
             flash[:error] = 'You must provide a receipt.'
           elsif !create_photo(params[:receipt_upload], 'receipt')
             flash[:error] = 'Invalid receipt provided. Make sure you selected the right file.'
           else
-            if txn = finish_transaction(shipping_cost_cents)
+            if txn = finish_transaction(actual_charge)
               @package.shipping_estimate_cents = shipping_cost_cents
               @package.shipper_tracking = params[:tracking_number] || ''
               @package.shipper_tracking_carrier = params[:tracking_carrier] || ''
-              Mailer.notification_email(@package.shippee, @package, 'Shipper sent package', 'shipper_sent').deliver
               txn.save
+
+              # Deduct a referral credit if one was used
+              if @package.shippee.referral_credits > 0
+                @package.shippee.update_attributes(:referral_credits => @package.shippee.referral_credits - 1)
+              end
+
+              Mailer.notification_email(@package.shippee, @package, 'Shipper sent package', 'shipper_sent').deliver
             end
           end
         end

@@ -30,10 +30,10 @@ class Mailer < PostageApp::Mailer
     mail to: EMAIL, subject: 'An unhandled error occurred'
   end
 
-  def notification_email(user, package, subject, name)
+  def notification_email(user, package, subject, name, with_description = true)
     @user = user
     @package = package
-    mail to: user.email, subject: subject + " (#{package.description})",
+    mail to: user.email, subject: subject + (with_description ? " (#{package.description})" : ''),
          template_path: 'mailer/notifications', template_name: name
   end
 end

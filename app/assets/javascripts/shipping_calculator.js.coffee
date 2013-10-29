@@ -11,7 +11,7 @@ ready = ->
     $.ajax('/packages/shipping_estimate', {data: data}).done((data) ->
       select = $('<select id="shipping-estimate-dropdown" />')
       for ship_class, cost of data
-        select.append($("<option>#{ship_class}: $#{cost.toFixed(2)}</option>"))
+        select.append($("<option>#{ship_class}: $#{cost.toFixed(2)} + handling</option>"))
       if select.children().length == 0
         display.html("No shipping options available. Please double-check your dimensions.")
       else
