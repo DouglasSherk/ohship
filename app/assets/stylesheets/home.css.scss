@@ -87,10 +87,7 @@ body {
       &#overview {
         background: url(../img/header_tile.png) center center;
         vertical-align: top;
-        padding-top: 200px;
-        @include respond-to(handhelds, tablets) {
-          padding-top: 130px;
-        }
+        padding-top: 140px;
 
         h1 {
           color: white;
@@ -270,6 +267,13 @@ body {
         color: white;
         @include border-radius(5px);
         @include square(rgba(0, 0, 0, 0.75));
+      }
+
+      .pins {
+        background: url(../img/pins.png) center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 650px;
       }
 
       .features {
