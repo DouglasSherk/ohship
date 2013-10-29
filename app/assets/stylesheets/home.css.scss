@@ -256,6 +256,20 @@ body {
       }
 
       .hero-unit {
+        margin-bottom: 75px;
+        max-width: 400px;
+
+        @include respond-to(handhelds, tablets) {
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        @include respond-to(desktops) {
+          margin-top: 60px;
+          width: 350px;
+          margin-left: 0;
+        }
+
         h2 {
           margin-bottom: 10px;
         }
@@ -270,6 +284,9 @@ body {
       }
 
       .pins {
+        @include respond-to(desktops) {
+          width: 550px;
+        }
         background: url(../img/pins.png) center center;
         background-repeat: no-repeat;
         background-size: contain;
