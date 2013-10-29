@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def profile
     @user = current_user
     @signup = params[:signup]
-    @country = current_user.country || User.guess_user_country
+    @country = current_user.country || User.guess_user_country(request.remote_ip)
   end
 
   def update

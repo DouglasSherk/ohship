@@ -52,7 +52,7 @@ class PackagesController < ApplicationController
     @package.ship_to_country = current_user.country
     @package.ship_to_postal_code = current_user.postal_code
 
-    @country = current_user.country || User.guess_user_country
+    @country = current_user.country || User.guess_user_country(request.remote_ip)
   end
 
   # POST /packages
