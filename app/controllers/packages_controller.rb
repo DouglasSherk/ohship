@@ -71,6 +71,7 @@ class PackagesController < ApplicationController
     @package = Package.new(package_params)
     @package.shippee = current_user
 
+    @save_address = params[:save_address]
     if params[:save_address].to_s == '1'
       current_user.update_attributes(
         :name => @package.ship_to_name,

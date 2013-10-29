@@ -63,7 +63,7 @@
     <div class="col-md-2"></div>
     <div class="col-md-10">
       <div class="checkbox">
-        <%= check_box_tag :save_address, '1', !current_user.address %>
+        <%= check_box_tag :save_address, '1', @save_address || !current_user.address %>
         Save this as my default address
       </div>
     </div>
