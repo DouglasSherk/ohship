@@ -37,7 +37,7 @@
         </div>
       <% end %>
 
-      <h3><%= @package.status(current_user.user_type) %></h3>
+      <h3><%= package_status(@package) %></h3>
       <div class="action-box">
         <%= render 'packages/' + (is_shipper? ? 'shipper' : 'shippee') +
                    '_actions/' + @package.state_to_s %>
@@ -48,7 +48,7 @@
   <div class="tab-pane" id="details">
     <dl class="dl-horizontal">
       <dt>Status</dt>
-      <dd><b><%= @package.status(current_user.user_type) %></b></dd>
+      <dd><b><%= package_status(@package) %></b></dd>
 
       <dt>Package ID</dt>
       <dd><%= @package.id %></dd>

@@ -113,41 +113,4 @@ class Package < ActiveRecord::Base
 
     return true
   end
-
-  def status(user_type)
-    case self.state
-    when STATE_SUBMITTED
-      if user_type == User::SHIPPEE
-        self.shipper.nil? ? 'Waiting for match with shipper' : 'Matched with shipper'
-      else
-        self.shipper.nil? ? 'Shipper required' : 'Pending user confirmation'
-      end
-    when STATE_SHIPPER_MATCHED
-      if user_type == User::SHIPPEE
-        self.shippee_tracking.nil? ? 'Send package to shipper' : 'En route to shipper'
-      else
-        self.shippee_tracking.nil? ? 'Waiting for user to send package' : 'Package en route to you'
-      end
-    when STATE_SHIPPER_RECEIVED
-      if user_type == User::SHIPPEE
-        'Shipper received package'
-      else
-        self.shipping_estimate_confirmed ? 'Payment pending' : 'Package details required'
-      end
-    when STATE_SHIPPEE_PAID
-      if user_type == User::SHIPPEE
-        self.shipper_tracking.nil? ? 'Waiting for shipper to send package' : 'Package en route to you'
-      else
-        self.shipper_tracking.nil? ? 'Payment received' : 'Package en route to user'
-      end
-    when STATE_COMPLETED
-      if user_type == User::SHIPPEE && self.feedback.nil?
-        'Leave feedback'
-      else
-        'Complete'
-      end
-    else
-      'Unknown'
-    end
-  end
 end

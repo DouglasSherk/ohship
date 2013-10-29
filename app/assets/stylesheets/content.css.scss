@@ -43,6 +43,12 @@ body {
 
     .packages-table {
       margin-top: 15px;
+
+      .fa-exclamation {
+        color: red;
+        float: right;
+        line-height: 1.42;
+      }
     }
 
     #overview {

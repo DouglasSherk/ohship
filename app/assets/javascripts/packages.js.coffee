@@ -42,5 +42,8 @@ ready = ->
     id = $(@).data('size-select')
     $('#' + id).click()
 
+  # tooltips for action required
+  $('.packages-table .fa-exclamation').tooltip(title: 'Action required')
+
 $(document).ready ready
 $(document).on 'page:load', ready

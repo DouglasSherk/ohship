@@ -40,7 +40,7 @@
       <th>Status</th>
       <th class="hidden-xs">Last updated</th>
     </tr>
-    <% @packages.each do |package| %>
+    <% @packages.sort_by { |p| package_action_required?(p) ? 0 : 1 }.each do |package| %>
       <tr data-href="<%= package_path(package) %>">
         <td>
           <a href="/packages/<%= package.id %>"><%= package.description %></a>
@@ -49,7 +49,10 @@
           <td><%= package.origin_country %>
         <% end %>
         <td>
-          <%= package.status(current_user.user_type) %>
+          <% if package_action_required?(package) %>
+            <i class="fa fa-exclamation" title="Action required"></i>
+          <% end %>
+          <%= package_status(package) %>
         </td>
         <td class="hidden-xs">
           <%= package.updated_at.to_formatted_s(:long_ordinal) %>
