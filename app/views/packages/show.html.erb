@@ -23,9 +23,9 @@
   <div class="tab-pane active" id="overview">
     <ul id="package-steps" class="nav nav-pills nav-stacked">
       <% get_package_steps.each_with_index do |step, i| %>
-        <li class="<%= i == @package.state ? 'active' : 'disabled' %> <%= i > @package.state && 'future' %>">
+        <li class="<%= i == @package.state && !no_more_actions?(@package) ? 'active' : 'disabled' %> <%= i > @package.state && 'future' %>">
           <a href="#">
-            <% if i < @package.state %><i class="fa fa-check"></i><% end %>
+            <% if i < @package.state || no_more_actions?(@package) %><i class="fa fa-check"></i><% end %>
             <b>Step <%= i+1 %></b>: <%= step %>
           </a>
         </li>

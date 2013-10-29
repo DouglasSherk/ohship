@@ -28,9 +28,15 @@ class PackagesController < ApplicationController
     end
 
     if @show == 'complete'
-      @packages = @packages.select { |package| package.state == Package::STATE_COMPLETED }
+      @packages = @packages.select do |package|
+        package.state == Package::STATE_COMPLETED &&
+          (current_user.user_type == User::SHIPPER || package.feedback)
+      end
     elsif @show != 'all'
-      @packages = @packages.select { |package| package.state != Package::STATE_COMPLETED }
+      @packages = @packages.select do |package|
+        package.state != Package::STATE_COMPLETED ||
+          (current_user.user_type == User::SHIPPEE && package.feedback.nil?)
+      end
     end
 
     if current_user.user_type == User::SHIPPER

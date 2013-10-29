@@ -57,6 +57,10 @@ module PackagesHelper
     end
   end
 
+  def no_more_actions?(package)
+    package.state == Package::STATE_COMPLETED && !package_action_required?(package)
+  end
+
   def get_shipping_companies
     ['USPS', 'UPS', 'FedEx', 'DHL', 'Other']
   end
