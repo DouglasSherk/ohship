@@ -66,6 +66,17 @@ body {
       }
     }
 
+    &#social {
+      padding: 100px 0;
+
+      h1 {
+        color: #999;
+        text-transform: uppercase;
+        font-size: 40px;
+        line-height: 60px;
+      }
+    }
+
     &.expanded {
       width: 100%;
       height: 100%;
