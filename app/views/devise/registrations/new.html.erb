@@ -14,13 +14,17 @@
       <h3>Sign up by email</h3>
 
       <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-        <%#= devise_error_messages! %>
+        <% unless (devise_error_messages!).empty? %>
+          <div class="alert alert-danger">
+            <%= devise_error_messages! %>
+          </div>
+        <% end %>
 
         <div class="form-group"><%= f.label :name %><br />
-        <%= f.email_field :name, :autofocus => true, :class => "form-control" %></div>
+        <%= f.text_field :name, :autofocus => true, :class => "form-control" %></div>
 
         <div class="form-group"><%= f.label :email %><br />
-        <%= f.email_field :email,:class => "form-control" %></div>
+        <%= f.email_field :email, :class => "form-control" %></div>
 
         <div class="form-group"><%= f.label :password %><br />
         <%= f.password_field :password, :class => "form-control" %></div>

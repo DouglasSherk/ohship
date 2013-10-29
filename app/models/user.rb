@@ -54,6 +54,6 @@ class User < ActiveRecord::Base
 
   private
     def send_welcome_email
-      Mailer.welcome_email(self).deliver
+      Mailer.welcome_email(self).deliver if valid?
     end
 end

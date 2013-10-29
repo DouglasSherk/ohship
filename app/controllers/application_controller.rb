@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   layout 'content'
 
+  before_action :configure_devise_permitted_parameters, if: :devise_controller?
+
   def after_inactive_sign_up_path_for(resource)
     packages_path(:signup => true)
   end
@@ -23,5 +25,21 @@ class ApplicationController < ActionController::Base
     end
 
     packages_path
+  end
+
+  protected
+
+  def configure_devise_permitted_parameters
+    registration_params = [:name, :email, :password, :password_confirmation]
+
+    if params[:action] == 'update'
+      devise_parameter_sanitizer.for(:account_update) {
+        |u| u.permit(registration_params << :current_password)
+      }
+    elsif params[:action] == 'create'
+      devise_parameter_sanitizer.for(:sign_up) {
+        |u| u.permit(registration_params)
+      }
+    end
   end
 end
