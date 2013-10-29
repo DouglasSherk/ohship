@@ -30,7 +30,7 @@
       <th>Description</th>
       <% if is_shipper? %><th>Origin Country</th><% end %>
       <th>Status</th>
-      <th>Last updated</th>
+      <th class="hidden-xs">Last updated</th>
     </tr>
     <% @packages.each do |package| %>
       <tr data-href="<%= package_path(package) %>">
@@ -43,7 +43,7 @@
         <td>
           <%= package.status(current_user.user_type) %>
         </td>
-        <td>
+        <td class="hidden-xs">
           <%= package.updated_at.to_formatted_s(:long_ordinal) %>
         </td>
       </tr>
