@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-$(document).ready ->
+ready = ->
   button = $('#stripe-checkout')
   button.click ->
     StripeCheckout.open(
@@ -41,3 +41,6 @@ $(document).ready ->
   $('.size-select').click ->
     id = $(@).data('size-select')
     $('#' + id).click()
+
+$(document).ready ready
+$(document).on 'page:load', ready

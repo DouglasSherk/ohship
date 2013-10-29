@@ -1,4 +1,4 @@
-$(document).ready ->
+ready = ->
   button = $('#shipping-estimate-button')
 
   button.click ->
@@ -22,3 +22,6 @@ $(document).ready ->
       else
         display.html('Could not connect to server. Please try again later.')
     )
+
+$(document).ready ready
+$(document).on 'page:load', ready
