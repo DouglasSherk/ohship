@@ -1,6 +1,6 @@
 <% if @package.shipping_estimate_confirmed %>
   <% if @package.shipping_estimate.nil? %>
-    The shipper is ready to send the package to you! First, verify the updated package dimensions and photos.<br />
+    We have the package and are ready to send it to you! First, verify the updated package dimensions and photos.<br />
 
     <dl class="dl-horizontal">
       <dt>Package dimensions</dt>
@@ -35,12 +35,12 @@
     <% end %>
   <% else %>
     The total cost of the shipment comes to: <strong><%= number_to_currency @package.shipping_estimate %></strong>.<br />
-    The shipper will be able to send the package to you once your payment is received.<br />
+    We'll be able to send the package to you once your payment is received.<br />
     If you have any concerns about the accuracy of the shipping cost, please contact us at
     <%= mail_to Mailer::EMAIL %>.<br />
     <br />
     <em>We are <strong>pre-authorizing</strong> 50% more, for a total of <%= number_to_currency @package.shipping_estimate*1.5 %>, in case any additional charges are incurred.<br />
-    You will only actually be charged for the true cost of shipping once the shipper has sent the package.</em><br />
+    You will only actually be charged for the true cost of shipping once we have sent the package.</em><br />
 
     <%= form_tag package_path + '/shippee_action' do %>
       <div class="buttons">
@@ -54,5 +54,5 @@
     <% end %>
   <% end %>
 <% else %>
-  The shipper has received the package! We will notify you when it is ready to be shipped.
+  We have received the package! We will notify you when it is ready to be shipped.
 <% end %>

@@ -1,9 +1,9 @@
 <% if @package.shippee_tracking.nil? %>
-  You can now send your package to the shipper's address:
+  You can now send your package to this OhShip location:
   <address>
     <strong><%= @package.shipper.name %></strong><br />
     <%= @package.shipper.address %><br />
-    <%= @package.shipper.city %>, <%= @package.shipper.state%>, <%= @package.shipper.country %><br />
+    <%= @package.shipper.city %>, <%= @package.shipper.state %>, <%= @package.shipper.country %><br />
     <%= @package.shipper.postal_code %>
   </address>
   When the package ships, please enter the tracking information here, if possible.
@@ -33,14 +33,14 @@
   <% end %>
 <% else %>
   <div class="alert alert-success">
-    Thanks! We will notify you when the shipper receives the item.
+    Thanks! We will notify you when we receive the item.
     <% if @package.shippee_tracking.empty? %>
       No tracking number was provided.
     <% else %>
       Your tracking number was: <%= @package.shippee_tracking %> (<%= @package.shippee_tracking_carrier %>).
     <% end %>
     <br />
-    If the shipper does not respond soon after tracking indicates the package has been received, please email us at
-    <%= mail_to Mailer::EMAIL %>.
+    If we don't send you an email soon after the carrier (<%= @package.shippee_tracking_carrier %>) says that we've received it,
+    please email us at <%= mail_to Mailer::EMAIL %>.
   </div>
 <% end %>

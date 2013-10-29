@@ -1,9 +1,9 @@
 <% if @package.shipper.nil? %>
   <div class="alert alert-success">
-    Package submitted. Please wait for a shipper to accept this package.
+    Package submitted. Please wait to be matched with the closest OhShip location.
   </div>
 <% else %>
-  A shipper living in <%= @package.shipper.city %>, <%= @package.shipper.state %>, <%= @package.shipper.country %> is willing to re-ship your package.<br />
+  An OhShip location in <%= @package.shipper.city %>, <%= @package.shipper.state %>, <%= @package.shipper.country %> is willing to re-ship your package.<br />
   Is this acceptable?
   <%= form_tag(package_path + '/shippee_action') do %>
     <div class="buttons">

@@ -5,25 +5,25 @@ module PackagesHelper
     case package.state
     when Package::STATE_SUBMITTED
       if is_shippee?
-        package.shipper.nil? ? 'Finding shipper' : 'Matched with shipper'
+        package.shipper.nil? ? 'Finding OhShip location' : 'Matched with OhShip location'
       else
         package.shipper.nil? ? 'Shipper required' : 'Pending user confirmation'
       end
     when Package::STATE_SHIPPER_MATCHED
       if is_shippee?
-        package.shippee_tracking.nil? ? 'Shipper found' : 'En route to shipper'
+        package.shippee_tracking.nil? ? 'OhShip location found' : 'En route to OhShip location'
       else
         package.shippee_tracking.nil? ? 'Waiting for package' : 'Package en route to you'
       end
     when Package::STATE_SHIPPER_RECEIVED
       if is_shippee?
-        package.shipping_estimate_confirmed ? 'Payment required' : 'Shipper received package'
+        package.shipping_estimate_confirmed ? 'Payment required' : 'OhShip received package'
       else
         package.shipping_estimate_confirmed ? 'Waiting for payment' : 'Package details required'
       end
     when Package::STATE_SHIPPEE_PAID
       if is_shippee?
-        package.shipper_tracking.nil? ? 'Waiting for shipper to send' : 'Package en route to you'
+        package.shipper_tracking.nil? ? 'Waiting for OhShip location to send' : 'Package en route to you'
       else
         package.shipper_tracking.nil? ? 'Ready to send' : 'Package en route to user'
       end
@@ -71,7 +71,7 @@ module PackagesHelper
 
   def get_package_steps
     if is_shippee?
-      ['Find a shipper', 'Send to shipper', 'Pay shipping costs', 'Receive package', 'Leave feedback']
+      ['Find an OhShip location', 'Send to OhShip location', 'Pay shipping costs', 'Receive package', 'Leave feedback']
     else
       ['Accept package', 'Receive package', 'Update details', 'Ship package', 'Complete']
     end
