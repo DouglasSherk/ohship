@@ -5,7 +5,11 @@
     <%= mail_to Mailer::EMAIL %>
   </div>
 <% else %>
-  Your package is en route! The tracking number is: <%= @package.shipper_tracking %> (<%= @package.shipper_tracking_carrier %>)<br />
+  Your package is en route! The tracking number is:
+  <a href="https://tools.usps.com/go/TrackConfirmAction.action?tLabels=<%= @package.shipper_tracking %>">
+    <%= @package.shipper_tracking %> (<%= @package.shipper_tracking_carrier %>)
+  </a>
+  <br />
   Please notify us when you receive the package.<br />
 
   <br />

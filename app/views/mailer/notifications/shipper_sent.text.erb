@@ -6,6 +6,7 @@ The actual shipping cost charged to your card was <%= number_to_currency @packag
 <% if !@package.shipper_tracking.empty? %>
 Tracking number: <%= @package.shipper_tracking %>
 Shipping company: <%= @package.shipper_tracking_carrier %>
+Link: https://tools.usps.com/go/TrackConfirmAction.action?tLabels=<%= @package.shipper_tracking %>
 <% end %>
 After you receive the package, please confirm and leave feedback here: <%= package_url @package %>
 
