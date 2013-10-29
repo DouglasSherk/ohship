@@ -12,6 +12,7 @@
     <script src="https://checkout.stripe.com/v2/checkout.js"></script>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
+    <%= analytics_init if Rails.env.production? %>
   </head>
   <body>
     <div class="content navbar navbar-inverse navbar-fixed-top">
