@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   SHIPPEE = 0
   SHIPPER = 1
 
+  validates :name, presence: true
   validates :user_type, :inclusion => { :in => [SHIPPEE, SHIPPER] }
 
   # Include default devise modules. Others available are:

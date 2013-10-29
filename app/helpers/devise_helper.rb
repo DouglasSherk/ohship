@@ -21,21 +21,21 @@ module DeviseHelper
 
     return html if resource.errors.empty?
 
-    errors_number = 0 
+    errors_number = 0
 
     html << "<ul class=\"#{resource_name}_errors_list\">"
 
     saved_key = ""
     resource.errors.each do |key, value|
       if key != saved_key
-        html << "<li class=\"#{key} error\"> #{key.capitalize} #{value} </li>"
+        html << "<li class=\"#{key} error\"> #{key.to_s.humanize} #{value} </li>"
         errors_number += 1
       end
       saved_key = key
     end
 
     unsolved_errors = pluralize(errors_number, "unresolved error")
-    html = "<h2 class=\"#{resource_name}_errors_title\"> You have #{unsolved_errors} </h2>" + html
+    html = "Please fix the following errors:" + html
     html << "</ul>"
 
     return html.html_safe

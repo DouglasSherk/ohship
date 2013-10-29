@@ -20,13 +20,7 @@
         <h3>Sign up by email</h3>
 
         <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-          <% unless (devise_error_messages!).empty? %>
-            <div class="alert alert-danger">
-              <%= devise_error_messages! %>
-            </div>
-          <% end %>
-
-          <%= f.hidden_field :email_only, :value => true %>
+          <%= hidden_field_tag :email_only, true %>
 
           <div class="form-group"><%= f.email_field :email, :class => "form-control", :placeholder => "Email address" %></div>
 
