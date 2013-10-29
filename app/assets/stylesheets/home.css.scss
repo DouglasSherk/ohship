@@ -82,7 +82,6 @@ body {
       @mixin square($color) {
         padding: 3em;
         background: $color;
-        display: inline-block;
       }
 
       &#overview {
@@ -244,7 +243,14 @@ body {
       }
 
       .hero-unit {
-        width: 400px;
+        h2 {
+          margin-bottom: 10px;
+        }
+
+        h3 {
+          margin: 15px 0 5px 0;
+        }
+
         color: white;
         @include square(rgba(0, 0, 0, 0.75));
       }
@@ -404,7 +410,6 @@ body {
       text-transform: uppercase;
       font-size: 16px;
       margin-top: -500px;
-      background-color: white;
     }
   }
 }

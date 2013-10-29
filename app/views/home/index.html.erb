@@ -1,23 +1,43 @@
 <div id="overview" class="section expanded">
-  <div class="container">
-    <div class="hero-unit">
-      <div class="logo">
-        <%= image_tag "../img/ohship-lg.png" %>
-      </div>
-      <div class="center">
-        <%#= link_to 'Sign Up', "#signup", :class => 'btn btn-primary btn-xlg' %>
-        <%= form_tag '/presignup', :method => 'post', :role => 'form', :class => 'presignup' do %>
-          <%= label_tag :q, "Get notified when we go live." %>
-          <div class="button-align">
-            <%= text_field_tag :q, nil, :class => 'input-lg form-control', :placeholder => 'yourname@mail.com' %>
-            <%= button_tag raw(fa_icon "envelope"), :class => "btn btn-lg btn-primary" %>
+  <div class="container auth">
+    <div class="row-fluid">
+      <div class="col-md-4 hero-unit">
+        <h2>Sign up</h2>
+
+        <%= link_to user_omniauth_authorize_path(:facebook), :class => "facebook-connect" do %>
+          <span><%= fa_icon "facebook", :class => "fa-3x" %></span>
+          <span>Log in with Facebook</span>
+        <% end %>
+
+        <hr class="soften" />
+        <div class="center">
+          <span class="or"> or </span>
+        </div>
+
+        <h3>Sign up by email</h3>
+
+        <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+          <% unless (devise_error_messages!).empty? %>
+            <div class="alert alert-danger">
+              <%= devise_error_messages! %>
+            </div>
+          <% end %>
+
+          <%= f.hidden_field :email_only, :value => true %>
+
+          <div class="form-group"><%= f.email_field :email, :class => "form-control", :placeholder => "Email address" %></div>
+
+          <div class="row row-gutterless">
+            <div class="col-xs-6">
+              <div class="form-group"><%= f.submit "Sign up", :class => "btn btn-primary" %></div>
+            </div>
+            <div class="col-xs-6 right">
+              <%= link_to "Or login instead", new_user_session_path %>
+            </div>
           </div>
         <% end %>
       </div>
     </div>
-  </div>
-  <div class="next-caret next-caret-darken">
-    <a href="#features"><i class="icon-angle-down icon-4x"></i></a>
   </div>
 </div>
 
