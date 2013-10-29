@@ -111,21 +111,27 @@ body {
 
     #details {
       // Bootstrap makes these responsive; we don't want this
-      dt {
-        float: left;
-        width: 160px;
-        clear: left;
-        text-align: right;
+      @include respond-to(tablets, desktops, widescreens) {
+        dt {
+          float: left;
+          width: 160px;
+          clear: left;
+          text-align: right;
+        }
+
+        dd {
+          margin-left: 180px;
+        }
+
+        dd:after {
+          clear: both;
+          content: " ";
+          display: table;
+        }
       }
 
       dd {
-        margin-left: 180px;
-      }
-
-      dd:after {
-        clear: both;
-        content: " ";
-        display: table;
+        margin-bottom: 3px;
       }
     }
 
