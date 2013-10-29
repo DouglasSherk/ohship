@@ -346,8 +346,7 @@ class PackagesController < ApplicationController
 
     # Accept payment with Stripe
     def create_transaction(card_token, amount)
-      # TODO: Put the real token in an environment variable
-      Stripe.api_key = 'sk_test_1G0fj6LjMEBRCkvGQvg70meT'
+      Stripe.api_key = STRIPE_CONFIG["SECRET_KEY"]
 
       begin
         # Add 50% (with rounding)
@@ -375,7 +374,6 @@ class PackagesController < ApplicationController
 
     # Retrieve previous pre-authorized payment; actually charge it.
     def finish_transaction(amount)
-      # TODO: Put the real token in an environment variable
       Stripe.api_key = 'sk_test_1G0fj6LjMEBRCkvGQvg70meT'
 
       begin

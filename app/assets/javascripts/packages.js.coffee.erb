@@ -6,7 +6,7 @@ ready = ->
   button = $('#stripe-checkout')
   button.click ->
     StripeCheckout.open(
-      key: 'pk_test_xhOGDSqkhDTfzW7RqeQ3TFlv',
+      key: <%= STRIPE_CONFIG["SECRET_PUB_KEY"] %>,
       amount: button.data('amount'),
       currency: 'usd',
       name: 'ohship.me',

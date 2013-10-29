@@ -17,3 +17,5 @@
 
 /uploads/*
 !/uploads/.keep
+
+/config/environments/stripe/production.yml
