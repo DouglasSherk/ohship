@@ -46,7 +46,8 @@
         <%= label_tag :height_in, 'Height (in)', :class => 'col-md-2 control-label' %>
         <div class="col-md-3">
           <div class="checkbox">
-            <%= check_box_tag :is_envelope, '1', @package.is_envelope == 1, :id => 'packageIsAnEnvelope' %> Is an envelope
+            <%= check_box_tag :is_envelope, '1', @package.is_envelope == 1, :id => 'packageIsAnEnvelope' %>
+            <%= label_tag :packageIsAnEnvelope, 'Is an envelope' %>
           </div>
         </div>
         <div class="col-md-7">

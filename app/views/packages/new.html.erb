@@ -64,7 +64,7 @@
     <div class="col-sm-10">
       <div class="checkbox">
         <%= check_box_tag :save_address, '1', @save_address || !current_user.address %>
-        Save this as my default address
+        <%= label_tag :save_address, 'Save this as my default address' %>
       </div>
     </div>
   </div>
@@ -107,13 +107,13 @@
   <p>Select the size that is closest to what you will be shipping.</p>
 
   <div class="row-fluid sizes">
-    <div class="col-sm-3" style="background-image: url('../img/box-envelope.png');">
+    <div class="col-sm-3 size-select" data-size-select="package_size_group_envelope" style="background-image: url('../img/box-envelope.png');">
     </div>
-    <div class="col-sm-3" style="background-image: url('../img/box-small.png');">
+    <div class="col-sm-3 size-select" data-size-select="package_size_group_small" style="background-image: url('../img/box-small.png');">
     </div>
-    <div class="col-sm-3" style="background-image: url('../img/box-medium.png');">
+    <div class="col-sm-3 size-select" data-size-select="package_size_group_medium" style="background-image: url('../img/box-medium.png');">
     </div>
-    <div class="col-sm-3" style="background-image: url('../img/box-large.png');">
+    <div class="col-sm-3 size-select" data-size-select="package_size_group_large" style="background-image: url('../img/box-large.png');">
     </div>
   </div>
 
@@ -155,7 +155,8 @@
       <%= f.label :height_in, 'Height (in)', :class => 'col-sm-2 control-label' %>
       <div class="col-sm-2">
         <div class="checkbox">
-          <%= f.check_box :is_envelope, :id => "packageIsAnEnvelope" %> Is an envelope
+          <%= f.check_box :is_envelope, :id => "packageIsAnEnvelope" %>
+          <%= label_tag :packageIsAnEnvelope, 'Is an envelope' %>
         </div>
       </div>
       <div class="col-sm-8">

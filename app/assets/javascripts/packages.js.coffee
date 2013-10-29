@@ -37,3 +37,7 @@ $(document).ready ->
   radio = $('input[type="radio"][name="package[size_group]"]')
   radio.change updatePackageDimensions
   radio.change()
+
+  $('.size-select').click ->
+    id = $(@).data('size-select')
+    $('#' + id).click()
