@@ -43,6 +43,7 @@
 <hr class="featurette-divider no-top-margin">
 
 <h1 class="featurette-heading">Meet OhShip</h1>
+<h2 class="featurette-subheading center">Shop online. Ship anywhere.</h2>
 
 <hr class="featurette-divider">
 
@@ -53,8 +54,8 @@
         <%= image_tag "../img/ribbon1.png", :class => "ribbon" %>
         <%= image_tag "../img/checkout.png", :class => "process" %>
         <div class="step-caption">
-          <h2>Buy like usual</h2>
-          <p>Ship it to us instead.</p>
+          <h2>Shop like usual</h2>
+          <p>Tell us where you want your items shipped, and we'll provide you with a forwarding address.</p>
         </div>
       </div>
     </div>
@@ -63,8 +64,8 @@
         <%= image_tag "../img/ribbon2.png", :class => "ribbon" %>
         <%= image_tag "../img/ohship-lg.png", :class => "process", :style => "top: 125px !important;" %>
         <div class="step-caption">
-          <h2>We ship it to you</h2>
-          <p>We'll deal with customs and fees.</p>
+          <h2>We receive it</h2>
+          <p>When the merchandise arrives at our address, we'll send it to your home.</p>
         </div>
       </div>
     </div>
@@ -73,7 +74,7 @@
         <%= image_tag "../img/ribbon3.png", :class => "ribbon" %>
         <%= image_tag "../img/house-gift.png", :class => "process" %>
         <div class="step-caption">
-          <h2>Receive it hassle-free</h2>
+          <h2>You receive it</h2>
           <p>You get it quickly and without hidden fees.</p>
         </div>
       </div>
@@ -119,13 +120,13 @@
     <br>
     <br>
     <div class="row">
-      <div class="col-md-5">
+      <div class="col-md-5" style="margin: auto;">
         <div class="title title-starter">
           Buy things globally
         </div>
         <div class="signup-inner">
           <div class="price">
-            10%
+            only 10%
           </div>
           <div class="renewal">
             service charge on shipping
@@ -133,14 +134,13 @@
           <hr />
           <p>No hidden fees</p>
           <hr />
-          <p>Pay only for shipping</p>
-          <br>
+          <p>No signup fee</p>
           <br>
           <% #Sign up for buying %>
-          <%= link_to "Coming soon", "#overview", :class => "pure-button button-starter"%>
+          <%= link_to "Sign up", "#overview", :class => "btn button-starter"%>
         </div>
       </div>
-      <div class="col-md-5 col-md-offset-1">
+      <div class="col-md-5 col-md-offset-1 hidden">
         <div class="title title-monthly">
           Become an OhShipper
         </div>
