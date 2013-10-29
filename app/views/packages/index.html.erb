@@ -3,8 +3,8 @@
 <% if current_user.referral_credits > 0 %>
   <div class="alert alert-success">
     Congratulations! You have <strong><%= current_user.referral_credits %></strong> <%= "credit".pluralize(current_user.referral_credits) %>
-    available for referring friends to OhShip. Each credit gives you a shipment with our service fees waived. That's <strong>20%</strong> of
-    the total cost back for free! You will automatically claim a credit the next time you make a payment with OhShip.
+    available from referring friends to OhShip.<br />
+    The next package you ship will have the usual <strong>20%</strong> handling fees waived! One credit will automatically used when you pay for your next shipment.
   </div>
 <% end %>
 
