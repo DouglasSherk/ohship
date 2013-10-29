@@ -2,7 +2,7 @@
   <div class="col-md-12 center">
     <div class="col-md-6" style="margin: auto; float: none; text-align: left;">
       <% if @email_only.nil? && devise_error_messages!.empty? %>
-        <%= link_to user_omniauth_authorize_path(:facebook), :class => "facebook-connect" do %>
+        <%= link_to user_omniauth_authorize_path(:facebook) + '?referrer_id=' + @referrer_id, :class => "facebook-connect" do %>
           <span><%= fa_icon "facebook", :class => "fa-3x" %></span>
           <span>Log in with Facebook</span>
         <% end %>
@@ -21,6 +21,8 @@
             <%= devise_error_messages! %>
           </div>
         <% end %>
+
+        <%= f.hidden_field :referrer_id, :value => @referrer_id if @referrer_id %>
 
         <div class="form-group"><%= f.label :name %>
         <%= f.text_field :name, :autofocus => true, :class => "form-control" %></div>

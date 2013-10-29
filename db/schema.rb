@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131027082405) do
+ActiveRecord::Schema.define(version: 20131029172645) do
 
   create_table "feedback", force: true do |t|
     t.integer "package_id"
@@ -92,6 +92,8 @@ ActiveRecord::Schema.define(version: 20131027082405) do
     t.string   "postal_code"
     t.string   "provider"
     t.string   "uid"
+    t.integer  "referrer_id"
+    t.integer  "referral_credits",       default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

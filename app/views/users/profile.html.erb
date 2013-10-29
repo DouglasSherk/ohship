@@ -96,6 +96,24 @@
         <%= f.password_field :password_confirmation, :class => "form-control" %>
       </div>
     </div>
+
+    <br />
+
+    <% if is_shippee? %>
+      <div class="alert alert-info">
+        <h3>Referrals</h3>
+        If you'd like to refer someone, have them sign up using the following link:<br />
+        <% url = new_user_registration_url + '?referrer_id=' + current_user.id.to_s %>
+        <strong><%= link_to url, url %></strong><br />
+        <br />
+        The first time they ship a package with us, your next package with OhShip will have the handling fees waived!<br />
+        So far, you've referred <%= @referral_count %> people<% if @referral_count > 0 %> and <%= @referral_success %> of them have sent a package<% end %>.<br />
+        <% if @user.referral_credits > 0 %>
+          <br />
+          <strong>You currently have <%= @user.referral_credits %> shipping credits available!</strong>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
 
   <br />

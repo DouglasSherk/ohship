@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
   after_create :send_welcome_email
 
+  belongs_to :referrer, :class_name => 'User'
+  has_many :referrals, :class_name => 'User', :foreign_key => 'referrer_id'
+
   attr_accessor :is_new
 
   SHIPPEE = 0
@@ -19,14 +22,15 @@ class User < ActiveRecord::Base
   # For OmniAuth Facebook authentication.
   #attr_accessible :provider, :uid, :name
 
-  def self.find_for_facebook_oauth(auth, signed_in_resource = nil)
+  def self.find_for_facebook_oauth(auth, signed_in_resource = nil, referrer_id = nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     unless user
       user = User.create(name: auth.extra.raw_info.name,
                          provider: auth.provider,
                          uid: auth.uid,
                          email: auth.info.email,
-                         password: Devise.friendly_token[0,20])
+                         password: Devise.friendly_token[0,20],
+                         referrer_id: referrer_id)
       user.is_new = true
     end
     user

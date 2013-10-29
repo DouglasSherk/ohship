@@ -5,6 +5,10 @@ class UsersController < ApplicationController
     @user = current_user
     @signup = params[:signup]
     @country = current_user.country || User.guess_user_country(request.remote_ip)
+    @referral_count = @user.referrals.length
+    @referral_success = @user.referrals.select { |ref|
+      Package.where(:shippee => ref, :state => Package::STATE_COMPLETED).first
+    }.count
   end
 
   def update
