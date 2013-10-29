@@ -1,25 +1,27 @@
 <div class="row-fluid auth">
   <div class="col-md-12 center">
     <div class="col-md-6" style="margin: auto; float: none; text-align: left;">
-      <%= link_to user_omniauth_authorize_path(:facebook), :class => "facebook-connect" do %>
-        <span><%= fa_icon "facebook", :class => "fa-3x" %></span>
-        <span>Log in with Facebook</span>
+      <% if flash[:error] || flash[:alert] %>
+        <div class="alert alert-danger">
+          <%= raw flash[:error] if flash[:error] %>
+          <%= raw flash[:alert] if flash[:alert] %>
+        </div>
       <% end %>
+      <% if !flash[:error] %>
+        <%= link_to user_omniauth_authorize_path(:facebook), :class => "facebook-connect" do %>
+          <span><%= fa_icon "facebook", :class => "fa-3x" %></span>
+          <span>Log in with Facebook</span>
+        <% end %>
 
-      <hr class="soften" />
-      <div class="center">
-        <span class="or"> or </span>
-      </div>
+        <hr class="soften" />
+        <div class="center">
+          <span class="or"> or </span>
+        </div>
+      <% end %>
 
       <h3>Login by email</h3>
 
       <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-        <% unless (devise_error_messages!).empty? %>
-          <div class="alert alert-danger">
-            <%= devise_error_messages! %>
-          </div>
-        <% end %>
-
         <div class="form-group"><%= f.label :email %><br />
         <%= f.email_field :email, :class => "form-control" %></div>
 
