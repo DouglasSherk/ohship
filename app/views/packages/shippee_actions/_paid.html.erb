@@ -13,7 +13,7 @@
   Please notify us when you receive the package.<br />
 
   <br />
-  The actual shipping cost came to <strong><%= number_to_currency @package.shipping_estimate %></strong>; in total you were charged <%= number_to_currency @package.transaction.final_charge_cents/100.0 %>. Please contact
+  The actual shipping cost came to <strong><%= number_to_currency @package.shipping_estimate %> USD</strong>; in total you were charged <strong><%= number_to_currency @package.transaction.final_charge_cents/100.0 %> USD</strong>. Please contact
   us at <%= mail_to Mailer::EMAIL %> if this is incorrect (see receipt).<br />
 
   <%= form_tag package_path + '/shippee_action' do %>
