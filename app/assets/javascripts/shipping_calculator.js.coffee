@@ -6,13 +6,7 @@ $(document).ready ->
     display = $('#shipping-estimate-display')
     display.html('Loading...')
 
-    data = {}
-    for raw_elem in form.find('input, select')
-      elem = $(raw_elem)
-      if elem.attr('type') == 'checkbox'
-        data[elem.attr('name')] = if elem.is(':checked') then 1 else 0
-      else
-        data[elem.attr('name')] = elem.val()
+    data = form.serialize()
 
     $.ajax('/packages/shipping_estimate', {data: data}).done((data) ->
       select = $('<select id="shipping-estimate-dropdown" />')

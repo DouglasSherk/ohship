@@ -84,7 +84,7 @@ module USPS
 
       if is_envelope = (name.ends_with?('Envelope') || name.ends_with?('Letter'))
         # Packages don't fit in envelopes (but vice versa is fine)
-        next if package.is_envelope == 0
+        next if package.is_envelope == 0 && package.height_in > 0.75
 
         # Envelope dimension constraints aren't calculated. Do it ourselves
         max_lengths = parse_dimensions(dims)

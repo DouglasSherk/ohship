@@ -7,7 +7,7 @@
 }
 
 .sizes {
-  div[class*="col-md-"] {
+  div[class*="col-"] {
     background-repeat: no-repeat;
     background-position: bottom center;
     background-size: contain;
@@ -16,7 +16,7 @@
 }
 
 .size-names {
-  div[class*="col-md-"] {
+  div[class*="col-"] {
     margin-top: 20px;
     margin-bottom: 40px;
   }
