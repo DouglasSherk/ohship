@@ -132,9 +132,18 @@ class PackagesController < ApplicationController
     # HACKHACKHACK: don't validate shipping estimate (as we're doing that here)
     @package.instance_variable_set('@new_record', false)
 
+    companies = {
+      'United Kingdom' => {:carrier => 'Royal Mail', :url => 'http://www.royalmail.com/price-finder'},
+      'France' => {:carrier => nil, :url => nil},
+      'Hong Kong' => {:carrier => nil, :url => nil}
+    }
+
     if set_package_dimensions && @package.valid?
-      # Get estimates, rename with display names
-      render json: Hash[USPS.get_shipping_estimate(@package).map { |k, v| [Package::SHIPPING_CLASSES[k], v] }.reverse]
+      if @package.origin_country == 'United States'
+        render json: {:estimates => USPS.get_shipping_estimate(@package)}
+      else
+        render json: companies[@package.origin_country]
+      end
     else
       head :unprocessable_entity
     end

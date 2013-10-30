@@ -83,7 +83,7 @@
 
       <% if @package.shipping_class %>
         <dt>Requested shipping</dt>
-        <dd><%= Package::SHIPPING_CLASSES[@package.shipping_class] %></dd>
+        <dd><%= @package.shipping_class %></dd>
       <% end %>
 
       <% if @receipt %>

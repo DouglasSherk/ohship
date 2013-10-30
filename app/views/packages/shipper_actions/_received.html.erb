@@ -6,10 +6,8 @@
   <% else %>
     The following shipping options will be available for this package:
     <ul>
-      <% Package::SHIPPING_CLASSES.each do |id, name| %>
-        <% if flash[:estimates][id] %>
-          <li><strong><%= name %></strong>: <%= number_to_currency flash[:estimates][id] %></li>
-        <% end %>
+      <% flash[:estimates].each do |name, cost| %>
+        <li><strong><%= name %></strong>: <%= number_to_currency cost %></li>
       <% end %>
     </ul>
   <% end %>

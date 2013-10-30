@@ -21,11 +21,12 @@ class Package < ActiveRecord::Base
   STATE_SHIPPEE_PAID = 3     # Shippee pays fees. Shipper sends package, adds receipt & tracking
   STATE_COMPLETED = 4         # Shippee confirms delivery.
 
-  SHIPPING_CLASSES = {
-    'first_class' => 'USPS First Class (up to 11+ days)',
-    'priority' => 'USPS Priority (6-10 days)',
-    'priority_express' => 'USPS Priority Express (3-5 days)',
-  }
+  ORIGIN_COUNTRIES = [
+    'United States',
+    'United Kingdom',
+    'France',
+    'Hong Kong',
+  ]
 
   SHIPPING_SIZES = {
     'envelope' => { :length_in => 12, :width_in => 12, :height_in => 0.75 },
@@ -35,6 +36,8 @@ class Package < ActiveRecord::Base
   }
 
   validates :state, :inclusion => { :in => STATE_SUBMITTED..STATE_COMPLETED }
+
+  # Shipping details
   validates :ship_to_name, :ship_to_address, :ship_to_city, :ship_to_state, :ship_to_country, :ship_to_postal_code,
             :origin_country, :description, presence: true
   validates :ship_to_name, :ship_to_city, :ship_to_state, :ship_to_country, :origin_country,
@@ -43,7 +46,9 @@ class Package < ActiveRecord::Base
             length: { in: 1..255 }
   validates :ship_to_postal_code,
             length: { in: 1..10 }
-  validates :shipping_class, :allow_blank => true, :inclusion => { :in => SHIPPING_CLASSES.keys }
+  validates :origin_country, :inclusion => { :in => ORIGIN_COUNTRIES }
+
+  # Dimensions
   validates :length_in, :width_in, :weight_lb, :value_cents,
             presence: true, numericality: { greater_than: 0 }
   validates :height_in, presence: true, numericality: { greater_than: 0 }, :if => "is_envelope == 0"
@@ -104,6 +109,9 @@ class Package < ActiveRecord::Base
 
   def check_shippable
     return false if errors.count > 0
+
+    # Can't auto-validate these yet.
+    return true if self.origin_country != 'United States'
 
     est = USPS.get_shipping_estimate(self)
     if est.empty?

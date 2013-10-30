@@ -4,6 +4,11 @@ require 'nokogiri'
 module USPS
   API_URL = 'http://production.shippingapis.com/ShippingAPI.dll'
   USER_ID = '868SCIGI7323'
+  SHIPPING_CLASSES = {
+    'first_class' => 'USPS First Class (up to 90 days)',
+    'priority' => 'USPS Priority (6-10 days)',
+    'priority_express' => 'USPS Priority Express (3-5 days)',
+  }
 
   def self.parse_dimensions(str)
     dims = []
@@ -117,6 +122,13 @@ module USPS
       end
     end
 
-    return min_cost
+    ret = {}
+    SHIPPING_CLASSES.each do |key, name|
+      unless min_cost[key].nil?
+        ret[name] = min_cost[key]
+      end
+    end
+
+    return ret
   end
 end

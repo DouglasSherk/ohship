@@ -8,7 +8,7 @@ Please send the package to the following address:
 <%= @package.ship_to_city %>, <%= @package.ship_to_state %>, <%= @package.ship_to_country %>
 <%= @package.ship_to_postal_code %>
 
-Use <%= Package::SHIPPING_CLASSES[@package.shipping_class] %> shipping; the cost should be <%= number_to_currency @package.shipping_estimate %>.
+Use <%= @package.shipping_class %> shipping; the cost should be <%= number_to_currency @package.shipping_estimate %>.
 
 Once you have done so, please upload the shipping receipt and tracking information here:
 <%= package_url @package %>

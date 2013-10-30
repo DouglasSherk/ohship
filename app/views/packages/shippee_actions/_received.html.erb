@@ -26,8 +26,8 @@
 
     <%= form_tag package_path + '/shippee_action' do %>
       <%= select_tag :shipping_class, options_for_select(flash[:estimates].map { |type, cost|
-            [Package::SHIPPING_CLASSES[type] + ': ' + number_to_currency(cost) + ' USD', type]
-          }.reverse), :class => 'form-control' %>
+            [type + ': ' + number_to_currency(cost) + ' USD', type]
+          }), :class => 'form-control' %>
 
       <div class="buttons">
         <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit</button>
