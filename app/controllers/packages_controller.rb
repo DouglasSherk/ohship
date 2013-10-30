@@ -200,6 +200,13 @@ class PackagesController < ApplicationController
             @package.state += 1
             txn.save
             Mailer.notification_email(@package.shipper, @package, 'Payment accepted', 'shippee_paid').deliver
+
+            if current_user.referrer &&
+               !Package.where(:shippee => current_user, :state => [Package::STATE_SHIPPEE_PAID, Package::STATE_COMPLETED]).first
+              ref = current_user.referrer
+              ref.update_attributes(:referral_credits => ref.referral_credits + 1)
+              Mailer.notification_email(ref, @package, 'New referral credit', 'referral_credit', false).deliver
+            end
           end
         else
           @package.shipping_class = @package.shipping_estimate = nil
@@ -209,12 +216,6 @@ class PackagesController < ApplicationController
       if !@package.shippee_tracking.nil? && params[:submit] == 'received'
         @package.state += 1
         Mailer.notification_email(@package.shippee, @package, 'Package received', 'shippee_received').deliver
-
-        if current_user.referrer
-          ref = current_user.referrer
-          ref.update_attributes(:referral_credits => ref.referral_credits + 1)
-          Mailer.notification_email(ref, @package, 'New referral credit', 'referral_credit', false).deliver
-        end
       end
     when Package::STATE_COMPLETED
       if @package.feedback.nil?
