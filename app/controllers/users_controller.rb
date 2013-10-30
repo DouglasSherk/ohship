@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def profile
     @user = current_user
     @signup = params[:signup]
-    @country = current_user.country || User.guess_user_country(request.remote_ip)
+    @country = @user.country || User.guess_user_country(request.remote_ip)
     @referral_count = @user.referrals.length
     @referral_success = @user.referrals.select { |ref|
       Package.where(:shippee => ref, :state => Package::STATE_COMPLETED).first
@@ -23,6 +23,7 @@ class UsersController < ApplicationController
       flash[:change_notice] = 'Successfully changed profile.'
     end
 
+    profile
     render action: 'profile'
   end
 

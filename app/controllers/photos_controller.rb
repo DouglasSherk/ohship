@@ -6,7 +6,7 @@ class PhotosController < ApplicationController
     File.open(Rails.root.join('uploads', filename), 'rb') do |file|
       send_data file.read,
         :filename => filename,
-        :type => Mime::Type.lookup_by_extension(@photo.file_type),
+        :type => Mime::Type.lookup_by_extension(@photo.file_type.downcase) || 'application/octet-stream',
         :disposition => 'inline'
     end
   end
