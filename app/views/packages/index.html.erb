@@ -47,7 +47,11 @@
     <tr>
       <td>
         No packages available.
-        <% if is_shippee? %> Perhaps you'd like to <%= link_to 'ship one?', new_package_path %><% end %>
+        <% if is_shippee? %>
+          Perhaps you'd like to <%= link_to 'ship one?', new_package_path %>
+        <% elsif is_shipper? && @show != 'open' %>
+          Perhaps you'd like to <%= link_to 'find one to ship?', packages_path + '?show=open' %>
+        <% end %>
       </td>
     </tr>
   <% else %>
