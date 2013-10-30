@@ -1,5 +1,36 @@
 <% if @package.shipper.nil? %>
   This package currently needs a shipper. Are you willing to accept and re-ship this?
+
+  <dl class="dl-horizontal">
+    <dt>Origin country</dt>
+    <dd><%= @package.origin_country %></dd>
+
+    <dt>Package dimensions</dt>
+    <dd><%= @package.length_in %>in x <%= @package.width_in %>in <% if @package.is_envelope == 1 %>(envelope)<% else %>x <%= @package.height_in %>in<% end %></dd>
+
+    <dt>Package weight</dt>
+    <dd><%= @package.weight_lb %>lb</dd>
+
+    <dt>Package value</dt>
+    <dd><%= number_to_currency @package.value %></dd>
+
+    <% unless @package.special_instructions.blank? %>
+      <dt>Special instructions</dt>
+      <dd><%= @package.special_instructions %></dd>
+    <% end %>
+
+    <% if !@photos.empty? %>
+      <dt>Package photos</dt>
+      <dd>
+        <ul class="list-inline no-bottom-margin">
+          <% @photos.each_with_index do |photo, i| %>
+            <li><a href="<%= photo_path photo %>" target="_blank">Photo <%= i+1 %></a></li>
+          <% end %>
+        </ul>
+      </dd>
+    <% end %>
+  </dl>
+
   <%= form_tag(package_path + '/shipper_action') do %>
     <div class="buttons">
       <button type="submit" class="btn btn-primary" name="submit" value="accept">Accept package</button>
