@@ -10,11 +10,9 @@
     <%= @package.shipper_tracking %> (<%= @package.shipper_tracking_carrier %>)
   </a>
   <br />
-  Please notify us when you receive the package.<br />
-
   <br />
-  The actual shipping cost came to <strong><%= number_to_currency @package.shipping_estimate %> USD</strong>; in total you were charged <strong><%= number_to_currency @package.transaction.final_charge_cents/100.0 %> USD</strong>. Please contact
-  us at <%= mail_to Mailer::EMAIL %> if this is incorrect (see receipt).<br />
+  The actual shipping cost came to <strong><%= number_to_currency @package.shipping_estimate %> USD</strong>; after handling fees you were charged a total of <strong><%= number_to_currency @package.transaction.final_charge_cents/100.0 %> USD</strong>.<br />
+  If this is incorrect, or if tracking isn't working, please contact us at <%= mail_to Mailer::EMAIL %>.<br />
 
   <%= form_tag package_path + '/shippee_action' do %>
     <div class="buttons">
