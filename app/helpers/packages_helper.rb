@@ -13,17 +13,17 @@ module PackagesHelper
       if is_shippee?
         package.shippee_tracking.nil? ? 'OhShip location found' : 'En route to OhShip location'
       else
-        package.shippee_tracking.nil? ? 'Waiting for package' : 'Package en route to you'
+        package.shippee_tracking.nil? ? 'Waiting for user to ship package' : 'Package en route to you'
       end
     when Package::STATE_SHIPPER_RECEIVED
       if is_shippee?
         package.shipping_estimate_confirmed ? 'Payment required' : 'OhShip received package'
       else
-        package.shipping_estimate_confirmed ? 'Waiting for payment' : 'Package details required'
+        package.shipping_estimate_confirmed ? 'Waiting for user payment' : 'Package details required'
       end
     when Package::STATE_SHIPPEE_PAID
       if is_shippee?
-        package.shipper_tracking.nil? ? 'Waiting for OhShip location to send' : 'Package en route to you'
+        package.shipper_tracking.nil? ? 'Waiting for OhShip to send' : 'Package en route to you'
       else
         package.shipper_tracking.nil? ? 'Ready to send' : 'Package en route to user'
       end
