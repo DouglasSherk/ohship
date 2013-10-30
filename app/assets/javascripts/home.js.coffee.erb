@@ -1,24 +1,42 @@
-$(document).ready ->
-  presignup = $('.presignup')
-  presignup.submit (e) ->
-    btn = $('.presignup button')
-    icon = btn.find('i')
-    if icon.hasClass 'fa-check'
-      return false
-    icon.removeClass 'fa-envelope'
-    icon.addClass 'fa-spin fa-spinner'
-    $.ajax presignup.attr('action') + '.json',
-      type: 'POST',
-      data: presignup.serialize(),
-      dataType: 'text',
-      success: (data) ->
-        icon.removeClass 'fa-spin fa-spinner fa-times'
-        icon.addClass 'fa-check'
-        btn.removeClass 'btn-primary'
-        btn.addClass 'btn-success'
-      error: (data, error) ->
-        icon.removeClass 'fa-spin fa-spinner'
-        icon.addClass 'fa-times'
-        btn.removeClass 'btn-primary'
-        btn.addClass 'btn-danger'
-    false
+ready = ->
+  adjustDimensions = ->
+    $('.section.expanded').css('width', $(window).width())
+    $('.section.expanded').first().css('height', $(window).height())
+
+  $(window).resize adjustDimensions
+  adjustDimensions()
+
+  findSectionById = (id) ->
+    $(".navbar a[href='##{id}']")
+
+  $('a').click (e) ->
+    target = $(e.target)
+    target = target.parent() if e.target.tagName != 'A'
+    return if !e.target? || target.attr('href')[0] != '#'
+    if (target = $("#{target.attr('href')}")).length
+      $('html, body').animate
+        scrollTop: target.offset().top - 170
+      , 500
+    e.preventDefault()
+
+  $(window).scroll ->
+    scrollTop = $(window).scrollTop()
+
+    if scrollTop > 0
+      $('.navbar').addClass('active')
+    else
+      $('.navbar').removeClass('active')
+
+    closestSection = undefined
+    closestDist = undefined
+    $('.section').each ->
+      dist = Math.abs($(@).offset().top - scrollTop)
+      if !closestSection? || dist < closestDist
+        closestSection = @
+        closestDist = dist
+
+    $('.navbar a').removeClass('active')
+    findSectionById($(closestSection).attr('id')).addClass('active')
+
+$(document).ready ready
+$(document).on 'page:load', ready
