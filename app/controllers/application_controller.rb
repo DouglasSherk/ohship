@@ -16,6 +16,8 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
+    return @redirect if !@redirect.blank?
+
     # XXX: Neither of |after_sign_up_path_for| or |after_inactive_sign_up_for|
     # seem to get called, so use this workaround instead. The user is marked
     # as new in the user model.
@@ -40,6 +42,13 @@ class ApplicationController < ActionController::Base
       devise_parameter_sanitizer.for(:sign_up) {
         |u| u.permit(registration_params << :referrer_id)
       }
+    end
+  end
+
+  # If authentication fails, redirect to sign-in with a return URL upon successful signin.
+  def authenticate_user_with_return!
+    if !current_user
+      redirect_to new_user_session_url(:redirect => request.path)
     end
   end
 end

@@ -26,6 +26,8 @@
       <h3>Login by email</h3>
 
       <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+        <%= hidden_field_tag :redirect, @redirect %>
+
         <div class="form-group"><%= f.label :email %>
         <%= f.email_field :email, :class => "form-control" %></div>
 

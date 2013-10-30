@@ -18,7 +18,7 @@
   <div class="alert alert-info">
     <h3>Limited time offer!</h3>
     Refer a friend to OhShip, and if they ship a package, we will waive our fees for your next order. Give them this link:<br />
-    <% url = new_user_registration_url + '?referrer_id=' + current_user.id.to_s %>
+    <% url = new_user_registration_url(:referrer_id => current_user.id) %>
     <strong><%= link_to url, url %></strong><br />
   </div>
 <% end %>
@@ -37,7 +37,7 @@
 <ul class="nav nav-tabs">
   <% get_package_tabs.each do |id, name| %>
     <li class="<%= 'active' if id == @show %>">
-      <a href="<%= packages_path + '?show=' + id %>"><%= name %></a>
+      <a href="<%= packages_path(:show => id) %>"><%= name %></a>
     </li>
   <% end %>
 </ul>
@@ -50,7 +50,7 @@
         <% if is_shippee? %>
           Perhaps you'd like to <%= link_to 'ship one?', new_package_path %>
         <% elsif is_shipper? && @show != 'open' %>
-          Perhaps you'd like to <%= link_to 'find one to ship?', packages_path + '?show=open' %>
+          Perhaps you'd like to <%= link_to 'find one to ship?', packages_path(:show => 'open') %>
         <% end %>
       </td>
     </tr>

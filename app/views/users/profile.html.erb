@@ -103,7 +103,7 @@
       <div class="alert alert-info">
         <h3>Referrals</h3>
         If you'd like to refer someone, have them sign up using the following link:<br />
-        <% url = new_user_registration_url + '?referrer_id=' + current_user.id.to_s %>
+        <% url = new_user_registration_url(:referrer_id => current_user.id) %>
         <strong><%= link_to url, url %></strong><br />
         <br />
         The first time they ship a package with us, your next package with OhShip will have the handling fees waived!<br />

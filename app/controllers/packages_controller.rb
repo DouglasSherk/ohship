@@ -7,10 +7,9 @@ end
 require 'stripe'
 
 class PackagesController < ApplicationController
+  before_filter :authenticate_user_with_return!
   load_and_authorize_resource :except => [:index, :new, :create]
   skip_authorize_resource :only => [:cancel, :shippee_action, :shipper_action]
-
-  before_filter :authenticate_user!
 
   # GET /packages
   # GET /packages.json
