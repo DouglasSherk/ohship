@@ -24,8 +24,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
+      execute :touch, release_path.join('tmp/restart.txt')
     end
   end
 
@@ -39,5 +38,6 @@ namespace :deploy do
   end
 
   after :finishing, 'deploy:cleanup'
+  after :finishing, 'deploy:restart'
 
 end
