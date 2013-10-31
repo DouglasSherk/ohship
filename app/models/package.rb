@@ -21,18 +21,12 @@ class Package < ActiveRecord::Base
   STATE_SHIPPEE_PAID = 3     # Shippee pays fees. Shipper sends package, adds receipt & tracking
   STATE_COMPLETED = 4         # Shippee confirms delivery.
 
-  ORIGIN_COUNTRIES = [
-    'United States',
-    'United Kingdom',
-    'France',
-    'Hong Kong',
-  ]
-
   COUNTRY_DATA = {
     'United States' => {:carrier => 'USPS', :url => 'http://postcalc.usps.com/', :currency => 'USD'},
     'United Kingdom' => {:carrier => 'Royal Mail', :url => 'http://www.royalmail.com/price-finder', :currency => 'GBP'},
     'France' => {:carrier => 'FedEx France', :url => 'https://www.fedex.com/ratefinder/home?cc=fr', :currency => 'EUR'},
-    'Hong Kong' => {:carrier => 'Hongkong Post', :url => 'http://app1.hongkongpost.hk/calc/eng/index.php', :currency => 'HKD'}
+    'Hong Kong' => {:carrier => 'Hongkong Post', :url => 'http://app1.hongkongpost.hk/calc/eng/index.php', :currency => 'HKD'},
+    'Canada' => {:carrier => 'Canada Post', :url => 'http://www.canadapost.ca/cpotools/apps/far/business/findARate?execution=e2s2', :currency => 'CAD'},
   }
 
   SHIPPING_SIZES = {
@@ -53,7 +47,7 @@ class Package < ActiveRecord::Base
             length: { in: 1..255 }
   validates :ship_to_postal_code,
             length: { in: 1..10 }
-  validates :origin_country, :inclusion => { :in => ORIGIN_COUNTRIES }
+  validates :origin_country, :inclusion => { :in => COUNTRY_DATA.keys }
 
   # Dimensions
   validates :length_in, :width_in, :weight_lb, :value_cents,

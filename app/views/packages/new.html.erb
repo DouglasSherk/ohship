@@ -78,7 +78,7 @@
   <div class="form-group <%= 'has-error' if @package.errors[:origin_country].any? %>">
     <%= f.label :origin_country, :class => 'col-sm-2 control-label' %>
     <div class="col-sm-10">
-      <%= f.select :origin_country, Package::ORIGIN_COUNTRIES, {},  :class => 'form-control' %>
+      <%= f.select :origin_country, Package::COUNTRY_DATA.keys, {},  :class => 'form-control' %>
     </div>
   </div>
 
