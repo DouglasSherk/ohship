@@ -23,15 +23,11 @@
   </div>
 <% end %>
 
-<div class="page-heading row">
-  <div class="col-xs-8">
-    <h2>Packages</h2>
-  </div>
-  <div class="col-xs-4 right">
-    <% if is_shippee? %>
-      <%= link_to 'Create Package', new_package_path, :class => 'btn btn-primary' %>
-    <% end %>
-  </div>
+<div class="page-heading">
+  <h2>Packages</h2>
+  <% if is_shippee? %>
+    <%= link_to 'Start a Package', new_package_path, :class => 'btn btn-primary btn-lg' %>
+  <% end %>
 </div>
 
 <ul class="nav nav-tabs">
