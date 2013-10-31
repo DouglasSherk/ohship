@@ -1,8 +1,15 @@
+# Include HipChat notifications
+require 'hipchat/capistrano'
+
 set :application, 'ohship'
 set :repo_url, 'git@github.com:DouglasSherk/ohship.git'
 set :deploy_to, '/var/www/ohship'
 set :ssh_options, { :forward_agent => true }
 set :deploy_via, :remote_cache
+
+set :hipchat_token, "bd9b46d4ed59c6589d40188658cdb6"
+set :hipchat_room_name, "SciGit"
+set :hipchat_announce, true
 
 set :format, :pretty
 set :keep_releases, 5

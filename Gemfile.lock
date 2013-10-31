@@ -1,6 +1,13 @@
 GIT
+  remote: git://github.com/DouglasSherk/hipchat.git
+  revision: c5d220b5304da53372bf6962e6a975159b88b5d9
+  specs:
+    hipchat (0.4.1)
+      httparty
+
+GIT
   remote: git://github.com/bokmann/font-awesome-rails.git
-  revision: f09de0955a0f4ca485b99045dbf5d4dfec78ec9a
+  revision: 25bd7287274897a22dd03d35b9fe7faa9a3b9dbe
   specs:
     font-awesome-rails (4.0.1.0)
       railties (>= 3.2, < 5.0)
@@ -73,6 +80,9 @@ GEM
     google-analytics-rails (0.0.4)
     hashie (2.0.5)
     hike (1.2.3)
+    httparty (0.12.0)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
     httpauth (0.2.0)
     i18n (0.6.5)
     jbuilder (1.2.1)
@@ -92,6 +102,7 @@ GEM
     mini_portile (0.5.2)
     minitest (4.7.5)
     multi_json (1.8.2)
+    multi_xml (0.5.5)
     multipart-post (1.2.0)
     mysql2 (0.3.13)
     net-scp (1.1.2)
@@ -206,6 +217,7 @@ DEPENDENCIES
   font-awesome-rails!
   geoip
   google-analytics-rails
+  hipchat!
   jbuilder (~> 1.2.0)
   jquery-rails
   mysql2
