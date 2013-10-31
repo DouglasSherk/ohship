@@ -98,6 +98,9 @@ class PackagesController < ApplicationController
 
     respond_to do |format|
       if set_package_dimensions && @package.save
+        admins = User.where(:user_type => User::ADMIN).all
+        Mailer.notification_email(admins, @package, '[Administrator] Shippee has submitted a package', 'admin_shippee_submitted').deliver
+
         format.html { redirect_to @package, notice: 'Package was successfully created.' }
         format.json { render action: 'show', status: :created, location: @package }
       else
