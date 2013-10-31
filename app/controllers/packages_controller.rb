@@ -46,7 +46,7 @@ class PackagesController < ApplicationController
   # GET /packages/1
   # GET /packages/1.json
   def show
-    @shippers = User.where(:user_type => User::SHIPPER, :country => @package.ship_to_country) if can? :admin, @package
+    @shippers = User.where(:user_type => User::SHIPPER, :country => @package.origin_country) if can? :admin, @package
 
     # Load shipping estimates from USPS
     if current_user.user_type == User::SHIPPEE &&
