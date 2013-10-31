@@ -1,26 +1,55 @@
 <% if @package.shipping_estimate_confirmed %>
-  Thank you! You will be notified when the user pays the shipping fees.
+  <div class="alert alert-success">
+    Thank you! You will be notified when the user pays the shipping fees.
+  </div>
 <% elsif flash[:estimates] %>
-  <% if flash[:estimates].empty? %>
-    No shipping options available for this package. Are you sure you entered the details correctly?
-  <% else %>
-    The following shipping options will be available for this package:
-    <ul>
-      <% flash[:estimates].each do |name, cost| %>
-        <li><strong><%= name %></strong>: <%= number_to_currency cost %></li>
-      <% end %>
-    </ul>
-  <% end %>
-
-  If the above information seems wrong, please contact us at <%= mail_to Mailer::EMAIL %> with the package ID (#<%= @package.id %>).
-
-  <p><em>You won't be able to update the package information after submitting this, so make sure it's accurate.</em></p>
-
+  <% info = Package::SHIPPING_CARRIERS[@package.origin_country] %>
   <%= form_tag package_path + '/shipper_action', :class => 'form-horizontal' do %>
+    <% if @package.origin_country != 'United States' %>
+      We can't calculate shipping estimates for your country yet.<br />
+      Please calculate the estimate using the <%= info[:carrier] %> website at <%= link_to info[:url], info[:url] %>:
+    <% elsif flash[:estimates].empty? %>
+      No shipping options could be found for this package. Are you sure you entered the details correctly?<br />
+      To provide a manual estimate, please fill out the fields below:<br />
+    <% else %>
+      The following shipping options will be available for this package:
+      <ul>
+        <% flash[:estimates].each do |name, cost| %>
+          <li><strong><%= name %></strong>: <%= number_to_currency cost %></li>
+        <% end %>
+      </ul>
+      If a different shipping method is required, please fill out both fields below:<br />
+    <% end %>
+
+    <% if !@package.special_instructions.blank? %>
+      <p>
+        <div class="alert alert-info">
+          Special instructions were provided for this package:</strong> <%= @package.special_instructions %>
+        </div>
+      </p>
+    <% end %>
+
+    <p>
+      <div class="form-group">
+        <%= label_tag :shipping_carrier, 'Shipping carrier & class', :class => 'col-md-4 control-label' %>
+        <div class="col-md-8">
+          <%= text_field_tag :shipping_class, flash[:shipping_class], :class => 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= label_tag :shipping_estimate, 'Shipping estimate', :class => 'col-md-4 control-label' %>
+        <div class="col-md-8">
+          <%= text_field_tag :shipping_estimate, flash[:shipping_estimate], :class => 'form-control' %>
+        </div>
+      </div>
+    </p>
+
+    If the above information seems wrong, please contact us at <%= mail_to Mailer::EMAIL %> with the package ID (#<%= @package.id %>).
+
+    <p><em>You won't be able to update the package information after submitting this, so make sure it's accurate.</em></p>
+
     <div class="buttons">
-      <% if !flash[:estimates].empty? %>
-        <button type="submit" name="submit" value="accept" class="btn btn-primary">Accept</button>
-      <% end %>
+      <button type="submit" name="submit" value="accept" class="btn btn-primary">Accept</button>
       <button type="submit" name="submit" value="back" class="btn btn-default">Back and edit details</button>
     </div>
   <% end %>
@@ -29,45 +58,45 @@
   <%= form_tag package_path + '/shipper_action', :multipart => true, :class => 'form-horizontal' do %>
     <div class="row">
       <div class="form-group">
-        <%= label_tag :length_in, 'Length (in)', :class => 'col-md-2 control-label' %>
-        <div class="col-md-10">
+        <%= label_tag :length_in, 'Length (in)', :class => 'col-md-3 control-label' %>
+        <div class="col-md-9">
           <%= text_field_tag :length_in, @package.length_in, :class => 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= label_tag :width_in, 'Width (in)', :class => 'col-md-2 control-label' %>
-        <div class="col-md-10">
+        <%= label_tag :width_in, 'Width (in)', :class => 'col-md-3 control-label' %>
+        <div class="col-md-9">
           <%= text_field_tag :width_in, @package.width_in, :class => 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= label_tag :height_in, 'Height (in)', :class => 'col-md-2 control-label' %>
+        <%= label_tag :height_in, 'Height (in)', :class => 'col-md-3 control-label' %>
         <div class="col-md-3">
           <div class="checkbox">
             <%= check_box_tag :is_envelope, '1', @package.is_envelope == 1, :id => 'packageIsAnEnvelope' %>
             <%= label_tag :packageIsAnEnvelope, 'Is an envelope' %>
           </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-6">
           <%= text_field_tag :height_in, @package.height_in, :id => 'packageHeight', :class => 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= label_tag :weight_lb, 'Weight (lb)', :class => 'col-md-2 control-label' %>
-        <div class="col-md-10">
+        <%= label_tag :weight_lb, 'Weight (lb)', :class => 'col-md-3 control-label' %>
+        <div class="col-md-9">
           <%= text_field_tag :weight_lb, @package.weight_lb, :class => 'form-control' %>
         </div>
       </div>
     </div>
 
     <br />
-    Please also upload a photo of the package with the shipping label visible:<br />
+    Please also upload a photo of the package with the original shipping label visible:<br />
     <br />
 
     <div class="row">
       <div class="form-group">
-        <%= label_tag :photo_upload, 'Upload file', :class => 'col-md-2 control-label' %>
-        <div class="col-md-10">
+        <%= label_tag :photo_upload, 'Upload file', :class => 'col-md-3 control-label' %>
+        <div class="col-md-9">
           <%= file_field_tag :photo_upload, :class => 'form-control' %>
         </div>
       </div>

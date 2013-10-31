@@ -1,5 +1,5 @@
 <% if @package.shipping_estimate_confirmed %>
-  <% if @package.shipping_estimate.nil? %>
+  <% if @package.shipping_estimate.nil? || @package.custom_shipping %>
     We have the package and are ready to send it to you! First, verify the updated package dimensions and photos.<br />
 
     <dl class="dl-horizontal">
@@ -22,6 +22,10 @@
     </dl>
 
     If there is a problem with any of the information above, please contact <%= mail_to Mailer::EMAIL %>.<br />
+    <br />
+  <% end %>
+
+  <% if @package.shipping_estimate.nil? %>
     If not, choose a shipping option from the list below:<br />
 
     <%= form_tag package_path + '/shippee_action' do %>
@@ -43,7 +47,7 @@
     <% total_cost = (@package.shipping_estimate_cents*(current_user.referral_credits > 0 ? 5 : 6) + 1) / 5 %>
     <% preauth = (total_cost * 3 + 1) / 2 %>
 
-    The total cost of shipping comes to: <strong><%= number_to_currency @package.shipping_estimate %> USD</strong>.<br />
+    The total cost of shipping comes to: <strong><%= number_to_currency @package.shipping_estimate %> USD</strong>. (<%= @package.shipping_class %>)<br />
     <% if current_user.referral_credits == 0 %>
       Including OhShip handling fees (20%), the total cost is <strong><%= number_to_currency total_cost/100.0 %> USD</strong>.<br />
     <% else %>
@@ -69,7 +73,9 @@
                 data-description="Pre-authorization for <%= @package.description %>">
           Pay with card
         </button>
-        <button type="submit" value="back" class="btn btn-danger">Back</button>
+        <% if !@package.custom_shipping %>
+          <button type="submit" value="back" class="btn btn-danger">Back</button>
+        <% end %>
       </div>
     <% end %>
   <% end %>

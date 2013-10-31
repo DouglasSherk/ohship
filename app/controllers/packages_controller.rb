@@ -135,17 +135,11 @@ class PackagesController < ApplicationController
     # HACKHACKHACK: don't validate shipping estimate (as we're doing that here)
     @package.instance_variable_set('@new_record', false)
 
-    companies = {
-      'United Kingdom' => {:carrier => 'Royal Mail', :url => 'http://www.royalmail.com/price-finder'},
-      'France' => {:carrier => nil, :url => nil},
-      'Hong Kong' => {:carrier => nil, :url => nil}
-    }
-
     if set_package_dimensions && @package.valid?
       if @package.origin_country == 'United States'
         render json: {:estimates => USPS.get_shipping_estimate(@package)}
       else
-        render json: companies[@package.origin_country]
+        render json: Package::SHIPPING_CARRIERS[@package.origin_country]
       end
     else
       head :unprocessable_entity
@@ -222,7 +216,7 @@ class PackagesController < ApplicationController
               Mailer.notification_email(ref, @package, 'New referral credit', 'referral_credit', false).deliver
             end
           end
-        else
+        elsif !@package.custom_shipping
           @package.shipping_class = @package.shipping_estimate = nil
         end
       end
@@ -273,17 +267,39 @@ class PackagesController < ApplicationController
             else
               Photo.where(:package => @package, :photo_type => 'photo').destroy_all
               if create_photo(params[:photo_upload])
-                flash[:estimates] = USPS.get_shipping_estimate(@package)
+                if @package.origin_country == 'United States'
+                  flash[:estimates] = USPS.get_shipping_estimate(@package)
+                else
+                  flash[:estimates] = {}
+                end
+                @package.custom_shipping = flash[:estimates].empty?
               else
                 flash[:error] = 'Invalid photo provided. Make sure you selected the right file.'
               end
             end
           end
         elsif params[:submit] == 'accept'
-          @package.shipping_estimate_confirmed = true
-          Mailer.notification_email(@package.shippee, @package, 'Shipper received package', 'shipper_received').deliver
+          flash[:shipping_class] = params[:shipping_class]
+          flash[:shipping_estimate] = params[:shipping_estimate]
+          if @package.custom_shipping && (params[:shipping_class].blank? || params[:shipping_estimate].blank?)
+            flash[:error] = 'Manual shipping estimate must be provided.'
+            flash[:estimates] = {} # so it skips the entering details step
+          else
+            if !params[:shipping_class].blank? && !params[:shipping_estimate].blank?
+              @package.shipping_class = params[:shipping_class]
+              @package.shipping_estimate = params[:shipping_estimate]
+              if @package.shipping_estimate.nil? || @package.shipping_estimate <= 0
+                flash[:error] = 'Must provide a valid shipping estimate.'
+                flash[:estimates] = {}
+              end
+            end
+            if !flash[:error]
+              @package.shipping_estimate_confirmed = true
+              Mailer.notification_email(@package.shippee, @package, 'Shipper received package', 'shipper_received').deliver
+            end
+          end
         elsif params[:submit] == 'back'
-          @package.shipping_estimate = nil
+          @package.custom_shipping = false
         end
       end
     when Package::STATE_SHIPPEE_PAID

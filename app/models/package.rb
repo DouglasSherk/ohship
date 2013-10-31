@@ -28,6 +28,13 @@ class Package < ActiveRecord::Base
     'Hong Kong',
   ]
 
+  SHIPPING_CARRIERS = {
+    'United States' => {:carrier => 'USPS', :url => 'http://postcalc.usps.com/'},
+    'United Kingdom' => {:carrier => 'Royal Mail', :url => 'http://www.royalmail.com/price-finder'},
+    'France' => {:carrier => 'FedEx France', :url => 'https://www.fedex.com/ratefinder/home?cc=fr'},
+    'Hong Kong' => {:carrier => 'Hongkong Post', :url => 'http://app1.hongkongpost.hk/calc/eng/index.php'}
+  }
+
   SHIPPING_SIZES = {
     'envelope' => { :length_in => 12, :width_in => 12, :height_in => 0.75 },
     'small' => { :length_in => 12, :width_in => 12, :height_in => 3 },
