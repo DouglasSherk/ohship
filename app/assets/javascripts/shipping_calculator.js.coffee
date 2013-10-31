@@ -11,15 +11,25 @@ ready = ->
 
     $.ajax('/packages/shipping_estimate', {data: data}).done((data) ->
       if data.estimates
-        select = $('<select id="shipping-estimate-dropdown" />')
+        table = $('<table class="table" />')
+        table.append('<tr><th>Shipping class</th><th>Cost</th><th>OhShip fee (20%)</th><th>Total</th></tr>')
         for ship_class, cost of data.estimates
-          select.append($("<option>#{ship_class}: $#{cost.toFixed(2)} + OhShip service fee</option>"))
-        if select.children().length == 0
+          tr = $('<tr />')
+          tr.append($("<td>#{ship_class}</td>"))
+          tr.append($("<td>$#{cost.toFixed(2)} USD</td>"))
+          tr.append($("<td>$#{(cost*0.2).toFixed(2)} USD</td>"))
+          tr.append($("<td><strong>$#{(cost*1.2).toFixed(2)} USD</strong></td>"))
+          table.append(tr)
+
+        if table.children().length == 0
           display.html("No shipping options available. Please double-check your dimensions.")
           display.attr('class', 'alert alert-danger')
         else
-          display.html('Your shipping options are: ')
-          display.append(select)
+          p = $('<p />')
+          p.html('Your shipping options are: ')
+          p.append(table)
+          p.append('<p>* Estimates obtained from the official USPS shipping calculator.')
+          display.html(p)
           display.attr('class', 'alert alert-info')
       else if data.url
         display.html("We can't automatically calculate shipping for this destination. Visit <a href='#{data.url}'><b>the #{data.carrier} site</b></a> for details.")

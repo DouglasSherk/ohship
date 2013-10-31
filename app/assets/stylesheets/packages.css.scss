@@ -18,6 +18,17 @@
   }
 }
 
+#shipping-estimate-display {
+  table {
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    th, td {
+      border: 1px solid #bbbbff;
+    }
+  }
+}
+
 .alert {
   display: table;
   width: 100%;
