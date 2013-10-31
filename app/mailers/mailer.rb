@@ -31,8 +31,7 @@ class Mailer < PostageApp::Mailer
   end
 
   def notification_email(users, package, subject, name, with_description = true)
-    users = [users] unless users.is_a?(Array)
-    users.each do |user|
+    [*users].each do |user|
       @user = user
       @package = package
       mail to: user.email, subject: subject + (with_description ? " (#{package.description})" : ''),
