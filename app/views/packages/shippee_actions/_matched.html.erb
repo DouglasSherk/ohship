@@ -15,7 +15,7 @@
 <% else %>
   Thanks! We will notify you when we receive the item.<br />
   <% if @package.shippee_tracking.blank? %>
-    Please provide the tracking information below when it is provided.
+    Please provide the tracking information below when it is provided. (optional)
     <%= form_tag package_path + '/shippee_action', :class => 'form-horizontal row' do %>
       <div class="form-group">
         <%= label_tag :tracking_number, 'Tracking #', :class => 'col-sm-3 control-label' %>
