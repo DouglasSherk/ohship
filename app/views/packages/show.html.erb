@@ -61,8 +61,9 @@
       <dt>Description</dt>
       <dd><%= @package.description %></dd>
 
-      <dt>Value (USD)</dt>
-      <dd><%= @package.value_cents.nil? ? '-' : sprintf('$%.02f', @package.value_cents/100.0) %></dd>
+      <dt>Value</dt>
+      <dd><%= @package.value_cents.nil? ? '-' : sprintf('$%.02f', @package.value_cents/100.0) + ' ' +
+                                                Package::COUNTRY_DATA[@package.origin_country][:currency] %></dd>
 
       <dt>Package dimensions</dt>
       <dd><%= @package.length_in %>in x <%= @package.width_in %>in <% if @package.is_envelope == 1 %>(envelope)<% else %>x <%= @package.height_in %>in<% end %></dd>

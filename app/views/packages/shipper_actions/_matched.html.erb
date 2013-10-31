@@ -5,7 +5,7 @@
 <% else %>
   The item is en route to you!
   <% if @package.shippee_tracking.empty? %>
-    No tracking number was provided.
+    No tracking number was provided yet.
   <% else %>
     The tracking number is: <%= @package.shippee_tracking %> (<%= @package.shippee_tracking_carrier %>).
   <% end %>

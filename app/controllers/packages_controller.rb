@@ -176,18 +176,21 @@ class PackagesController < ApplicationController
       #   end
       # end
     when Package::STATE_SHIPPER_MATCHED
-      if params[:submit] == 'shipped'
+      if params[:submit] == 'ordered'
+        @package.shippee_tracking = ''
+        Mailer.notification_email(@package.shipper, @package, 'Package ordered', 'shippee_ordered').deliver
+      elsif params[:submit] == 'shipped'
         if params[:tracking_carrier] == 'Other'
           params[:tracking_carrier] = params[:tracking_carrier_other]
         end
         flash[:tracking_number] = params[:tracking_number]
         flash[:tracking_carrier] = params[:tracking_carrier]
         if params[:tracking_number].blank? || params[:tracking_carrier].blank?
-          flash[:error] = 'Please provide a tracking number/carrier. Type N/A if you are sure neither is available.'
+          flash[:error] = 'Please provide both tracking number and carrier.'
         else
           @package.shippee_tracking = params[:tracking_number]
           @package.shippee_tracking_carrier = params[:tracking_carrier]
-          Mailer.notification_email(@package.shipper, @package, 'Package sent', 'shippee_sent').deliver
+          Mailer.notification_email(@package.shipper, @package, 'Package shipped', 'shippee_sent').deliver
         end
       end
     when Package::STATE_SHIPPER_RECEIVED

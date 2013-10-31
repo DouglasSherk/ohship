@@ -6,43 +6,42 @@
     <%= @package.shipper.city %>, <%= @package.shipper.state %>, <%= @package.shipper.country %><br />
     <%= @package.shipper.postal_code %>
   </address>
-  When the package ships, please enter the tracking information here, if you are given any.
-  <%= form_tag package_path + '/shippee_action', :class => 'form-horizontal row' do %>
-    <div class="form-group">
-      <%= label_tag :tracking_number, 'Tracking #', :class => 'col-sm-3 control-label' %>
-      <div class="col-xs-9">
-        <%= text_field_tag :tracking_number, flash[:tracking_number], :class => 'form-control' %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= label_tag :tracking_carrier, 'Carrier', :class => 'col-sm-3 control-label' %>
-      <% if flash[:tracking_carrier] %>
-        <% tracking_carrier = get_shipping_companies.include?(flash[:tracking_carrier]) ? flash[:tracking_carrier] : 'Other' %>
-        <% tracking_carrier_other = (tracking_carrier == 'Other' ? flash[:tracking_carrier] : '') %>
-      <% end %>
-      <div class="col-xs-3">
-        <%= select_tag :tracking_carrier, options_for_select(get_shipping_companies, tracking_carrier), :class => 'form-control' %>
-      </div>
-      <div class="col-xs-6">
-        <%= text_field_tag :tracking_carrier_other, tracking_carrier_other, :class => 'form-control' %>
-      </div>
-    </div>
-    <br>
-    <p>If you have any questions or comments, please don't hesitate to contact us at <%= link_to "hello@ohship.me", "mailto:hello@ohship.me" %>.
+  Please press the button below when you've successfully ordered the item.
+  <%= form_tag package_path + '/shippee_action', :class => 'form-horizontal' do %>
     <div class="buttons">
-      <button type="submit" name="submit" value="shipped" class="btn btn-primary">Package has shipped</button>
+      <button type="submit" name="submit" value="ordered" class="btn btn-primary">I ordered the item</button>
     </div>
   <% end %>
 <% else %>
-  <div class="alert alert-success">
-    Thanks! We will notify you when we receive the item.
-    <% if @package.shippee_tracking.empty? %>
-      No tracking number was provided.
-    <% else %>
-      Your tracking number was: <%= @package.shippee_tracking %> (<%= @package.shippee_tracking_carrier %>).
+  Thanks! We will notify you when we receive the item.<br />
+  <% if @package.shippee_tracking.blank? %>
+    Please provide the tracking information below when it is provided.
+    <%= form_tag package_path + '/shippee_action', :class => 'form-horizontal row' do %>
+      <div class="form-group">
+        <%= label_tag :tracking_number, 'Tracking #', :class => 'col-sm-3 control-label' %>
+        <div class="col-xs-9">
+          <%= text_field_tag :tracking_number, @package.shippee_tracking, :class => 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= label_tag :tracking_carrier, 'Carrier', :class => 'col-sm-3 control-label' %>
+        <% if @package.shippee_tracking_carrier %>
+          <% tracking_carrier = get_shipping_companies.include?(@package.shippee_tracking_carrier) ? @package.shippee_tracking_carrier : 'Other' %>
+          <% tracking_carrier_other = (tracking_carrier == 'Other' ? @package.shippee_tracking_carrier : '') %>
+        <% end %>
+        <div class="col-xs-3">
+          <%= select_tag :tracking_carrier, options_for_select(get_shipping_companies, tracking_carrier), :class => 'form-control' %>
+        </div>
+        <div class="col-xs-6">
+          <%= text_field_tag :tracking_carrier_other, tracking_carrier_other, :class => 'form-control' %>
+        </div>
+      </div>
+      <div class="buttons">
+        <button type="submit" name="submit" value="shipped" class="btn btn-primary">Update tracking information</button>
+      </div>
     <% end %>
-    <br />
-    If we don't send you an email soon after the carrier (<%= @package.shippee_tracking_carrier %>) says that we've received it,
-    please email us at <%= mail_to Mailer::EMAIL %>.
-  </div>
+  <% end %>
+  <br />
+  If you aren't notified with 1-2 days after tracking indicates the package has arrived,
+  please email us at <%= mail_to Mailer::EMAIL %>.
 <% end %>
