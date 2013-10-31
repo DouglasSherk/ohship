@@ -6,9 +6,13 @@
   </div>
 <% else %>
   Your package is en route! The tracking number is:
+  <% if @package.shipper_tracking_carrier == 'USPS' %>
   <a href="https://tools.usps.com/go/TrackConfirmAction.action?tLabels=<%= @package.shipper_tracking %>">
+  <% end %>
     <%= @package.shipper_tracking %> (<%= @package.shipper_tracking_carrier %>)
+  <% if @package.shipper_tracking_carrier == 'USPS' %>
   </a>
+  <% end %>
   <br />
   <br />
   The actual shipping cost came to <strong><%= number_to_currency @package.shipping_estimate %> USD</strong>; after handling fees you were charged a total of <strong><%= number_to_currency @package.transaction.final_charge_cents/100.0 %> USD</strong>.<br />

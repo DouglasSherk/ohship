@@ -7,7 +7,9 @@ Including handling fees, the total amount charged to your card was <%= number_to
 <% if !@package.shipper_tracking.empty? %>
 Tracking number: <%= @package.shipper_tracking %>
 Shipping company: <%= @package.shipper_tracking_carrier %>
+<% if @package.shipper_tracking_carrier == 'USPS' %>
 Link: https://tools.usps.com/go/TrackConfirmAction.action?tLabels=<%= @package.shipper_tracking %>
+<% end %>
 <% end %>
 
 Details, including the shipping receipt, are available here: <%= package_url @package %>

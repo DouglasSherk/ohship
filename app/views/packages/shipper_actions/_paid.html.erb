@@ -7,7 +7,7 @@
     <%= @package.ship_to_postal_code %>
   </address>
 
-  Use <strong><%= @package.shipping_class %></strong> shipping; the cost should be about <%= number_to_currency @package.shipping_estimate %>.<br />
+  Use <strong><%= @package.shipping_class %></strong> shipping; the cost should be about <%= number_to_currency @package.shipping_estimate %> USD.<br />
   Please upload the shipping receipt and tracking information for reimbursement.
 
   <%= form_tag package_path + '/shipper_action', :multipart => true, :class => 'form-horizontal row' do %>
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="form-group">
-      <%= label_tag :shipping_cost, 'Shipping cost', :class => 'col-md-3 control-label' %>
+      <%= label_tag :shipping_cost, "Cost (#{Package::COUNTRY_DATA[@package.origin_country][:currency]})", :class => 'col-md-3 control-label' %>
       <div class="col-md-9">
         <%= text_field_tag :shipping_cost, flash[:shipping_cost], :class => 'form-control' %>
       </div>
@@ -32,7 +32,7 @@
     <div class="form-group">
       <%= label_tag :tracking_carrier, 'Carrier', :class => 'col-md-3 control-label' %>
       <div class="col-md-9">
-        <%= select_tag :tracking_carrier, options_for_select(['USPS'], flash[:tracking_carrier]), :class => 'form-control' %>
+        <%= text_field_tag :tracking_carrier, flash[:tracking_carrier] || Package::COUNTRY_DATA[@package.origin_country][:carrier], :class => 'form-control' %>
       </div>
     </div>
 

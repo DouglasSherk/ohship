@@ -5,6 +5,7 @@ else
 end
 
 require 'stripe'
+require 'currencies/exchange_bank'
 
 class PackagesController < ApplicationController
   before_filter :authenticate_user_with_return!
@@ -28,18 +29,18 @@ class PackagesController < ApplicationController
 
     if @show == 'complete'
       @packages = @packages.select do |package|
-        package.state == Package::STATE_COMPLETED &&
-          (current_user.user_type == User::SHIPPER || package.feedback)
+       package.state == Package::STATE_COMPLETED &&
+         (current_user.user_type == User::SHIPPER || package.feedback)
       end
     elsif @show != 'all'
       @packages = @packages.select do |package|
-        package.state != Package::STATE_COMPLETED ||
-          (current_user.user_type == User::SHIPPEE && package.feedback.nil?)
+       package.state != Package::STATE_COMPLETED ||
+         (current_user.user_type == User::SHIPPEE && package.feedback.nil?)
       end
     end
 
     if current_user.user_type == User::SHIPPER
-      @packages = @packages.select { |package| package.origin_country == current_user.country }
+      #@packages = @packages.select { |package| package.origin_country == current_user.country }
     end
   end
 
@@ -139,7 +140,7 @@ class PackagesController < ApplicationController
       if @package.origin_country == 'United States'
         render json: {:estimates => USPS.get_shipping_estimate(@package)}
       else
-        render json: Package::SHIPPING_CARRIERS[@package.origin_country]
+        render json: Package::COUNTRY_DATA[@package.origin_country]
       end
     else
       head :unprocessable_entity
@@ -282,7 +283,7 @@ class PackagesController < ApplicationController
           flash[:shipping_class] = params[:shipping_class]
           flash[:shipping_estimate] = params[:shipping_estimate]
           if @package.custom_shipping && (params[:shipping_class].blank? || params[:shipping_estimate].blank?)
-            flash[:error] = 'Manual shipping estimate must be provided.'
+            flash[:error] = 'Manual shipping estimate must be completed.'
             flash[:estimates] = {} # so it skips the entering details step
           else
             if !params[:shipping_class].blank? && !params[:shipping_estimate].blank?
@@ -291,6 +292,9 @@ class PackagesController < ApplicationController
               if @package.shipping_estimate.nil? || @package.shipping_estimate <= 0
                 flash[:error] = 'Must provide a valid shipping estimate.'
                 flash[:estimates] = {}
+              else
+                @package.shipping_estimate_cents = ISO4217::Currency::ExchangeBank.instance.exchange(
+                  @package.shipping_estimate_cents, Package::COUNTRY_DATA[@package.origin_country][:currency], 'USD')
               end
             end
             if !flash[:error]
@@ -312,6 +316,9 @@ class PackagesController < ApplicationController
         else
           shipping_cost = Float(params[:shipping_cost]) rescue nil
           shipping_cost_cents = ((shipping_cost||0) * 100).round
+
+          shipping_cost_cents = ISO4217::Currency::ExchangeBank.instance.exchange(
+            shipping_cost_cents, Package::COUNTRY_DATA[@package.origin_country][:currency], 'USD')
 
           actual_charge = shipping_cost_cents
           if @package.shippee.referral_credits == 0

@@ -3,11 +3,11 @@
     Thank you! You will be notified when the user pays the shipping fees.
   </div>
 <% elsif flash[:estimates] %>
-  <% info = Package::SHIPPING_CARRIERS[@package.origin_country] %>
+  <% info = Package::COUNTRY_DATA[@package.origin_country] %>
   <%= form_tag package_path + '/shipper_action', :class => 'form-horizontal' do %>
     <% if @package.origin_country != 'United States' %>
       We can't calculate shipping estimates for your country yet.<br />
-      Please calculate the estimate using the <%= info[:carrier] %> website at <%= link_to info[:url], info[:url] %>:
+      We recommend you calculate the estimate using the <%= info[:carrier] %> website at <%= link_to info[:url], info[:url] %>:
     <% elsif flash[:estimates].empty? %>
       No shipping options could be found for this package. Are you sure you entered the details correctly?<br />
       To provide a manual estimate, please fill out the fields below:<br />
@@ -15,7 +15,7 @@
       The following shipping options will be available for this package:
       <ul>
         <% flash[:estimates].each do |name, cost| %>
-          <li><strong><%= name %></strong>: <%= number_to_currency cost %></li>
+          <li><strong><%= name %></strong>: <%= number_to_currency cost %> USD</li>
         <% end %>
       </ul>
       If a different shipping method is required, please fill out both fields below:<br />
@@ -33,11 +33,11 @@
       <div class="form-group">
         <%= label_tag :shipping_carrier, 'Shipping carrier & class', :class => 'col-md-4 control-label' %>
         <div class="col-md-8">
-          <%= text_field_tag :shipping_class, flash[:shipping_class], :class => 'form-control' %>
+          <%= text_field_tag :shipping_class, flash[:shipping_class] || info[:carrier] + ': <Shipping Class>', :class => 'form-control' %>
         </div>
       </div>
       <div class="form-group">
-        <%= label_tag :shipping_estimate, 'Shipping estimate', :class => 'col-md-4 control-label' %>
+        <%= label_tag :shipping_estimate, "Shipping estimate (#{info[:currency]})", :class => 'col-md-4 control-label' %>
         <div class="col-md-8">
           <%= text_field_tag :shipping_estimate, flash[:shipping_estimate], :class => 'form-control' %>
         </div>

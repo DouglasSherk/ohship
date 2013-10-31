@@ -1,3 +1,4 @@
+require 'currencies/currency'
 require 'thread'
 
 class ISO4217::Currency
@@ -19,7 +20,7 @@ class ISO4217::Currency
 
     def get_rate(from, to)
       @mutex.synchronize do
-        @rates["#{from}_TO_#{to}".upcase] 
+        @rates["#{from}_TO_#{to}".upcase]
       end
     end
 
@@ -34,7 +35,7 @@ class ISO4217::Currency
       else
         from_currency = ISO4217::Currency.from_code(from_currency)
         to_currency = ISO4217::Currency.from_code(to_currency)
-                
+
         if from_currency && to_currency && from_currency.exchange_rate && to_currency.exchange_rate && (from_currency.exchange_currency == to_currency.exchange_currency)
           ((cents * from_currency.exchange_rate) / to_currency.exchange_rate).floor
         else
