@@ -17,3 +17,20 @@
     margin-bottom: 40px;
   }
 }
+
+.alert {
+  display: table;
+  width: 100%;
+
+  i {
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 10px;
+    padding-right: 20px;
+  }
+
+  p {
+    display: table-cell;
+    width: 100%;
+  }
+}

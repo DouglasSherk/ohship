@@ -29,6 +29,12 @@
             [type + ': ' + number_to_currency(cost) + ' USD', type]
           }), :class => 'form-control' %>
 
+      <br>
+      <div class="alert alert-warning">
+        <%= fa_icon "warning" %>
+        <p>Actual costs may vary slightly from these estimates. You will not be charged until the package has actually shipped.</p>
+      </div>
+
       <div class="buttons">
         <button type="submit" name="submit" value="submit" class="btn btn-primary">Submit</button>
       </div>
@@ -47,9 +53,14 @@
     We'll be able to send the package to you once your payment is received.<br />
     If you have any concerns about the accuracy of the shipping cost, please contact us at
     <%= mail_to Mailer::EMAIL %>.<br />
-    <br />
-    <em>We are <strong>pre-authorizing</strong> 50% more, for a total of <strong><%= number_to_currency preauth/100.0 %> USD</strong>, in case any additional charges are incurred.<br />
-    <strong>You will only actually be charged</strong> for the true cost of shipping once we have sent the package.</em><br />
+    <br>
+    <div class="alert alert-warning">
+      <%= fa_icon "warning" %>
+      <p>
+        We are <strong>pre-authorizing</strong> 50% more, for a total of <strong><%= number_to_currency preauth/100.0 %> USD</strong>, in case any additional charges are incurred.
+        <strong>You will only actually be charged</strong> for the true cost of shipping once we have sent the package.
+      </p>
+  </div>
 
     <%= form_tag package_path + '/shippee_action' do %>
       <div class="buttons">

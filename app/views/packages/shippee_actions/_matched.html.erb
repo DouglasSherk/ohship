@@ -6,7 +6,7 @@
     <%= @package.shipper.city %>, <%= @package.shipper.state %>, <%= @package.shipper.country %><br />
     <%= @package.shipper.postal_code %>
   </address>
-  When the package ships, please enter the tracking information here, if possible.
+  When the package ships, please enter the tracking information here, if you are given any.
   <%= form_tag package_path + '/shippee_action', :class => 'form-horizontal row' do %>
     <div class="form-group">
       <%= label_tag :tracking_number, 'Tracking #', :class => 'col-sm-3 control-label' %>
@@ -27,6 +27,8 @@
         <%= text_field_tag :tracking_carrier_other, tracking_carrier_other, :class => 'form-control' %>
       </div>
     </div>
+    <br>
+    <p>If you have any questions or comments, please don't hesitate to contact us at <%= link_to "hello@ohship.me", "mailto:hello@ohship.me" %>.
     <div class="buttons">
       <button type="submit" name="submit" value="shipped" class="btn btn-primary">Package has shipped</button>
     </div>
