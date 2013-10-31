@@ -71,7 +71,7 @@
         <button id="stripe-checkout" class="btn btn-primary" type="button"
                 data-amount="<%= preauth %>"
                 data-description="Pre-authorization for <%= @package.description %>">
-          Pay with card
+          Pre-authorize with card
         </button>
         <% if !@package.custom_shipping %>
           <button type="submit" value="back" class="btn btn-danger">Back</button>
