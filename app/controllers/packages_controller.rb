@@ -229,7 +229,7 @@ class PackagesController < ApplicationController
     when Package::STATE_SHIPPEE_PAID
       if !@package.shippee_tracking.nil? && params[:submit] == 'received'
         @package.state += 1
-        Mailer.notification_email(@package.shippee, @package, 'Package received', 'shippee_received').deliver
+        Mailer.notification_email(@package.shipper, @package, 'Package received', 'shippee_received').deliver
       end
     when Package::STATE_COMPLETED
       if @package.feedback.nil?
@@ -343,6 +343,7 @@ class PackagesController < ApplicationController
     when Package::STATE_SUBMITTED
       @package.shipper_id = params[:shipper][:shipper_id]
       @package.state = @package.state + 1
+      Mailer.notification_email(@package.shipper, @package, 'Package for you!', 'shipper_matched').deliver
       if !@package.save
         flash[:error] = '<br />' + @package.errors.full_messages.map { |m| ' - ' + m }.join('<br />')
       end

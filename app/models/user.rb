@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   ADMIN = 2
 
   validates :name, presence: true
-  validates :user_type, :inclusion => { :in => [SHIPPEE, SHIPPER] }
+  validates :user_type, :inclusion => { :in => [SHIPPEE, SHIPPER, ADMIN] }
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
