@@ -1,7 +1,7 @@
 <% if @package.shippee_tracking.nil? %>
   You can now send your package to this OhShip location:
   <address>
-    <strong><%= @package.shipper.name %></strong><br />
+    <strong><%= @package.shippee.name %></strong><br />
     <%= @package.shipper.address %><br />
     <%= @package.shipper.city %>, <%= @package.shipper.state %>, <%= @package.shipper.country %><br />
     <%= @package.shipper.postal_code %>
