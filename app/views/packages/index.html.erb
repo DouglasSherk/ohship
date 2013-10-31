@@ -17,7 +17,7 @@
 <% elsif is_shippee? %>
   <div class="alert alert-info">
     <h3>Limited time offer!</h3>
-    Refer a friend to OhShip, and if they ship a package, we will waive our fees for your next order. Give them this link:<br />
+    Get a friend to ship a package we'll waive our service fee on your next order! Give them this link:<br />
     <% url = new_user_registration_url(:referrer_id => current_user.id) %>
     <strong><%= link_to url, url %></strong><br />
   </div>
