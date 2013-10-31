@@ -3,6 +3,8 @@ require 'thread'
 
 class ISO4217::Currency
   class ExchangeBank
+    EXPIRY = 60 * 60 # hourly
+
     def self.instance
       @@singleton
     end
@@ -14,14 +16,16 @@ class ISO4217::Currency
 
     def add_rate(from, to, rate)
       @mutex.synchronize do
-        @rates["#{from}_TO_#{to}".upcase] = rate
+        @rates["#{from}_TO_#{to}".upcase] = {:value => rate, :time => Time.now}
       end
     end
 
     def get_rate(from, to)
+      ret = nil
       @mutex.synchronize do
-        @rates["#{from}_TO_#{to}".upcase]
+        ret = @rates["#{from}_TO_#{to}".upcase]
       end
+      ret[:value] if ret && ret[:time] >= Time.now - EXPIRY
     end
 
     def same_currency?(currency1, currency2)
@@ -37,6 +41,7 @@ class ISO4217::Currency
         to_currency = ISO4217::Currency.from_code(to_currency)
 
         if from_currency && to_currency && from_currency.exchange_rate && to_currency.exchange_rate && (from_currency.exchange_currency == to_currency.exchange_currency)
+          add_rate(from_currency.code, to_currency.code, from_currency.exchange_rate / to_currency.exchange_rate)
           ((cents * from_currency.exchange_rate) / to_currency.exchange_rate).floor
         else
           raise Money::UnknownRate, "No conversion rate known for '#{from_currency}' -> '#{to_currency}'"
