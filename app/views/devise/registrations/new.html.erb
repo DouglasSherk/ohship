@@ -24,11 +24,11 @@
 
         <%= f.hidden_field :referrer_id, :value => @referrer_id if @referrer_id %>
 
-        <div class="form-group"><%= f.label :name %>
-        <%= f.text_field :name, :autofocus => true, :class => "form-control" %></div>
-
         <div class="form-group"><%= f.label :email %>
         <%= f.email_field :email, :class => "form-control" %></div>
+
+        <div class="form-group"><%= f.label :name %>
+        <%= f.text_field :name, :autofocus => true, :class => "form-control" %></div>
 
         <div class="form-group"><%= f.label :password %>
         <%= f.password_field :password, :class => "form-control" %></div>
@@ -38,10 +38,10 @@
 
         <div class="row row-gutterless">
           <div class="col-xs-6">
-            <div class="form-group"><%= f.submit "Sign up", :class => "btn btn-primary" %></div>
+            <div class="form-group"><%= f.submit "Sign up", :class => "btn btn-primary btn-lg" %></div>
           </div>
           <div class="col-xs-6 right">
-            <%= link_to "Sign in", new_user_session_path %>
+            <%= link_to "Already have an account?", new_user_session_path %>
           </div>
         </div>
       <% end %>
