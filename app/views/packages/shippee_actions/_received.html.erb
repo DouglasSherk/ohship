@@ -49,9 +49,9 @@
 
     The total cost of shipping comes to: <strong><%= number_to_currency @package.shipping_estimate %> USD</strong>. (<%= @package.shipping_class %>)<br />
     <% if current_user.referral_credits == 0 %>
-      Including OhShip handling fees (20%), the total cost is <strong><%= number_to_currency total_cost/100.0 %> USD</strong>.<br />
+      Including the OhShip service fee (20%), the total cost is <strong><%= number_to_currency total_cost/100.0 %> USD</strong>.<br />
     <% else %>
-      You have a referral credit, so you don't have to pay handling fees for this shipment!<br />
+      You have a referral credit, so you don't have to pay a service fee for this shipment!<br />
     <% end %>
     <br />
     We'll be able to send the package to you once your payment is received.<br />

@@ -13,7 +13,7 @@ ready = ->
       if data.estimates
         select = $('<select id="shipping-estimate-dropdown" />')
         for ship_class, cost of data.estimates
-          select.append($("<option>#{ship_class}: $#{cost.toFixed(2)} + OhShip handling fees</option>"))
+          select.append($("<option>#{ship_class}: $#{cost.toFixed(2)} + OhShip service fee</option>"))
         if select.children().length == 0
           display.html("No shipping options available. Please double-check your dimensions.")
           display.attr('class', 'alert alert-danger')

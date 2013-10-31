@@ -201,7 +201,7 @@ class PackagesController < ApplicationController
           end
         elsif !@package.shipping_estimate.nil? && (token = params[:stripeToken])
           total_cost = @package.shipping_estimate_cents
-          # Add 20% handling costs if no credits are available
+          # Add 20% service fee if no credits are available
           if current_user.referral_credits == 0
             total_cost = (total_cost*6 + 1) / 5
           end

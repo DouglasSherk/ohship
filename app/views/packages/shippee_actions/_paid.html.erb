@@ -15,7 +15,7 @@
   <% end %>
   <br />
   <br />
-  The actual shipping cost came to <strong><%= number_to_currency @package.shipping_estimate %> USD</strong>; after handling fees you were charged a total of <strong><%= number_to_currency @package.transaction.final_charge_cents/100.0 %> USD</strong>.<br />
+  The actual shipping cost came to <strong><%= number_to_currency @package.shipping_estimate %> USD</strong>; after the OhShip service fee you were charged a total of <strong><%= number_to_currency @package.transaction.final_charge_cents/100.0 %> USD</strong>.<br />
   If this is incorrect, or if tracking isn't working, please contact us at <%= mail_to Mailer::EMAIL %>.<br />
 
   <%= form_tag package_path + '/shippee_action' do %>
