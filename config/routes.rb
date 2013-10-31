@@ -6,6 +6,7 @@ Ohship::Application.routes.draw do
     member do
       post 'shipper_action'
       post 'shippee_action'
+      post 'admin_action'
       post 'cancel'
     end
 

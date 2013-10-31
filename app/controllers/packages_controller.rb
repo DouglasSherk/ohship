@@ -9,7 +9,7 @@ require 'stripe'
 class PackagesController < ApplicationController
   before_filter :authenticate_user_with_return!
   load_and_authorize_resource :except => [:index, :new, :create]
-  skip_authorize_resource :only => [:cancel, :shippee_action, :shipper_action]
+  skip_authorize_resource :only => [:cancel, :shippee_action, :shipper_action, :admin_action]
 
   # GET /packages
   # GET /packages.json
@@ -46,6 +46,8 @@ class PackagesController < ApplicationController
   # GET /packages/1
   # GET /packages/1.json
   def show
+    @shippers = User.where(:user_type => User::SHIPPER, :country => @package.ship_to_country) if can? :admin, @package
+
     # Load shipping estimates from USPS
     if current_user.user_type == User::SHIPPEE &&
        @package.state == Package::STATE_SHIPPER_RECEIVED &&
@@ -316,6 +318,22 @@ class PackagesController < ApplicationController
 
     if !@package.save
       flash[:error] = '<br />' + @package.errors.full_messages.map { |m| ' - ' + m }.join('<br />')
+    end
+
+    redirect_to package_path
+  end
+
+  # POST /packages/1/admin_action
+  def admin_action
+    authorize! :admin, @package
+
+    case @package.state
+    when Package::STATE_SUBMITTED
+      @package.shipper_id = params[:shipper][:shipper_id]
+      @package.state = @package.state + 1
+      if !@package.save
+        flash[:error] = '<br />' + @package.errors.full_messages.map { |m| ' - ' + m }.join('<br />')
+      end
     end
 
     redirect_to package_path

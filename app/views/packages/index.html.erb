@@ -60,6 +60,7 @@
       <% if is_shipper? %><th>Origin Country</th><% end %>
       <th>Status</th>
       <th class="hidden-xs">Last updated</th>
+      <% if can? :admin, Package %><th>Shipper</th><% end %>
     </tr>
     <% @packages.sort_by { |p| package_action_required?(p) ? 0 : 1 }.each do |package| %>
       <tr data-href="<%= package_path(package) %>">
@@ -78,6 +79,11 @@
         <td class="hidden-xs">
           <%= package.updated_at.to_formatted_s(:long_ordinal) %>
         </td>
+        <% if can? :admin, package %>
+          <td>
+            <%= (package.shipper && package.shipper.name) || raw('<span class="text-muted">Unassigned</span>') %>
+          </td>
+        <% end %>
       </tr>
     <% end %>
   <% end %>

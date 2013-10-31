@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
 
   SHIPPEE = 0
   SHIPPER = 1
+  ADMIN = 2
 
   validates :name, presence: true
   validates :user_type, :inclusion => { :in => [SHIPPEE, SHIPPER] }

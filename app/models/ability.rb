@@ -17,5 +17,12 @@ class Ability
     can :read, Photo do |photo|
       can? :read, photo.package
     end
+
+    cannot :admin, Package
+    cannot :admin, Photo
+    if user.user_type == User::ADMIN
+      can [:admin, :manage], Package
+      can [:admin, :manage], Photo
+    end
   end
 end

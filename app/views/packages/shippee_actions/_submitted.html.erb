@@ -1,4 +1,14 @@
 <% if @package.shipper.nil? %>
+  <% if can? :admin, @package %>
+    <div class="alert alert-info">
+      <h2>Administrator Panel</h2>
+      This package needs a shipper. Would you like to assign one manually? Here are the list of shippers in this country:
+      <%= form_tag(package_path + '/admin_action') do %>
+        <%= select "shipper", "shipper_id", @shippers.collect { |shipper| [shipper.name, shipper.id] } %>
+        <%= button_tag "Submit", :class => "btn btn-primary" %>
+      <% end %>
+    </div>
+  <% end %>
   <div class="alert alert-success">
     Package submitted. Please wait to be matched with the closest OhShip location.
   </div>
