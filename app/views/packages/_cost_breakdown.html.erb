@@ -1,20 +1,35 @@
-<h3>Shipping cost breakdown</h3>
+<% is_estimate = !@package.transaction || !@package.transaction.final_charge_cents %>
+<% total_amount = @package.shipping_estimate if is_estimate %>
+<% total_amount = @package.transaction.final_charge_cents/100.0 unless is_estimate %>
+
+<h3>Shipping cost breakdown<%= raw(' (<span class="text-muted">Estimate only</span>)') if is_estimate %></h3>
 <table class="table table-bordered">
   <tr>
     <th>Description</th>
     <th>Amount</th>
   </tr>
   <tr>
-    <td>Shipping via <%= @package.shipper_tracking_carrier %></td>
-    <td><%= number_to_currency @package.shipping_estimate %></td>
+    <td>Shipping via <%= @package.shipping_class %></td>
+    <td><%= number_to_currency total_amount %></td>
   </tr>
   <tr>
     <td>OhShip service fee</td>
-    <% # XXX: Pull this from a variable instead of calculating it here. %>
-    <td><%= number_to_currency @package.transaction.final_charge_cents/100.0 - @package.shipping_estimate %></td>
+    <td>
+      <% if is_estimate %>
+        <%= number_to_currency total_amount*0.2 %>
+      <% else %>
+        <%= number_to_currency total_amount - @package.shipping_estimate %>
+      <% end %>
+    </td>
   </tr>
   <tr>
     <td class="right">Total</td>
-    <td><strong><%= number_to_currency @package.transaction.final_charge_cents/100.0 %></strong></td>
+    <td><strong>
+      <% if is_estimate %>
+        <%= number_to_currency total_amount*1.2 %>
+      <% else %>
+        <%= number_to_currency total_amount %>
+      <% end %>
+    </strong></td>
   </tr>
 </table>

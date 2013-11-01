@@ -44,12 +44,14 @@ namespace :deploy do
     end
   end
 
-  before "assets:precompile" do
-    on roles(:app) do
-      run "cp /home/www-data/facebook/production.yml #{release_path}/config/environments/facebook/production.yml"
-      run "cp /home/www-data/stripe/production.yml #{release_path}/config/environments/stripe/production.yml"
+  task :configs do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute :cp, "/home/www-data/facebook/production.yml", release_path.join("config/environments/facebook/production.yml")
+      execute :cp, "/home/www-data/stripe/production.yml", release_path.join("config/environments/stripe/production.yml")
     end
   end
+
+  before "deploy:assets:precompile", "deploy:configs"
 
   after :finishing, 'deploy:cleanup'
   after :finishing, 'deploy:restart'
