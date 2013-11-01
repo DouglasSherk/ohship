@@ -459,7 +459,7 @@ class PackagesController < ApplicationController
         preauth_amount = (amount*3 + 1)/2
         charge = Stripe::Charge.create(
           :amount => preauth_amount,
-          :currency => 'cad',
+          :currency => 'usd',
           :card => card_token,
           :capture => false,
           :metadata => { 'package_id' => @package.id }

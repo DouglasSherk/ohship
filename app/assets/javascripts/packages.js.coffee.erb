@@ -8,7 +8,7 @@ ready = ->
     StripeCheckout.open(
       key: '<%= STRIPE_CONFIG["SECRET_PUB_KEY"] %>',
       amount: button.data('amount'),
-      currency: 'cad',
+      currency: 'usd',
       name: 'ohship.me',
       description: button.data('description'),
       token: (res) ->
