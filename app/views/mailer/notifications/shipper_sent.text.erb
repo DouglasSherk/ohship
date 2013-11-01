@@ -1,8 +1,8 @@
 Hello <%= @user.name %>,
 
 The package (<%= @package.description %>) has shipped, and is en route to your address!
-The final shipping cost was <%= number_to_currency @package.shipping_estimate %>.
-Including our service fee, the total amount charged to your card was <%= number_to_currency @package.transaction.final_charge_cents/100.0 %>.
+The final shipping cost was <%= number_to_currency @package.shipping_estimate %> USD.
+Including our service fee, the total amount charged to your card was <%= number_to_currency @package.transaction.final_charge_cents/100.0 %> USD.
 
 <% if !@package.shipper_tracking.empty? %>
 Tracking number: <%= @package.shipper_tracking %>

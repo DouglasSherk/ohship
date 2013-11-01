@@ -80,4 +80,11 @@ module PackagesHelper
       ['Accept package', 'Receive package', 'Update details', 'Ship package', 'Complete']
     end
   end
+
+  def number_to_local_currency(amount, country)
+    require 'currencies/exchange_bank'
+    currency = Package::COUNTRY_DATA[country][:currency]
+    amount = ISO4217::Currency::ExchangeBank.instance.exchange((amount*100).round, 'USD', currency)/100.0
+    number_to_currency(amount) + " " + currency
+  end
 end

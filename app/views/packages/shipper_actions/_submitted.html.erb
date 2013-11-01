@@ -12,7 +12,7 @@
     <dd><%= @package.weight_lb %>lb</dd>
 
     <dt>Package value</dt>
-    <dd><%= number_to_currency @package.value %></dd>
+    <dd><%= number_to_currency @package.value %> <%= Package::COUNTRY_DATA[@package.origin_country][:currency] %></dd>
 
     <% unless @package.special_instructions.blank? %>
       <dt>Special instructions</dt>

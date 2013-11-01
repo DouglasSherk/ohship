@@ -7,7 +7,7 @@
     <%= @package.ship_to_postal_code %>
   </address>
 
-  Use <strong><%= @package.shipping_class %></strong> shipping; the cost should be about <%= number_to_currency @package.shipping_estimate %> USD.<br />
+  Use <strong><%= @package.shipping_class %></strong> shipping; the cost should be about <%= number_to_local_currency @package.shipping_estimate, @package.origin_country %>.<br />
   Please upload the shipping receipt and tracking information for reimbursement.
 
   <%= form_tag package_path + '/shipper_action', :multipart => true, :class => 'form-horizontal row' do %>
