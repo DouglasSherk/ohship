@@ -254,7 +254,7 @@ class PackagesController < ApplicationController
         if params[:submit] == 'accept'
           @package.shipper = current_user
           @package.state += 1
-          Mailer.notification_email(@package.shippee, @package, 'Ship your item to us', 'shipper_found').deliver
+          Mailer.notification_email(@package.shippee, @package, 'Please ship your item to us', 'shipper_found').deliver
         end
       end
     when Package::STATE_SHIPPER_MATCHED
