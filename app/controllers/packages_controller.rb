@@ -101,6 +101,7 @@ class PackagesController < ApplicationController
       if set_package_dimensions && @package.save
         admins = User.where(:user_type => User::ADMIN).all
         Mailer.notification_email(admins, @package, '[Administrator] Shippee has submitted a package', 'admin_shippee_submitted').deliver
+        auto_match_shipper
 
         format.html { redirect_to @package, notice: 'Package was successfully created.' }
         format.json { render action: 'show', status: :created, location: @package }
@@ -399,6 +400,31 @@ class PackagesController < ApplicationController
         :special_instructions,
         :size_group,
       ]
+    end
+
+    def auto_match_shipper
+      best_match = nil
+      best_count = nil
+
+      User.where(:user_type => User::SHIPPER, :country => @package.origin_country).each do |u|
+        count = 0
+        Package.where(:shipper => u).each do |p|
+          # Shipper is done once he enters tracking information, pretty much.
+          if p.shipper_tracking.nil?
+            count += 1
+          end
+        end
+
+        if best_match.nil? || count < best_count
+          best_match = u
+          best_count = count
+        end
+      end
+
+      unless best_match.nil?
+        @package.update_attributes(:shipper => best_match, :state => @package.state + 1)
+        Mailer.notification_email(best_match, @package, 'Package for you!', 'shipper_matched').deliver
+      end
     end
 
     def create_photo(data, type = 'photo')

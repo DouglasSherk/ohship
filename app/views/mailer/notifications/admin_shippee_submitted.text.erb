@@ -2,7 +2,7 @@ Hello <%= @user.name %>,
 
 This is an administrator message.
 
-<%= @package.shippee.name %> has submitted a package for shipment.
+<%= @package.shippee.name %> has submitted a package (<%= package_url @package %>) for shipment.
 They are asking for it to be shipped from <%= @package.origin_country %>.
 
 Regards,

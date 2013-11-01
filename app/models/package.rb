@@ -19,7 +19,7 @@ class Package < ActiveRecord::Base
   STATE_SHIPPER_MATCHED = 1  # Matched & confirmed by shippee. Shippee sends package & enters tracking
   STATE_SHIPPER_RECEIVED = 2 # Package received by shipper. Shipper updates package details & estimate
   STATE_SHIPPEE_PAID = 3     # Shippee pays fees. Shipper sends package, adds receipt & tracking
-  STATE_COMPLETED = 4         # Shippee confirms delivery.
+  STATE_COMPLETED = 4        # Shippee confirms delivery.
 
   COUNTRY_DATA = {
     'United States' => {:carrier => 'USPS', :url => 'http://postcalc.usps.com/', :currency => 'USD'},
