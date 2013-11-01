@@ -348,7 +348,7 @@ class PackagesController < ApplicationController
                 @package.shippee.update_attributes(:referral_credits => @package.shippee.referral_credits - 1)
               end
 
-              Mailer.notification_email(@package.shippee, @package, 'Shipper sent package', 'shipper_sent').deliver
+              Mailer.notification_email(@package.shippee, @package, 'We have sent your package', 'shipper_sent').deliver
             end
           end
         end

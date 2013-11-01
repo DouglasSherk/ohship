@@ -1,15 +1,16 @@
 <% if @package.shippee_tracking.nil? %>
   You can now send your package to this OhShip location:
-  <address>
-    <strong><%= @package.shippee.name %></strong><br />
+  <address class="alert alert-info">
+    <strong><%= @package.shipper.name %></strong><br />
     <%= @package.shipper.address %><br />
     <%= @package.shipper.city %>, <%= @package.shipper.state %>, <%= @package.shipper.country %><br />
-    <%= @package.shipper.postal_code %>
+    <%= @package.shipper.postal_code %><br />
+    For <strong><%= @package.shippee.name %></strong>
   </address>
   Please press the button below when you've successfully ordered the item.
   <%= form_tag package_path + '/shippee_action', :class => 'form-horizontal' do %>
     <div class="buttons">
-      <button type="submit" name="submit" value="ordered" class="btn btn-primary">I ordered the item</button>
+      <button type="submit" name="submit" value="ordered" class="btn btn-primary">I have ordered the item</button>
     </div>
   <% end %>
 <% else %>
