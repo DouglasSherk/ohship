@@ -58,7 +58,7 @@
       <th class="hidden-xs">Last updated</th>
       <% if can? :admin, Package %><th>Shipper</th><% end %>
     </tr>
-    <% @packages.sort_by { |p| package_action_required?(p) ? 0 : 1 }.each do |package| %>
+    <% @packages.sort_by { |p| [package_action_required?(p) ? 0 : 1, -p.updated_at.to_i] }.each do |package| %>
       <tr data-href="<%= package_path(package) %>">
         <td>
           <a href="/packages/<%= package.id %>"><%= package.description %></a>
