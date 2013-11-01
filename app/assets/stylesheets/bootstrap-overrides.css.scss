@@ -9,6 +9,11 @@ $font-family-sans-serif: 'ProximaNova', 'Helvetica Neue', sans-serif;
 }
 
 body {
+  &.modal-open {
+    overflow: auto;
+    margin-right: 0;
+  }
+
   .landing .navbar > .container .navbar-brand {
     padding: 0;
     margin-left: 0;
@@ -36,4 +41,8 @@ body {
     padding-left: 0;
     padding-right: 0;
   }
+}
+
+.modal {
+  overflow: auto;
 }
