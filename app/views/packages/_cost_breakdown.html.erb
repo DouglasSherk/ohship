@@ -9,11 +9,11 @@
     <th>Amount</th>
   </tr>
   <tr>
-    <td>Shipping via <%= @package.shipping_class %></td>
+    <td><%= is_estimate ? "Estimated shipping" : "Shipping" %> cost via <%= @package.shipping_class %></td>
     <td><%= number_to_currency total_amount %></td>
   </tr>
   <tr>
-    <td>OhShip service fee</td>
+    <td><%= "Estimated " if is_estimate %>OhShip service fee</td>
     <td>
       <% if is_estimate %>
         <%= number_to_currency total_amount*0.2 %>
@@ -23,7 +23,7 @@
     </td>
   </tr>
   <tr>
-    <td class="right">Total</td>
+    <td class="right"><%= is_estimate ? "Estimated total" : "Total" %> cost</td>
     <td><strong>
       <% if is_estimate %>
         <%= number_to_currency total_amount*1.2 %>

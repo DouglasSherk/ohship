@@ -17,7 +17,7 @@ module PackagesHelper
       end
     when Package::STATE_SHIPPER_RECEIVED
       if is_shippee?
-        package.shipping_estimate_confirmed ? 'Payment required' : 'OhShip received package'
+        package.shipping_estimate_confirmed ? 'Payment pre-authorization' : 'OhShip received package'
       else
         package.shipping_estimate_confirmed ? 'Waiting for user payment' : 'Package details required'
       end
@@ -75,7 +75,7 @@ module PackagesHelper
 
   def get_package_steps
     if is_shippee?
-      ['Find an OhShip location', 'Send to OhShip location', 'Pay shipping costs', 'Receive package', 'Leave feedback']
+      ['Find an OhShip location', 'Send to OhShip location', 'Pre-authorize payment', 'Receive package', 'Leave feedback']
     else
       ['Accept package', 'Receive package', 'Update details', 'Ship package', 'Complete']
     end
