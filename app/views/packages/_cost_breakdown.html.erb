@@ -1,0 +1,20 @@
+<h3>Shipping cost breakdown</h3>
+<table class="table table-bordered">
+  <tr>
+    <th>Description</th>
+    <th>Amount</th>
+  </tr>
+  <tr>
+    <td>Shipping via <%= @package.shipper_tracking_carrier %></td>
+    <td><%= number_to_currency @package.shipping_estimate %></td>
+  </tr>
+  <tr>
+    <td>OhShip service fee</td>
+    <% # XXX: Pull this from a variable instead of calculating it here. %>
+    <td><%= number_to_currency @package.transaction.final_charge_cents/100.0 - @package.shipping_estimate %></td>
+  </tr>
+  <tr>
+    <td class="right">Total</td>
+    <td><strong><%= number_to_currency @package.transaction.final_charge_cents/100.0 %></strong></td>
+  </tr>
+</table>

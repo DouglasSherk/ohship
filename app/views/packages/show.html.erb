@@ -96,6 +96,8 @@
       <dd><%= @package.special_instructions %></dd>
     </dl>
 
+    <hr class="soften" />
+
     <h3>Package will be sent to:</h3>
 
     <dl class="dl-horizontal">
@@ -118,5 +120,14 @@
       <dt>Zip/Postal Code</dt>
       <dd><%= @package.ship_to_postal_code %></dd>
     </dl>
+
+    <% if @package.state >= Package::STATE_SHIPPEE_PAID %>
+      <hr class="soften" />
+      <div class="row row-gutterless">
+        <div class="col-md-6">
+          <%= render "packages/cost_breakdown" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

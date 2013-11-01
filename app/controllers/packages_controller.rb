@@ -303,7 +303,7 @@ class PackagesController < ApplicationController
             end
             if !flash[:error]
               @package.shipping_estimate_confirmed = true
-              Mailer.notification_email(@package.shippee, @package, 'Shipper received package', 'shipper_received').deliver
+              Mailer.notification_email(@package.shippee, @package, 'We have received your package', 'shipper_received').deliver
             end
           end
         elsif params[:submit] == 'back'
