@@ -100,6 +100,11 @@ body {
         vertical-align: top;
         padding-top: 140px;
 
+        .header-bg {
+          padding: 10px;
+          background: rgba(0, 0, 0, 0.3);
+        }
+
         h1 {
           color: white;
           text-transform: uppercase;
