@@ -7,7 +7,7 @@ class HomeController < ApplicationController
     end
   end
 
-  def how_it_works
+  def details
 
   end
 end

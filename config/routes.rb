@@ -23,7 +23,7 @@ Ohship::Application.routes.draw do
     :omniauth_callbacks => "users/omniauth_callbacks"
   }
 
-  get "how_it_works" => "home#how_it_works"
+  get "details" => "home#details"
 
   root 'home#index'
 
