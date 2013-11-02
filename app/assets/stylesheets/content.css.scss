@@ -5,8 +5,12 @@ body {
 
   .content {
     &.container {
-      margin-top: 80px;
+      padding-top: 80px;
       padding-bottom: 40px;
+
+      &.home {
+        padding-top: 120px;
+      }
     }
 
     &.navbar-inverse {

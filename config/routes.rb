@@ -23,6 +23,8 @@ Ohship::Application.routes.draw do
     :omniauth_callbacks => "users/omniauth_callbacks"
   }
 
+  get "how_it_works" => "home#how_it_works"
+
   root 'home#index'
 
   # The priority is based upon order of creation: first created -> highest priority.

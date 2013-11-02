@@ -29,11 +29,11 @@
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-              <li class="active"><a href="#overview">Overview</a></li>
-              <li><a href="#features">How it Works</a></li>
-              <li><a href="#signup">Signup</a></li>
               <% unless current_user %>
+                <%= yield :navbar %>
                 <li><%= link_to "Login", "#loginModal", :class => "btn btn-primary", :data => {:toggle => "modal"} %></li>
+              <% else %>
+                <li><%= link_to "Go to App", root_path, :class => "btn btn-primary" %></li>
               <% end %>
             </ul>
           </div>

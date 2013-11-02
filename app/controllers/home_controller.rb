@@ -6,4 +6,8 @@ class HomeController < ApplicationController
       redirect_to '/packages'
     end
   end
+
+  def how_it_works
+
+  end
 end
