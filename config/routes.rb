@@ -24,6 +24,7 @@ Ohship::Application.routes.draw do
   }
 
   get "details" => "home#details"
+  get "terms" => "home#terms"
 
   root 'home#index'
 

@@ -10,4 +10,8 @@ class HomeController < ApplicationController
   def details
 
   end
+
+  def terms
+
+  end
 end
