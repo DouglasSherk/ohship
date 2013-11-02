@@ -67,7 +67,7 @@ body {
     }
 
     &#social {
-      padding-bottom: 100px;
+      padding: 100px 0;
 
       h1 {
         color: #999;
@@ -147,11 +147,10 @@ body {
         }
       }
 
-      &#information {
-        padding: 0;
-      }
+      &#signup {
+        background-color: #ccc;
+        margin-top: 50px;
 
-      #signup {
         h1 {
           color: #666;
           text-transform: uppercase;
@@ -172,7 +171,6 @@ body {
 
         .signup-inner {
           padding: 30px;
-          border: 1px solid #ed6c4d;
         }
 
         .title {

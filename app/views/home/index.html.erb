@@ -95,67 +95,80 @@
 
 <hr class="featurette-divider">
 
-<div id="information" class="section expanded">
-  <div class="container">
-    <div class="col-md-6">
-      <div class="row">
-        <h2 class="featurette-heading"><span class="text-muted">No hidden fees.</span><br />No signup fee.</h2>
-        <br />
-        <p class="lead">OhShip charges a 20% service fee on the <b>shipping cost</b><br />(e.g. $2 if the shipping cost is $10).</p>
-      </div>
-
-      <br />
-
-      <div class="row">
-        <h2 class="featurette-heading">Safe. <span class="text-muted">Secure.</span></h2>
-        <br />
-        <p class="lead">We take extra care in making sure your merchandise is shipped to you in perfect condition.</p>
-      </div>
-    </div>
-
-    <div id="signup" class="col-md-5 col-md-offset-1">
-      <div class="row">
-        <div>
-          <div class="title title-starter">
-            Shop online. Ship anywhere.
-          </div>
-          <div class="signup-inner">
-            <p><b>20%</b> of the shipping cost / package</p>
-            <hr />
-            <p>No hidden fees</p>
-            <hr />
-            <p>No signup fee</p>
-            <br>
-            <%= link_to "Sign up", "#overview", :class => "btn button-starter"%>
-          </div>
-        </div>
-        <!-- <div class="col-md-5 col-md-offset-1">
-          <div class="title title-monthly">
-            Become an OhShipper
-          </div>
-          <div class="signup-inner">
-            <div class="price">
-              50%
-            </div>
-            <div class="renewal">
-              commission on packages you ship
-            </div>
-            <hr />
-            <p>Simple background check</p>
-            <hr />
-            <p>Make money easily</p>
-            <br>
-            <br>
-            <% #Become an OhShipper %>
-            <%= link_to "Coming soon", "#overview", :class => "pure-button button-monthly"%>
-          </div>
-        </div> -->
-      </div>
+<div class="container">
+  <div class="row featurette">
+    <div class="col-md-6" style="margin: auto;">
+      <h2 class="featurette-heading">Affordable. <span class="text-muted">No hidden fees. No signup fee.</span></h2>
+      <p class="lead">We ship at a lower cost by shipping from our location closest to you. OhShip charges a 20%
+      serice fee on the shipping cost (e.g. $2 if the shipping cost is $10). This fee covers the cost of running
+      this site and allows us to offer top notch service.</p>
     </div>
   </div>
 </div>
 
 <hr class="featurette-divider">
+
+<div class="container">
+  <div class="row featurette">
+    <div class="col-md-6 col-md-offset-6 right">
+      <h2 class="featurette-heading">Safe. <span class="text-muted">Secure.</span></h2>
+      <p class="lead">We take extra care in making sure your merchandise is shipped to you in perfect condition.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="featurette-divider no-bottom-margin">
+
+<div id="signup" class="section expanded">
+  <div class="container">
+    <h1 class="center">Get started with OhShip!</h1>
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-md-5" style="margin: auto;">
+        <div class="title title-starter">
+          Shop online. Ship anywhere.
+        </div>
+        <div class="signup-inner">
+          <!--<div class="price">
+            20%
+          </div>
+          <div class="renewal">
+            as additional fees
+          </div>
+          <hr />-->
+          <p>No hidden fees</p>
+          <hr />
+          <p>No signup fee</p>
+          <br>
+          <% #Sign up for buying %>
+          <%= link_to "Sign up", "#overview", :class => "btn button-starter"%>
+        </div>
+      </div>
+      <div class="col-md-5 col-md-offset-1 hidden">
+        <div class="title title-monthly">
+          Become an OhShipper
+        </div>
+        <div class="signup-inner">
+          <div class="price">
+            50%
+          </div>
+          <div class="renewal">
+            commission on packages you ship
+          </div>
+          <hr />
+          <p>Simple background check</p>
+          <hr />
+          <p>Make money easily</p>
+          <br>
+          <br>
+          <% #Become an OhShipper %>
+          <%= link_to "Coming soon", "#overview", :class => "pure-button button-monthly"%>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div id="social" class="section">
   <div class="container center">
