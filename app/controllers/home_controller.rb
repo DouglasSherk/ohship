@@ -8,10 +8,11 @@ class HomeController < ApplicationController
   end
 
   def details
-
   end
 
   def terms
+  end
 
+  def prohibited
   end
 end

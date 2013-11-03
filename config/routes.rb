@@ -25,6 +25,7 @@ Ohship::Application.routes.draw do
 
   get "details" => "home#details"
   get "terms" => "home#terms"
+  get "prohibited" => "home#prohibited"
 
   root 'home#index'
 
