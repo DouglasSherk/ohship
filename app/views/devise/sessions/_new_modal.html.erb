@@ -7,7 +7,7 @@
       </div>
       <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :class => "form") do |f| %>
         <div class="modal-body">
-          <%= link_to user_omniauth_authorize_path(:facebook), :class => "facebook-connect" do %>
+          <%= link_to user_omniauth_authorize_path(:facebook), :class => "facebook-connect", :style => "margin: auto;" do %>
             <span><%= fa_icon "facebook", :class => "fa-3x" %></span>
             <span>Log in with Facebook</span>
           <% end %>

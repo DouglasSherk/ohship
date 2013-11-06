@@ -124,6 +124,48 @@ body {
           font-weight: 200;
           text-shadow: 1px 1px 1px black;
         }
+
+        .form-group {
+          display: table;
+          width: 300px;
+
+          @include respond-to(handhelds) {
+            display: block;
+            margin: auto;
+          }
+
+          .or {
+            display: table-cell;
+            font-size: 32px;
+            line-height: 55px;
+            vertical-align: middle;
+            color: #aaa;
+
+            @include respond-to(handhelds, tablets) {
+              display: none;
+            }
+
+            .or-inner {
+              margin-left: -55px;
+              margin-right: 25px;
+
+              @include respond-to(desktops) {
+                margin-left: 10px;
+              }
+            }
+          }
+
+          .email {
+            display: table-cell;
+            height: 55px;
+            font-size: 20px;
+            text-align: left;
+
+            @include respond-to(handhelds, tablets) {
+              margin-top: 5px;
+            }
+          }
+        }
       }
 
       &#mobile {
@@ -357,7 +399,6 @@ body {
 
     .navbar-nav {
       line-height: 40px;
-      font-size: 18px;
 
       a {
         margin-left: 25px;
@@ -370,8 +411,9 @@ body {
         &, &:link, &:visited, &:hover, &:active {
           @include transition();
 
-          text-transform: uppercase;
           color: #999;
+          font-size: 20px;
+          font-weight: 100;
 
           &.active, &:hover {
             color: white;
@@ -505,48 +547,6 @@ body {
 
       @include respond-to(handhelds) {
         margin: auto;
-      }
-    }
-
-    .form-group {
-      display: table;
-      width: 300px;
-
-      @include respond-to(handhelds) {
-        display: block;
-        margin: auto;
-      }
-
-      .or {
-        display: table-cell;
-        font-size: 32px;
-        line-height: 55px;
-        vertical-align: middle;
-        color: #aaa;
-
-        @include respond-to(handhelds, tablets) {
-          display: none;
-        }
-
-        .or-inner {
-          margin-left: -55px;
-          margin-right: 25px;
-
-          @include respond-to(desktops) {
-            margin-left: 10px;
-          }
-        }
-      }
-
-      .email {
-        display: table-cell;
-        height: 55px;
-        font-size: 20px;
-        text-align: left;
-
-        @include respond-to(handhelds, tablets) {
-          margin-top: 5px;
-        }
       }
     }
   }
