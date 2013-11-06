@@ -87,6 +87,10 @@ body {
         font-size: 40px;
         line-height: 60px;
       }
+
+      a:hover {
+        text-decoration: none;
+      }
     }
 
     &.expanded {
