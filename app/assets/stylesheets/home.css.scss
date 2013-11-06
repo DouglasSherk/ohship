@@ -20,19 +20,6 @@ body {
       font-size: 18px;
       padding: 80px 0;
 
-      @include respond-to(desktops, widescreens) {
-        background-color: #333;
-      }
-
-      .container {
-        background-color: white;
-
-        @include respond-to(desktops, widescreens) {
-          margin-top: -200px;
-          padding: 50px;
-        }
-      }
-
       h1 {
         margin-top: 0;
         color: #666;
@@ -124,11 +111,10 @@ body {
         background: url(../img/header.png) center center;
         vertical-align: top;
         padding-top: 140px;
-        height: 600px;
+        height: 500px;
 
         h1 {
           color: white;
-          text-transform: uppercase;
           font-size: 60px;
           text-shadow: 1px 1px 1px black;
         }
@@ -465,6 +451,7 @@ body {
     }
 
     a.facebook-connect {
+      @include border-radius(5px);
       width: 300px;
       $bg-color: #4063b3;
       $bg-color-gradient: #3c599d;
