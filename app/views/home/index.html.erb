@@ -7,119 +7,100 @@
 <div id="overview" class="section expanded">
   <div class="container auth">
     <div class="header-bg">
-      <h1 class="center">Website doesn't ship to your address? We'll do it for you.</h1>
-      <h2 class="center">OhShip ships items to anywhere from shopping websites.</h2>
+      <h1>Shop online. Ship anywhere.</h1>
+      <h2>OhShip ships items to anywhere from shopping websites.</h2>
     </div>
     <br><br>
-    <div class="row-fluid">
-      <div class="col-md-4 hero-unit">
-        <h2>Sign up</h2>
-
+    <div class="row-fluid row-gutterless">
+      <div class="col-md-4">
         <%= link_to user_omniauth_authorize_path(:facebook), :class => "facebook-connect" do %>
           <span><%= fa_icon "facebook", :class => "fa-3x" %></span>
           <span>Log in with Facebook</span>
         <% end %>
-
-        <hr class="soften" />
-        <div class="center">
-          <span class="or"> or </span>
-        </div>
-
-        <h3>Sign up by email</h3>
-
+      </div>
+      <div class="col-md-4 mobile-or">
+        <span class="or">- or -</span>
+      </div>
+      <div class="col-md-4">
         <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
           <%= hidden_field_tag :email_only, true %>
-
-          <div class="form-group"><%= f.email_field :email, :class => "form-control", :placeholder => "Email address" %></div>
-
-          <div class="row row-gutterless">
-            <div class="col-xs-6">
-              <div class="form-group"><%= f.submit "Sign up", :class => "btn btn-primary" %></div>
-            </div>
-            <div class="col-xs-6 right">
-              <%= link_to "Or login instead", new_user_session_path %>
-            </div>
+          <div class="form-group">
+            <span class="or"><div class="or-inner">or</div></span>
+            <%= f.email_field :email, :class => "email form-control col-xs-6", :placeholder => "Email address" %>
           </div>
         <% end %>
       </div>
-      <div class="col-md-8 pins">
-      </div>
     </div>
   </div>
 </div>
 
-<hr class="featurette-divider no-top-margin">
-
-<h1 class="featurette-heading">Meet OhShip</h1>
-<h2 class="featurette-subheading center">Shop online. Ship anywhere.</h2>
-
-<hr class="featurette-divider">
-
-<div id="features" class="section container">
-  <div class="row-fluid featurette">
-    <div class="col-md-4">
-      <div class="step">
-        <%= image_tag "../img/ribbon1.png", :class => "ribbon" %>
-        <%= image_tag "../img/checkout.png", :class => "process" %>
-        <div class="step-caption">
-          <h2>Shop like usual</h2>
-          <p>Tell us where you want your items shipped, and we'll provide you with a forwarding address.</p>
-          <%= link_to "Read more", details_path, :class => "btn btn-primary" %>
+<div id="features" class="section">
+  <div class="container">
+    <h1>How it Works</h1>
+    <hr class="soften" />
+    <div class="row-fluid">
+      <div class="col-md-4">
+        <div class="step">
+          <%= image_tag "../img/ribbon1.png", :class => "ribbon" %>
+          <%= image_tag "../img/checkout.png", :class => "process" %>
+          <div class="step-caption">
+            <h2>Shop like usual</h2>
+            <p>Tell us where you want your items shipped, and we'll provide you with a forwarding address.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="step">
+          <%= image_tag "../img/ribbon2.png", :class => "ribbon" %>
+          <%= image_tag "../img/ohship-lg.png", :class => "process", :style => "top: 125px !important;" %>
+          <div class="step-caption">
+            <h2>We send it</h2>
+            <p>When the merchandise arrives at our address, we'll send it to your home.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="step last">
+          <%= image_tag "../img/ribbon3.png", :class => "ribbon" %>
+          <%= image_tag "../img/house-gift.png", :class => "process" %>
+          <div class="step-caption">
+            <h2>You receive it</h2>
+            <p>You get it quickly and without hidden fees.</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
-      <div class="step">
-        <%= image_tag "../img/ribbon2.png", :class => "ribbon" %>
-        <%= image_tag "../img/ohship-lg.png", :class => "process", :style => "top: 125px !important;" %>
-        <div class="step-caption">
-          <h2>We send it</h2>
-          <p>When the merchandise arrives at our address, we'll send it to your home.</p>
-          <%= link_to "Read more", details_path, :class => "btn btn-primary" %>
-        </div>
-      </div>
+    <div class="row-fluid">
+      <%= link_to "Read more", details_path, :class => "btn btn-primary btn-lg" %>
     </div>
-    <div class="col-md-4">
-      <div class="step last">
-        <%= image_tag "../img/ribbon3.png", :class => "ribbon" %>
-        <%= image_tag "../img/house-gift.png", :class => "process" %>
-        <div class="step-caption">
-          <h2>You receive it</h2>
-          <p>You get it quickly and without hidden fees.</p>
-          <%= link_to "Read more", details_path, :class => "btn btn-primary" %>
-        </div>
+  </div>
+</div>
+
+<div class="featurette featurette-1">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="featurette-heading">Safe. <span class="text-muted">Secure.</span></h2>
+        <p class="lead">We take extra care in making sure your merchandise is shipped to you in perfect condition.</p>
       </div>
     </div>
   </div>
 </div>
 
-<hr class="featurette-divider">
-
-<div class="container">
-  <div class="row featurette">
-    <div class="col-md-6" style="margin: auto;">
-      <h2 class="featurette-heading">Affordable. <span class="text-muted">No hidden fees. No signup fee.</span></h2>
-      <p class="lead">We ship at a lower cost by shipping from our location closest to you. OhShip charges a 20%
-      service fee on the shipping cost (e.g. $2 if the shipping cost is $10). This fee covers the cost of running
-      this site and allows us to offer top notch service.</p>
+<div class="featurette featurette-2">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-6 right">
+        <h2 class="featurette-heading">Affordable. <span class="text-muted">No hidden fees. No signup fee.</span></h2>
+        <p class="lead">We ship at a lower cost by shipping from our location closest to you. OhShip charges a 20%
+        service fee on the shipping cost (e.g. $2 if the shipping cost is $10). This fee covers the cost of running
+        this site and allows us to offer top notch service.</p>
+      </div>
     </div>
   </div>
 </div>
 
-<hr class="featurette-divider">
-
-<div class="container">
-  <div class="row featurette">
-    <div class="col-md-6 col-md-offset-6 right">
-      <h2 class="featurette-heading">Safe. <span class="text-muted">Secure.</span></h2>
-      <p class="lead">We take extra care in making sure your merchandise is shipped to you in perfect condition.</p>
-    </div>
-  </div>
-</div>
-
-<hr class="featurette-divider no-bottom-margin">
-
-<div id="signup" class="section expanded">
+<div id="signup" class="section expanded hidden">
   <div class="container">
     <h1 class="center">Get started with OhShip!</h1>
     <br>
@@ -172,7 +153,7 @@
 
 <div id="social" class="section">
   <div class="container center">
-    <h1 class="center">Find us on social networks</h1>
+    <h1 class="center no-top-margin">Find us on social networks</h1>
     <%= link_to "http://www.facebook.com/ohshipme" do %>
       <%= fa_stacked_icon "facebook inverse", base: "circle", :class => "fa-5x" %>
     <% end %>

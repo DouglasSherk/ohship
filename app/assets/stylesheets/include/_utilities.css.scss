@@ -1,4 +1,4 @@
-$break-small: 480px;
+$break-small: 768px;
 $break-large: 992px;
 $break-xlarge: 1200px;
 
@@ -63,4 +63,11 @@ $break-tall: 768px;
 @mixin box-shadow($shadow) {
   -webkit-box-shadow: $shadow;
   box-shadow: $shadow;
+}
+
+@mixin background-cover() {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }

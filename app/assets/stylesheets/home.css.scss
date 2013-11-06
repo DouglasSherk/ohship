@@ -16,7 +16,33 @@ body {
   .section {
     &#features {
       text-align: center;
-      color: #888;
+      color: #999;
+      font-size: 18px;
+      padding: 80px 0;
+
+      @include respond-to(desktops, widescreens) {
+        background-color: #333;
+      }
+
+      .container {
+        background-color: white;
+
+        @include respond-to(desktops, widescreens) {
+          margin-top: -200px;
+          padding: 50px;
+        }
+      }
+
+      h1 {
+        margin-top: 0;
+        color: #666;
+        text-transform: uppercase;
+        font-size: 52px;
+      }
+
+      hr.soften {
+        margin-bottom: 50px;
+      }
 
       .step {
         @include border-radius(5px);
@@ -27,11 +53,10 @@ body {
 
         position: relative;
         padding: 0;
-        background-color: white;
-        height: 450px;
+        height: 425px;
 
         @include respond-to(handhelds, tablets) {
-          margin-bottom: 100px;
+          margin-bottom: 50px;
 
           &.last {
             margin-bottom: 0;
@@ -55,7 +80,7 @@ body {
 
         .step-caption {
           position: absolute;
-          top: 300px;
+          top: 270px;
           width: 100%;
         }
       }
@@ -96,25 +121,22 @@ body {
       }
 
       &#overview {
-        background: url(../img/header_tile.png) center center;
+        background: url(../img/header.png) center center;
         vertical-align: top;
         padding-top: 140px;
-
-        .header-bg {
-          padding: 10px;
-          background: rgba(0, 0, 0, 0.3);
-        }
+        height: 600px;
 
         h1 {
           color: white;
           text-transform: uppercase;
-          font-weight: 400;
-          font-size: 36px;
+          font-size: 60px;
+          text-shadow: 1px 1px 1px black;
         }
 
         h2 {
           color: white;
           font-weight: 200;
+          text-shadow: 1px 1px 1px black;
         }
       }
 
@@ -270,7 +292,6 @@ body {
       }
 
       .hero-unit {
-        margin-bottom: 75px;
         max-width: 400px;
 
         @include respond-to(handhelds, tablets) {
@@ -279,17 +300,12 @@ body {
         }
 
         @include respond-to(desktops) {
-          margin-top: 60px;
           width: 350px;
           margin-left: 0;
         }
 
-        h2 {
-          margin-bottom: 10px;
-        }
-
-        h3 {
-          margin: 15px 0 5px 0;
+        h1, h2, h3 {
+          margin: 0;
         }
 
         color: white;
@@ -410,8 +426,20 @@ body {
   }
 
   .featurette {
+    color: white;
     margin-left: -15px;
     margin-right: -15px;
+    padding: 80px 0;
+
+    &.featurette-1 {
+      @include background-cover;
+      background: url(../img/point1.png) center center;
+    }
+
+    &.featurette-2 {
+      @include background-cover;
+      background: url(../img/point2.png) center center;
+    }
   }
 
   .featurette-divider {
@@ -419,12 +447,25 @@ body {
   }
 
   .auth {
+    position: relative;
+    left: -25%;
+    opacity: 0;
+
+    &.active {
+      @include respond-to(desktops, widescreens) {
+        @include transition(0.8s);
+      }
+
+      left: auto;
+      opacity: 1;
+    }
+
     .modal-dialog {
       width: 400px;
     }
 
     a.facebook-connect {
-      width: 100%;
+      width: 300px;
       $bg-color: #4063b3;
       $bg-color-gradient: #3c599d;
       background-color: $bg-color;
@@ -436,6 +477,10 @@ body {
       box-shadow: 0 1px 2px 0 rgba(0,0,0,0.18),inset 0 0 1px 1px rgba(255,255,255,0.09);
       display: table;
       font-weight: bold;
+
+      @include respond-to(handhelds) {
+        margin: auto;
+      }
 
       &:hover {
         text-decoration: none;
@@ -459,12 +504,63 @@ body {
       }
     }
 
-    .or {
+    .mobile-or {
+      display: none;
+      font-size: 32px;
+      line-height: 55px;
+      width: 300px;
       text-align: center;
-      color: #999;
-      text-transform: uppercase;
-      font-size: 16px;
-      margin-top: -500px;
+      color: #aaa;
+
+      @include respond-to(handhelds, tablets) {
+        display: block;
+      }
+
+      @include respond-to(handhelds) {
+        margin: auto;
+      }
+    }
+
+    .form-group {
+      display: table;
+      width: 300px;
+
+      @include respond-to(handhelds) {
+        display: block;
+        margin: auto;
+      }
+
+      .or {
+        display: table-cell;
+        font-size: 32px;
+        line-height: 55px;
+        vertical-align: middle;
+        color: #aaa;
+
+        @include respond-to(handhelds, tablets) {
+          display: none;
+        }
+
+        .or-inner {
+          margin-left: -55px;
+          margin-right: 25px;
+
+          @include respond-to(desktops) {
+            margin-left: 10px;
+          }
+        }
+      }
+
+      .email {
+        display: table-cell;
+        height: 55px;
+        font-size: 20px;
+        text-align: left;
+
+        @include respond-to(handhelds, tablets) {
+          margin-top: 5px;
+        }
+      }
     }
   }
 }

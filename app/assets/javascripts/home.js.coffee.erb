@@ -1,7 +1,7 @@
 ready = ->
   adjustDimensions = ->
     $('.section.expanded').css('width', $(window).width())
-    $('.section.expanded').first().css('height', $(window).height())
+    #$('.section.expanded').first().css('height', $(window).height()*(1/2))
 
   $(window).resize adjustDimensions
   adjustDimensions()
@@ -37,6 +37,8 @@ ready = ->
 
     $('.navbar a').removeClass('active')
     findSectionById($(closestSection).attr('id')).addClass('active')
+
+  $('.auth').addClass('active')
 
 $(document).ready ready
 $(document).on 'page:load', ready
