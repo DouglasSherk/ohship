@@ -1,6 +1,9 @@
 $font-family-sans-serif: 'ProximaNova', 'Helvetica Neue', sans-serif;
 @import "twitter/bootstrap";
 
+@import 'include/constants';
+@import 'include/utilities';
+
 @mixin btn-xlg {
   @include button-size($padding-large-vertical, $padding-large-horizontal*2, $font-size-large*1.5, $line-height-large*1.5, $border-radius-large);
 }
@@ -35,6 +38,16 @@ body {
   .row-gutterless div[class*="col-"] {
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .container.thin {
+    @include respond-to(widescreens) {
+      width: 970px;
+    }
+
+    @include respond-to(desktops) {
+      width: 750px;
+    }
   }
 }
 

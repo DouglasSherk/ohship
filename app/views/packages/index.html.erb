@@ -16,7 +16,7 @@
   </div>
 <% elsif is_shippee? %>
   <div class="alert alert-info">
-    <h3>Limited time offer!</h3>
+    <h3 class="no-top-margin">Limited time offer!</h3>
     Get a friend to ship a package and we'll waive our service fee on your next order! Give them this link:<br />
     <% url = new_user_registration_url(:referrer_id => current_user.id) %>
     <strong><%= link_to url, url %></strong><br />
@@ -26,7 +26,7 @@
 <div class="page-heading">
   <h2>Packages</h2>
   <% if is_shippee? %>
-    <%= link_to 'Start a Package', new_package_path, :class => 'btn btn-primary btn-lg' %>
+    <%= link_to 'Begin', new_package_path, :class => 'btn btn-primary btn-lg' %>
   <% end %>
   <%= link_to "Read about how we work", details_path, :class => 'btn btn-lg' %>
 </div>
