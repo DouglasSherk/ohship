@@ -101,12 +101,12 @@
   </div>
 </div>
 
-<div id="signup" class="section expanded hidden">
-  <div class="container">
-    <h1 class="center">Get started with OhShip!</h1>
+<div id="signup" class="section expanded">
+  <div class="container center">
+    <h1>Get started with OhShip!</h1>
     <br>
-    <br>
-    <div class="row">
+    <%= link_to "Sign up", new_user_registration_path, :class => "btn button-starter"%>
+    <div class="row hidden">
       <div class="col-md-5" style="margin: auto;">
         <div class="title title-starter">
           Shop online. Ship anywhere.
