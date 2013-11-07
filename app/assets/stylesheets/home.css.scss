@@ -132,6 +132,7 @@ body {
         .form-group {
           display: table;
           width: 300px;
+          position: relative;
 
           @include respond-to(handhelds) {
             display: block;
@@ -167,6 +168,25 @@ body {
 
             @include respond-to(handhelds, tablets) {
               margin-top: 5px;
+            }
+          }
+
+          button.email-signup {
+            position: absolute;
+            right: 0;
+            height: 55px;
+            -webkit-border-radius: 0;
+            -webkit-border-top-right-radius: 3px;
+            -webkit-border-bottom-right-radius: 3px;
+            -moz-border-radius: 0;
+            -moz-border-radius-topright: 3px;
+            -moz-border-radius-bottomright: 3px;
+            border-radius: 0;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+
+            @include respond-to(handhelds, tablets) {
+              top: 5px;
             }
           }
         }

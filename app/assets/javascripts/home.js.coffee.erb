@@ -19,6 +19,28 @@ ready = ->
       , 500
     e.preventDefault()
 
+  $('.email').keypress (e) ->
+    button = $('.email-signup')
+    icon = button.find('i')
+    regex = /\S+@\S+\.\S+/
+    email = $(@)
+    if (button.hasClass 'btn-primary' || button.hasClass 'btn-danger') && regex.test(email.val())
+      button.removeClass 'btn-primary btn-danger'
+      button.addClass 'btn-success'
+      icon.removeClass 'fa-envelope fa-times'
+      icon.addClass 'fa-check'
+
+  $('.email').change (e) ->
+    button = $('.email-signup')
+    icon = button.find('i')
+    regex = /\S+@\S+\.\S+/
+    email = $(@)
+    if (button.hasClass 'btn-primary' || button.hasClass 'btn-success') && !regex.test(email.val())
+      button.removeClass 'btn-primary btn-success'
+      button.addClass 'btn-danger'
+      icon.removeClass 'fa-envelope fa-check'
+      icon.addClass 'fa-times'
+
   $(window).scroll ->
     scrollTop = $(window).scrollTop()
 
