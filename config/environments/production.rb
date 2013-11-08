@@ -78,7 +78,4 @@ Ohship::Application.configure do
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
-
-  # Google Analytics tracking number.
-  GA.tracker = "UA-45276102-1"
 end
