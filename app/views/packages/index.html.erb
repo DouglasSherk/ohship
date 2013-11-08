@@ -1,5 +1,12 @@
 <% content_for :title do %>Packages<% end %>
 
+<% if @error %>
+  <div class="alert alert-danger">
+    <%= fa_icon "times-circle" %>
+    <p><%= @error %></p>
+  </div>
+<% end %>
+
 <% if current_user.referral_credits > 0 %>
   <div class="alert alert-success">
     Congratulations! You have <strong><%= current_user.referral_credits %></strong> <%= "credit".pluralize(current_user.referral_credits) %>
@@ -20,6 +27,13 @@
     Get a friend to ship a package and we'll waive our service fee on your next order! Give them this link:<br />
     <% url = new_user_registration_url(:referrer_id => current_user.id) %>
     <strong><%= link_to url, url %></strong><br />
+  </div>
+<% end %>
+
+<% if can? :admin, Package %>
+  <div class="alert alert-info">
+    <h3 class="no-top-margin">Administrator Panel</h3>
+    <%= link_to "Create No Fee Shipment Link", new_coupon_path, :class => "btn btn-primary" %>
   </div>
 <% end %>
 

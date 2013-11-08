@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131031195748) do
+ActiveRecord::Schema.define(version: 20131108180936) do
+
+  create_table "coupons", force: true do |t|
+    t.integer  "shippee_id"
+    t.string   "code"
+    t.integer  "type"
+    t.datetime "used_at"
+    t.datetime "expires_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "feedback", force: true do |t|
     t.integer "package_id"

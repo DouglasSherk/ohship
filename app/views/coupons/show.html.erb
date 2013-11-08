@@ -1,0 +1,55 @@
+<% if can? :manage, @coupon %>
+  <div class="alert alert-info">
+    <%= fa_icon "info" %>
+    <p>You are viewing this coupon as an administrator. Viewing it will have
+    no effect. You can copy and paste this link to the coupon recipient:
+    <% url = coupon_url(@coupon.code) %>
+    <%= link_to url, url, :class => "alert-link" %></p>
+  </div>
+<% end %>
+
+<% if @coupon.nil? %>
+  <div class="alert alert-danger">
+    <%= fa_icon "times-circle" %>
+    <p>Sorry, we couldn't find this coupon. If you think this is a mistake,
+    please contact us at
+    <%= link_to "hello@ohship.me", "mailto:hello@ohship.me", :class => "alert-link" %>.</p>
+  </div>
+<% elsif @error %>
+  <div class="alert alert-danger">
+    <%= fa_icon "times-circle" %>
+    <p>We're sorry, but there's been an error processing your coupon. We're
+    alerting our staff right away. You can also contact us at
+    <%= link_to "hello@ohship.me", "mailto:hello@ohship.me", :class => "alert-link" %>
+    if you'd like.
+  </div>
+<% elsif @used %>
+  <div class="alert alert-success">
+    <%= fa_icon "check" %>
+    <p>Congratulations! You have redeemed your coupon and your next
+    shipment with us will have no service fees. That's 20% off! Thank you
+    for using OhShip.</p>
+  </div>
+<% elsif @coupon.expired? %>
+  <div class="alert alert-danger">
+    <%= fa_icon "times-circle" %>
+    <p>We're sorry, but this coupon has expired. If you think this is a
+    mistake, please contact us at
+    <%= link_to "hello@ohship.me", "mailto:hello@ohship.me", :class => "alert-link" %>.</p>
+  </div>
+<% elsif @coupon.used? %>
+  <div class="alert alert-danger">
+    <%= fa_icon "times-circle" %>
+    <p>
+      <% if @coupon.shippee == current_user %>
+        You have already used this coupon. If you're having trouble, please
+        contact us at
+        <%= link_to "hello@ohship.me", "mailto:hello@ohship.me", :class => "alert-link" %>.
+      <% else %>
+        Someone else has already used this coupon. If you think this is a
+        mistake, please contact us at
+        <%= link_to "hello@ohship.me", "mailto:hello@ohship.me", :class => "alert-link" %>.
+      <% end %>
+    </p>
+  </div>
+<% end %>

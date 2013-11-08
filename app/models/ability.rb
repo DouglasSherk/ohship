@@ -20,9 +20,11 @@ class Ability
 
     cannot :admin, Package
     cannot :admin, Photo
+    cannot :admin, Coupon
     if user.user_type == User::ADMIN
       can [:admin, :manage], Package
       can [:admin, :manage], Photo
+      can [:admin, :manage], Coupon
     end
   end
 end

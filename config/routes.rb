@@ -13,6 +13,8 @@ Ohship::Application.routes.draw do
     resources :photos
   end
 
+  resources :coupons
+
   post "presignup" => "presignup#index"
 
   get "users/profile" => "users#profile"
