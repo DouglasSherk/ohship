@@ -100,7 +100,9 @@ class PackagesController < ApplicationController
     respond_to do |format|
       if set_package_dimensions && @package.save
         admins = User.where(:user_type => User::ADMIN).all
-        Mailer.notification_email(admins, @package, '[Administrator] Shippee has submitted a package', 'admin_shippee_submitted').deliver
+        admins.each do |admin|
+          Mailer.notification_email(admin, @package, '[Administrator] Shippee has submitted a package', 'admin_shippee_submitted').deliver
+        end
         auto_match_shipper
 
         format.html { redirect_to @package, notice: 'Package was successfully created.' }
