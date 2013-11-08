@@ -12,7 +12,7 @@
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
-    <%= analytics_init if Rails.env.production? %>
+    <%= render "analytics/segment" %>
   </head>
   <body>
     <%= render "devise/sessions/new_modal" %>

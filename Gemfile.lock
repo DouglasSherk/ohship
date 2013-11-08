@@ -7,9 +7,9 @@ GIT
 
 GIT
   remote: git://github.com/bokmann/font-awesome-rails.git
-  revision: 25bd7287274897a22dd03d35b9fe7faa9a3b9dbe
+  revision: b4ca904141e3ca50c8cfdfd5ce84af4062b6f1dd
   specs:
-    font-awesome-rails (4.0.1.0)
+    font-awesome-rails (4.0.3.0)
       railties (>= 3.2, < 5.0)
 
 GEM
@@ -39,7 +39,11 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
-    anjlab-bootstrap-rails (3.0.0.3)
+    analytics-ruby (0.5.0)
+      faraday (>= 0.8, < 0.10)
+      faraday_middleware (>= 0.8, < 0.10)
+      multi_json (~> 1.0)
+    anjlab-bootstrap-rails (3.0.2.0)
       railties (>= 3.0)
       sass (>= 3.2)
     arel (4.0.1)
@@ -48,7 +52,7 @@ GEM
     bcrypt-ruby (3.1.2-x86-mingw32)
     builder (3.1.4)
     cancan (1.6.10)
-    capistrano (3.0.0)
+    capistrano (3.0.1)
       i18n
       rake (>= 10.0.0)
       sshkit (>= 0.0.23)
@@ -66,7 +70,7 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     country_select (1.2.0)
-    devise (3.1.1)
+    devise (3.2.0)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
@@ -76,8 +80,9 @@ GEM
     execjs (2.0.2)
     faraday (0.8.8)
       multipart-post (~> 1.2.0)
+    faraday_middleware (0.9.0)
+      faraday (>= 0.7.4, < 0.9)
     geoip (1.3.3)
-    google-analytics-rails (0.0.4)
     hashie (2.0.5)
     hike (1.2.3)
     httparty (0.12.0)
@@ -104,7 +109,7 @@ GEM
     multi_json (1.8.2)
     multi_xml (0.5.5)
     multipart-post (1.2.0)
-    mysql2 (0.3.13)
+    mysql2 (0.3.14)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.7.0)
@@ -187,14 +192,14 @@ GEM
     thread_safe (0.1.3)
       atomic
     tilt (1.4.1)
-    tins (0.12.0)
+    tins (0.13.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
     turbolinks (1.3.0)
       coffee-rails
     tzinfo (0.3.38)
-    uglifier (2.3.0)
+    uglifier (2.3.1)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     warden (1.2.3)
@@ -205,6 +210,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  analytics-ruby (< 1.0)
   anjlab-bootstrap-rails
   cancan
   capistrano
@@ -216,7 +222,6 @@ DEPENDENCIES
   devise
   font-awesome-rails!
   geoip
-  google-analytics-rails
   hipchat!
   jbuilder (~> 1.2.0)
   jquery-rails
