@@ -8,7 +8,7 @@ ready = ->
     return if !e.target? || target.attr('href')[0] != '#'
     if (target = $("#{target.attr('href')}")).length
       $('html, body').animate
-        scrollTop: target.offset().top - 170
+        scrollTop: target.offset().top - 92
       , 500
     e.preventDefault()
 
