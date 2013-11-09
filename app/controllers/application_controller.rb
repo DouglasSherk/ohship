@@ -6,6 +6,29 @@ class ApplicationController < ActionController::Base
   layout 'content'
 
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
+  after_action :analytics_track
+
+  Warden::Manager.after_authentication do |user, auth, opts|
+    Analytics.identify(
+      user_id: user.id,
+      traits: {
+        name: user.name,
+        email: user.email,
+        user_type: user.user_type,
+        referral_credits: user.referral_credits,
+        country: user.country,
+        provider: user.provider,
+      }
+    )
+  end
+
+  def analytics_track
+    Analytics.track(
+      user_id: current_user ? current_user.id : User::GUEST_NAME,
+      event: 'View ' + params[:controller].capitalize + ' ' + params[:action].capitalize,
+      properties: params.select{ |k, v| !['controller', 'action'].include?(k) },
+    )
+  end
 
   def after_inactive_sign_up_path_for(resource)
     packages_path(:signup => true)

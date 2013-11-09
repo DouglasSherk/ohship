@@ -76,6 +76,11 @@ class PackagesController < ApplicationController
     @package.ship_to_postal_code = current_user.postal_code
 
     @country = current_user.country || User.guess_user_country(request.remote_ip)
+
+    Analytics.track(
+      user_id: current_user.id,
+      event: 'Begin Package',
+    )
   end
 
   # POST /packages
@@ -99,6 +104,11 @@ class PackagesController < ApplicationController
 
     respond_to do |format|
       if set_package_dimensions && @package.save
+        Analytics.track(
+          user_id: current_user.id,
+          event: 'Submitted Package',
+        )
+
         admins = User.where(:user_type => User::ADMIN).all
         admins.each do |admin|
           Mailer.notification_email(admin, @package, '[Administrator] Shippee has submitted a package', 'admin_shippee_submitted').deliver

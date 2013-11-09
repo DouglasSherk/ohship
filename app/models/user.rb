@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   SHIPPER = 1
   ADMIN = 2
 
+  GUEST_NAME = 'guest'
+
   validates :name, presence: true
   validates :user_type, :inclusion => { :in => [SHIPPEE, SHIPPER, ADMIN] }
 

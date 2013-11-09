@@ -4,6 +4,11 @@ class HomeController < ApplicationController
   def index
     if current_user
       redirect_to '/packages'
+    else
+      Analytics.track(
+        user_id: User::GUEST_NAME,
+        event: 'Landing Page',
+      )
     end
   end
 
