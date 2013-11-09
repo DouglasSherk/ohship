@@ -15,7 +15,6 @@ class PackagesController < ApplicationController
   # GET /packages
   # GET /packages.json
   def index
-    @signup = params[:signup]
     @packages = Package.all.select { |package| can? :read, package }
 
     @show = params[:show] || ''
@@ -66,6 +65,8 @@ class PackagesController < ApplicationController
   def new
     authorize! :create, Package
     @package = Package.new
+
+    @signup = params[:signup]
 
     # Load user's address as the default
     @package.ship_to_name = current_user.name

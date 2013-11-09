@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   after_create :send_welcome_email
+  after_create :set_is_new
 
   belongs_to :referrer, :class_name => 'User'
   has_many :referrals, :class_name => 'User', :foreign_key => 'referrer_id'
@@ -34,7 +35,6 @@ class User < ActiveRecord::Base
                          email: auth.info.email,
                          password: Devise.friendly_token[0,20],
                          referrer_id: referrer_id)
-      user.is_new = true
     end
     user
   end
@@ -62,5 +62,9 @@ class User < ActiveRecord::Base
   private
     def send_welcome_email
       Mailer.welcome_email(self).deliver if valid?
+    end
+
+    def set_is_new
+      self.is_new = true
     end
 end

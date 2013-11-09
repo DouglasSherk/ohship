@@ -15,13 +15,7 @@
   </div>
 <% end %>
 
-<% if @signup %>
-  <div class="alert alert-info">
-    Welcome to OhShip! To get started, you can <%= link_to "create a package", new_package_path %>. You can
-    buy your product normally from any retailer, then instead of having it shipped to them, you ship it to us.
-    We'll provide you with an address to have the product shipped to.
-  </div>
-<% elsif is_shippee? %>
+<% if is_shippee? %>
   <div class="alert alert-info">
     <h3 class="no-top-margin">Limited time offer!</h3>
     Get a friend to ship a package and we'll waive our service fee on your next order! Give them this link:<br />

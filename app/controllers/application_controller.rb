@@ -31,11 +31,11 @@ class ApplicationController < ActionController::Base
   end
 
   def after_inactive_sign_up_path_for(resource)
-    packages_path(:signup => true)
+    new_package_path(:signup => true)
   end
 
   def after_sign_up_path_for(resource)
-    packages_path(:signup => true)
+    new_package_path(:signup => true)
   end
 
   def after_sign_in_path_for(resource)
@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
     # as new in the user model.
     if current_user && current_user.is_new
       current_user.is_new = false
-      return packages_path(:signup => true)
+      return new_package_path(:signup => true)
     end
 
     packages_path
