@@ -2,7 +2,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def new
     Analytics.track(
       user_id: User::GUEST_NAME,
-      event: 'Sign Up',
+      event: 'User Sign Up',
     )
 
     # Persist this in the session for the next request
@@ -19,11 +19,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
       return render action: 'new'
     end
 
-    Analytics.track(
-      user_id: User::GUEST_NAME,
-      event: 'Signed Up',
-    )
-
     super
+
+    Analytics.track(
+      user_id: current_user.id,
+      event: 'User Signed Up',
+    )
   end
 end

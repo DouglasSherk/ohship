@@ -29,7 +29,9 @@ ready = ->
         closestDist = dist
 
     $('.navbar a').removeClass('active')
-    findSectionById($(closestSection).attr('id')).addClass('active')
+    sectionId = $(closestSection).attr('id')
+    section = findSectionById($(closestSection).attr('id'))
+    section.addClass('active')
 
   $('.auth').addClass('active')
 

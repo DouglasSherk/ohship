@@ -2,13 +2,12 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!
 
   def profile
-    @user = current_user
-    @signup = params[:signup]
-    @country = @user.country || User.guess_user_country(request.remote_ip)
-    @referral_count = @user.referrals.length
-    @referral_success = @user.referrals.select { |ref|
-      Package.where(:shippee => ref, :state => Package::STATE_COMPLETED).first
-    }.count
+    set_class_variables
+
+    Analytics.track(
+      user_id: current_user.id,
+      event: 'View User Profile',
+    )
   end
 
   def update
@@ -23,7 +22,12 @@ class UsersController < ApplicationController
       flash[:change_notice] = 'Successfully changed profile.'
     end
 
-    profile
+    Analytics.track(
+      user_id: current_user.id,
+      event: 'Save User Profile',
+    )
+
+    set_class_variables
     render action: 'profile'
   end
 
@@ -42,4 +46,15 @@ class UsersController < ApplicationController
         :password_confirmation
       )
     end
+
+    def set_class_variables
+      @user = current_user
+      @signup = params[:signup]
+      @country = @user.country || User.guess_user_country(request.remote_ip)
+      @referral_count = @user.referrals.length
+      @referral_success = @user.referrals.select { |ref|
+        Package.where(:shippee => ref, :state => Package::STATE_COMPLETED).first
+      }.count
+    end
+
 end

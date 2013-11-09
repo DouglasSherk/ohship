@@ -8,6 +8,17 @@ class PhotosController < ApplicationController
         :filename => filename,
         :type => Mime::Type.lookup_by_extension(@photo.file_type.downcase) || 'application/octet-stream',
         :disposition => 'inline'
+
+      Analytics.track(
+        user_id: current_user.id,
+        event: 'Package View Photo',
+        properties: {
+          'Id' => @photo.id,
+          'Photo Type' => @photo.photo_type,
+          'File Type' => @photo.file_type,
+          'Description' => @photo.description,
+        },
+      )
     end
   end
 end

@@ -6,13 +6,14 @@
     instead of having it shipped to them, you ship it to us.  After you fill out
     this form, we'll provide you with an address to have the product shipped
     to.<br><br>
-    Need help? <%= link_to "Read more about how OhShip works.", details_path, :class => "alert-link" %>
+    Need help? <%= link_to "Read more about how OhShip works.", details_path, :class => "alert-link", :id => "packageReadDetailsLink" %>
     <br><br>
-    Or contact us at <%= link_to "hello@ohship.me", "mailto:hello@ohship.me", :class => "alert-link" %>.
+    Or contact us at <%= link_to "hello@ohship.me", "mailto:hello@ohship.me", :class => "alert-link", :id => "packageContactLink" %>.
   </div>
 <% else %>
   <div class="alert alert-info">
-    Need help? <%= link_to "Read more about how OhShip works.", details_path, :class => "alert-link" %>
+    Need help? <%= link_to "Read more about how OhShip works.", details_path, :class => "alert-link", :id => "packageReadDetailsLink" %>
+    Or contact us at <%= link_to "hello@ohship.me", "mailto:hello@ohship.me", :class => "alert-link", :id => "packageContactLink" %>.
   </div>
 <% end %>
 
@@ -102,7 +103,7 @@
     <%= f.label :description, 'What is it?', :class => 'col-sm-2 control-label' %>
     <div class="col-sm-10">
       <%= f.text_field :description, :class => 'form-control' %>
-      <%= link_to "Read about prohibited items", prohibited_path %>
+      <%= link_to "Read about prohibited items", prohibited_path, :id => "packageProhibitedLink" %>
     </div>
   </div>
 

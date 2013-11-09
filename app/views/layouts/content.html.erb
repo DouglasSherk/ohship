@@ -13,7 +13,7 @@
     <script src="https://checkout.stripe.com/v2/checkout.js"></script>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
-    <%= render "analytics/segment" %>
+    <%= render "analytics/segment_inject" %>
   </head>
   <body>
     <div class="content navbar navbar-inverse navbar-fixed-top">

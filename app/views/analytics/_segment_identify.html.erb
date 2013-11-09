@@ -1,0 +1,12 @@
+<script>
+  analytics.identify(<%= raw "'#{current_user.id}'" %>, {
+    <% # Built-in traits. %>
+    name: <%= raw "'#{current_user.name}'" %>,
+    email: <%= raw "'#{current_user.email}'" %>,
+    created: <%= raw "'#{current_user.created_at}'" %>,
+    <% # Custom traits. %>
+    'User Type': <%= raw "'#{current_user.user_type}'" %>,
+    'Referral Credits': <%= raw "'#{current_user.referral_credits}'" %>,
+    'Provider': <%= raw "'#{current_user.provider}'" %>,
+  });
+</script>

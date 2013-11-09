@@ -6,28 +6,32 @@ class ApplicationController < ActionController::Base
   layout 'content'
 
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
-  after_action :analytics_track
+  before_action :maybe_identify_user
 
-  Warden::Manager.after_authentication do |user, auth, opts|
+  def self.identify_user(user, _session)
+    _session[:identified] = true
     Analytics.identify(
       user_id: user.id,
       traits: {
+        # Built-in traits.
         name: user.name,
         email: user.email,
-        user_type: user.user_type,
-        referral_credits: user.referral_credits,
-        country: user.country,
-        provider: user.provider,
-      }
+        created: user.created_at,
+
+        # Custom traits.
+        'User Type' => user.user_type,
+        'Referral Credits' => user.referral_credits,
+        'Provider' => user.provider,
+      },
     )
   end
 
-  def analytics_track
-    Analytics.track(
-      user_id: current_user ? current_user.id : User::GUEST_NAME,
-      event: 'View ' + params[:controller].capitalize + ' ' + params[:action].capitalize,
-      properties: params.select{ |k, v| !['controller', 'action'].include?(k) },
-    )
+  Warden::Manager.after_authentication do |user, auth, opts|
+    identify_user(user, auth.env['rack.session'])
+  end
+
+  def maybe_identify_user
+    self.class.identify_user(current_user, session) if current_user && !session[:identified]
   end
 
   def after_inactive_sign_up_path_for(resource)

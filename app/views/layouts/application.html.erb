@@ -12,7 +12,7 @@
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
-    <%= render "analytics/segment" %>
+    <%= render "analytics/segment_inject" %>
   </head>
   <body>
     <%= render "devise/sessions/new_modal" %>
@@ -34,9 +34,9 @@
             <ul class="nav navbar-nav navbar-right">
               <% unless current_user %>
                 <%= yield :navbar %>
-                <li><%= link_to "Login", "#loginModal", :class => "btn btn-primary", :data => {:toggle => "modal"} %></li>
+                <li><%= link_to "Login", "#loginModal", :class => "btn btn-primary", :id => 'homeLogin', :data => {:toggle => "modal"} %></li>
               <% else %>
-                <li><%= link_to "Go to App", root_path, :class => "btn btn-primary" %></li>
+                <li><%= link_to "Go to App", root_path, :class => "btn btn-primary", :id => 'homeGoToApp' %></li>
               <% end %>
             </ul>
           </div>

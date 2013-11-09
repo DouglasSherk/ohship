@@ -13,7 +13,7 @@
     <br><br>
     <div class="row-fluid row-gutterless">
       <div class="col-md-4">
-        <%= link_to user_omniauth_authorize_path(:facebook), :class => "facebook-connect" do %>
+        <%= link_to user_omniauth_authorize_path(:facebook), :class => "facebook-connect", :id => "homeFacebookLogin" do %>
           <span><%= fa_icon "facebook", :class => "fa-3x" %></span>
           <span>Log in with Facebook</span>
         <% end %>
@@ -22,11 +22,11 @@
         <span class="or">- or -</span>
       </div>
       <div class="col-md-4">
-        <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+        <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:id => "homeEmailForm"}) do |f| %>
           <%= hidden_field_tag :email_only, true %>
           <div class="form-group">
             <span class="or"><div class="or-inner">or</div></span>
-            <%= f.email_field :email, :class => "email form-control col-xs-6", :placeholder => "Sign up with email" %>
+            <%= f.email_field :email, :class => "email form-control col-xs-6", :placeholder => "Sign up with email", :id => "homeEmailField" %>
             <%= button_tag raw(fa_icon("arrow-right", :class => "fa-lg")), :class => "email-signup btn btn-primary" %>
           </div>
         <% end %>
@@ -72,7 +72,7 @@
       </div>
     </div>
     <div class="row-fluid">
-      <%= link_to "Read more", details_path, :class => "btn btn-primary btn-lg" %>
+      <%= link_to "Read more", details_path, :class => "btn btn-primary btn-lg", :id => 'homeReadMore' %>
     </div>
   </div>
 </div>
@@ -106,7 +106,7 @@
   <div class="container center">
     <h1>Get started with OhShip!</h1>
     <br>
-    <%= link_to "Sign up", new_user_registration_path, :class => "btn button-starter"%>
+    <%= link_to "Sign up", new_user_registration_path, :class => "btn button-starter", :id => "homeSignUp" %>
     <div class="row hidden">
       <div class="col-md-5" style="margin: auto;">
         <div class="title title-starter">
@@ -156,10 +156,10 @@
 <div id="social" class="section">
   <div class="container center">
     <h1 class="center no-top-margin">Find us on social networks</h1>
-    <%= link_to "http://www.facebook.com/ohshipme" do %>
+    <%= link_to "http://www.facebook.com/ohshipme", :id => "homeFacebookPage" do %>
       <%= fa_stacked_icon "facebook inverse", base: "circle", :class => "fa-5x" %>
     <% end %>
-    <%= link_to "http://twitter.com/OhShipMe" do %>
+    <%= link_to "http://twitter.com/OhShipMe", :id => "homeTwitterPage" do %>
       <%= fa_stacked_icon "twitter inverse", base: "circle", :class => "fa-5x" %>
     <% end %>
   </div>

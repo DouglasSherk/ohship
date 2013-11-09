@@ -20,7 +20,7 @@
     <h3 class="no-top-margin">Limited time offer!</h3>
     Get a friend to ship a package and we'll waive our service fee on your next order! Give them this link:<br />
     <% url = new_user_registration_url(:referrer_id => current_user.id) %>
-    <strong><%= link_to url, url %></strong><br />
+    <strong><%= link_to url, url, :id => "packagesListReferralLink" %></strong><br />
   </div>
 <% end %>
 
@@ -36,7 +36,7 @@
   <% if is_shippee? %>
     <%= link_to 'Begin', new_package_path, :class => 'btn btn-primary btn-lg' %>
   <% end %>
-  <%= link_to "Read about how we work", details_path, :class => 'btn btn-lg' %>
+  <%= link_to "Read about how we work", details_path, :class => 'btn btn-lg', :id => "packagesListReadDetails" %>
 </div>
 
 <ul class="nav nav-tabs">
