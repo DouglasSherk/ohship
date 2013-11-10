@@ -106,4 +106,10 @@ body {
   .no-bottom-margin {
     margin-bottom: 0;
   }
+
+  ul.spaced, ol.spaced {
+    li {
+      margin: 10px 0;
+    }
+  }
 }
