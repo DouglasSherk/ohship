@@ -11,14 +11,14 @@ class CouponsController < ApplicationController
       Analytics.track(
         user_id: current_user.id,
         event: 'Admin Coupon Create',
-        properties: serialize_coupon,
+        properties: serialize_resource,
       )
 
       if coupon_type == Coupon::NO_FEE_SHIPMENT
         Analytics.track(
           user_id: current_user.id,
           event: 'User Referral Credit Create',
-          properties: serialize_coupon,
+          properties: serialize_resource,
         )
       end
 
@@ -29,7 +29,7 @@ class CouponsController < ApplicationController
       Analytics.track(
         user_id: current_user.id,
         event: 'Admin Coupon Create Failed',
-        properties: serialize_coupon.merge({
+        properties: serialize_resource.merge({
           'Error' => flash[:error],
         }),
       )
@@ -60,7 +60,7 @@ class CouponsController < ApplicationController
           Analytics.track(
             user_id: current_user.id,
             event: 'User Coupon Redeem Failed',
-            properties: serialize_coupon.merge({
+            properties: serialize_resource.merge({
               'Error' => flash[:error],
             }),
           )
@@ -69,23 +69,17 @@ class CouponsController < ApplicationController
             Analytics.track(
               user_id: current_user.id,
               event: 'User Referral Credit Redeem',
-              properties: serialize_coupon,
+              properties: serialize_resource,
             )
           end
 
           Analytics.track(
             user_id: current_user.id,
             event: 'User Coupon Redeem',
-            properties: serialize_coupon,
+            properties: serialize_resource,
           )
         end
       end
     end
   end
-
-  private
-
-    def serialize_coupon
-      @coupon.attributes.select{ |k, v| !['updated_at', 'created_at'].include?(k) }
-    end
 end

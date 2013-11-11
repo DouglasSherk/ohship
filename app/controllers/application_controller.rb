@@ -77,4 +77,15 @@ class ApplicationController < ActionController::Base
       redirect_to new_user_session_url(:redirect => request.path)
     end
   end
+
+  def serialize_resource
+    strip_attrs = ['created_at', 'updated_at']
+    resource_name = controller_name.classify.underscore
+    resource = instance_variable_get("@#{resource_name}")
+    Hash[resource.attributes.select{ |k, v|
+      !strip_attrs.include?(k)
+    }.collect { |k, v|
+      [k == "id" ? "#{resource_name.titleize} Id" : k.titleize, v]
+    }]
+  end
 end
