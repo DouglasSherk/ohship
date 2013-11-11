@@ -5,7 +5,7 @@ class UsersController < ApplicationController
     set_class_variables
 
     Analytics.track(
-      user_id: current_user.id,
+      user_id: distinct_id,
       event: 'View User Profile',
     )
   end
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     end
 
     Analytics.track(
-      user_id: current_user.id,
+      user_id: distinct_id,
       event: 'Save User Profile',
     )
 
@@ -43,7 +43,7 @@ class UsersController < ApplicationController
         :postal_code,
         :current_password,
         :password,
-        :password_confirmation
+        :password_confirmation,
       )
     end
 

@@ -10,7 +10,7 @@ class PhotosController < ApplicationController
         :disposition => 'inline'
 
       Analytics.track(
-        user_id: current_user.id,
+        user_id: distinct_id,
         event: 'Package View Photo',
         properties: {
           'Id' => @photo.id,

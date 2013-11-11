@@ -1,7 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   def new
     Analytics.track(
-      user_id: User::GUEST_NAME,
+      user_id: distinct_id,
       event: 'User Sign Up',
     )
 
@@ -21,9 +21,31 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     super
 
-    Analytics.track(
-      user_id: current_user.id,
-      event: 'User Signed Up',
-    )
+    if current_user
+      current_user.distinct_id = session[:distinct_id]
+      if !current_user.save
+        Analytics.track(
+          user_id: distinct_id,
+          event: 'User Signed Up Failed',
+          properties: {
+            'Error' => 'Devise signup failed.',
+          }
+        )
+      else
+        session.delete(:distinct_id)
+        Analytics.track(
+          user_id: distinct_id,
+          event: 'User Signed Up',
+        )
+      end
+    else
+      Analytics.track(
+        user_id: distinct_id,
+        event: 'User Signed Up Failed',
+        properties: {
+          'Error' => 'Devise signup failed.',
+        }
+      )
+    end
   end
 end

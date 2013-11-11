@@ -39,7 +39,7 @@ class PackagesController < ApplicationController
     end
 
     Analytics.track(
-      user_id: current_user.id,
+      user_id: distinct_id,
       event: "View Packages List",
       properties: {
         show: @show,
@@ -69,7 +69,7 @@ class PackagesController < ApplicationController
     @receipt = @package.photos.where(:photo_type => 'receipt').first
 
     Analytics.track(
-      user_id: current_user.id,
+      user_id: distinct_id,
       event: "View Package",
       properties: serialize_resource,
     )
@@ -93,7 +93,7 @@ class PackagesController < ApplicationController
     @country = current_user.country || User.guess_user_country(request.remote_ip)
 
     Analytics.track(
-      user_id: current_user.id,
+      user_id: distinct_id,
       event: 'Package Begin',
       properties: serialize_resource.merge({
         'Signup' => @signup,
@@ -123,7 +123,7 @@ class PackagesController < ApplicationController
     respond_to do |format|
       if set_package_dimensions && @package.save
         Analytics.track(
-          user_id: current_user.id,
+          user_id: distinct_id,
           event: 'Package Submit',
           properties: serialize_resource,
         )
@@ -138,7 +138,7 @@ class PackagesController < ApplicationController
         format.json { render action: 'show', status: :created, location: @package }
       else
         Analytics.track(
-          user_id: current_user.id,
+          user_id: distinct_id,
           event: 'Package Submit',
           properties: serialize_resource,
         )
@@ -155,7 +155,7 @@ class PackagesController < ApplicationController
 
     if !@package.cancelable?
       Analytics.track(
-        user_id: current_user.id,
+        user_id: distinct_id,
         event: 'Package Cancel Failed',
         properties: serialize_resource,
       )
@@ -168,7 +168,7 @@ class PackagesController < ApplicationController
     end
 
     Analytics.track(
-      user_id: current_user.id,
+      user_id: distinct_id,
       event: 'Package Cancel Failed',
       properties: serialize_resource,
     )
@@ -196,7 +196,7 @@ class PackagesController < ApplicationController
         end
 
       Analytics.track(
-        user_id: current_user.id,
+        user_id: distinct_id,
         event: 'Package View Shipping Estimate',
         properties: serialize_resource.merge({
           'Estimates' => estimates,
@@ -206,7 +206,7 @@ class PackagesController < ApplicationController
       render json: estimates
     else
       Analytics.track(
-        user_id: current_user.id,
+        user_id: distinct_id,
         event: 'Package View Shipping Estimate',
         properties: serialize_resource,
       )
@@ -249,7 +249,7 @@ class PackagesController < ApplicationController
         Mailer.notification_email(@package.shipper, @package, 'Package ordered', 'shippee_ordered').deliver
 
         Analytics.track(
-          user_id: current_user.id,
+          user_id: distinct_id,
           event: 'Package Shippee Ordered',
           properties: serialize_resource,
         )
@@ -263,7 +263,7 @@ class PackagesController < ApplicationController
           flash[:error] = 'Please provide both tracking number and carrier.'
 
           Analytics.track(
-            user_id: current_user.id,
+            user_id: distinct_id,
             event: 'Package Shippee Update Tracking Info Failed',
             properties: serialize_resource.merge({
               'Error' => flash[:error],
@@ -275,7 +275,7 @@ class PackagesController < ApplicationController
           Mailer.notification_email(@package.shipper, @package, 'Package shipped', 'shippee_sent').deliver
 
           Analytics.track(
-            user_id: current_user.id,
+            user_id: distinct_id,
             event: 'Package Shippee Update Tracking Info',
             properties: serialize_resource,
           )
@@ -288,7 +288,7 @@ class PackagesController < ApplicationController
             flash[:error] = 'Invalid shipping class.'
 
             Analytics.track(
-              user_id: current_user.id,
+              user_id: distinct_id,
               event: 'Package Shippee Select Shipping Failed',
               properties: serialize_resource.merge({
                 'Error' => flash[:error],
@@ -299,7 +299,7 @@ class PackagesController < ApplicationController
             @package.shipping_estimate = flash[:estimates][@package.shipping_class]
 
             Analytics.track(
-              user_id: current_user.id,
+              user_id: distinct_id,
               event: 'Package Shippee Select Shipping',
               properties: serialize_resource,
             )
@@ -323,7 +323,7 @@ class PackagesController < ApplicationController
               Mailer.notification_email(ref, @package, 'New referral credit', 'referral_credit', false).deliver
 
               Analytics.track(
-                user_id: current_user.id,
+                user_id: distinct_id,
                 event: 'User Referral Credit Granted',
                 properties: serialize_resource.merge({
                   'Referrer Id' => current_user.referrer.id,
@@ -333,7 +333,7 @@ class PackagesController < ApplicationController
             end
 
             Analytics.track(
-              user_id: current_user.id,
+              user_id: distinct_id,
               event: 'Package Shippee Preauthorize Payment',
               properties: serialize_resource.merge({
                 'Charge Id' => txn.charge_id,
@@ -343,7 +343,7 @@ class PackagesController < ApplicationController
             )
           else
             Analytics.track(
-              user_id: current_user.id,
+              user_id: distinct_id,
               event: 'Package Shippee Preauthorize Payment Failed',
               properties: serialize_resource.merge({
                 'Error' => flash[:error],
@@ -360,7 +360,7 @@ class PackagesController < ApplicationController
         Mailer.notification_email(@package.shipper, @package, 'Package received', 'shippee_received').deliver
 
         Analytics.track(
-          user_id: current_user.id,
+          user_id: distinct_id,
           event: 'Package Shippee Received',
           properties: serialize_resource,
         )
@@ -371,14 +371,14 @@ class PackagesController < ApplicationController
         @package.feedback.save
 
         Analytics.track(
-          user_id: current_user.id,
+          user_id: distinct_id,
           event: 'Package Shippee Feedback Received',
           properties: serialize_resource,
         )
       end
 
       Analytics.track(
-        user_id: current_user.id,
+        user_id: distinct_id,
         event: 'Package Shippee Completed',
         properties: serialize_resource,
       )
@@ -386,7 +386,7 @@ class PackagesController < ApplicationController
 
     if !@package.save
       Analytics.track(
-        user_id: current_user.id,
+        user_id: distinct_id,
         event: 'Package Shippee Save Failed',
         properties: serialize_resource,
       )
@@ -410,7 +410,7 @@ class PackagesController < ApplicationController
           Mailer.notification_email(@package.shippee, @package, 'Please ship your item to us', 'shipper_found').deliver
 
           Analytics.track(
-            user_id: current_user.id,
+            user_id: distinct_id,
             event: 'Package Shipper Matched',
             properties: serialize_resource,
           )
@@ -421,7 +421,7 @@ class PackagesController < ApplicationController
         @package.state += 1
 
         Analytics.track(
-          user_id: current_user.id,
+          user_id: distinct_id,
           event: 'Package Shipper Received',
           properties: serialize_resource,
         )
@@ -435,7 +435,7 @@ class PackagesController < ApplicationController
             if params[:photo_upload].nil?
               flash[:error] = 'You must provide a photo.'
               Analytics.track(
-                user_id: current_user.id,
+                user_id: distinct_id,
                 event: 'Package Shipper Update Details Failed',
                 properties: serialize_resource.merge({
                   'Error' => flash[:error],
@@ -452,14 +452,14 @@ class PackagesController < ApplicationController
                 @package.custom_shipping = flash[:estimates].empty?
 
                 Analytics.track(
-                  user_id: current_user.id,
+                  user_id: distinct_id,
                   event: 'Package Shipper Update Details',
                   properties: serialize_resource,
                 )
               else
                 flash[:error] = 'Invalid photo provided. Make sure you selected the right file.'
                 Analytics.track(
-                  user_id: current_user.id,
+                  user_id: distinct_id,
                   event: 'Package Shipper Update Details Failed',
                   properties: serialize_resource.merge({
                     'Error' => flash[:error],
@@ -469,7 +469,7 @@ class PackagesController < ApplicationController
             end
           else
             Analytics.track(
-              user_id: current_user.id,
+              user_id: distinct_id,
               event: 'Package Shipper Update Details Failed',
               properties: serialize_resource.merge({
                 'Error' => 'Package invalid.',
@@ -484,7 +484,7 @@ class PackagesController < ApplicationController
             flash[:estimates] = {} # so it skips the entering details step
 
             Analytics.track(
-              user_id: current_user.id,
+              user_id: distinct_id,
               event: 'Package Shipper Accept Failed',
               properties: serialize_resource.merge({
                 'Error' => flash[:error],
@@ -507,13 +507,13 @@ class PackagesController < ApplicationController
               Mailer.notification_email(@package.shippee, @package, 'We have received your package', 'shipper_received').deliver
 
               Analytics.track(
-                user_id: current_user.id,
+                user_id: distinct_id,
                 event: 'Package Shipper Accept',
                 properties: serialize_resource,
               )
             else
               Analytics.track(
-                user_id: current_user.id,
+                user_id: distinct_id,
                 event: 'Package Shipper Accept Failed',
                 properties: serialize_resource.merge({
                   'Error' => flash[:error],
@@ -534,7 +534,7 @@ class PackagesController < ApplicationController
           flash[:error] = 'All fields below must be filled out.'
 
           Analytics.track(
-            user_id: current_user.id,
+            user_id: distinct_id,
             event: 'Package Shipper Sent Failed',
             properties: serialize_resource.merge({
               'Error' => flash[:error],
@@ -576,7 +576,7 @@ class PackagesController < ApplicationController
               Mailer.notification_email(@package.shippee, @package, 'We have sent your package', 'shipper_sent').deliver
 
               Analytics.track(
-                user_id: current_user.id,
+                user_id: distinct_id,
                 event: 'Package Shipper Sent',
                 properties: serialize_resource.merge({
                   'User Referral Credit Used' => used_referral_credit,
@@ -587,7 +587,7 @@ class PackagesController < ApplicationController
 
           if flash[:error]
             Analytics.track(
-              user_id: current_user.id,
+              user_id: distinct_id,
               event: 'Package Shipper Sent Failed',
               properties: serialize_resource.merge({
                 'Error' => flash[:error],
@@ -602,7 +602,7 @@ class PackagesController < ApplicationController
       flash[:error] = '<br />' + @package.errors.full_messages.map { |m| ' - ' + m }.join('<br />')
 
       Analytics.track(
-        user_id: current_user.id,
+        user_id: distinct_id,
         event: 'Package Shipper Save Failed',
         properties: serialize_resource.merge({
           'Error' => flash[:error],
@@ -627,7 +627,7 @@ class PackagesController < ApplicationController
       end
 
       Analytics.track(
-        user_id: current_user.id,
+        user_id: distinct_id,
         event: 'Package Administrator Assigned',
         properties: serialize_resource,
       )
@@ -683,7 +683,7 @@ class PackagesController < ApplicationController
         Mailer.notification_email(best_match, @package, 'Package for you!', 'shipper_matched').deliver
 
         Analytics.track(
-          user_id: current_user.id,
+          user_id: distinct_id,
           event: 'Package Shipper Auto-Assign Failed',
           properties: serialize_resource.merge({
             'Error' => 'No shipper found.',
@@ -694,7 +694,7 @@ class PackagesController < ApplicationController
         Mailer.notification_email(best_match, @package, 'Package for you!', 'shipper_matched').deliver
 
         Analytics.track(
-          user_id: current_user.id,
+          user_id: distinct_id,
           event: 'Package Shipper Auto-Assign',
           properties: serialize_resource,
         )
@@ -718,7 +718,7 @@ class PackagesController < ApplicationController
         end
 
         Analytics.track(
-          user_id: current_user.id,
+          user_id: distinct_id,
           event: 'Package Shipper Create Photo',
           properties: serialize_resource.merge({
             'Photo Type' => p.photo_type,
@@ -772,7 +772,7 @@ class PackagesController < ApplicationController
         txn.final_charge_cents = amount
 
         Analytics.track(
-          user_id: current_user.id,
+          user_id: distinct_id,
           event: 'Package Shippee Final Payment',
           properties: serialize_resource.merge({
             'Charge Id' => txn.charge_id,

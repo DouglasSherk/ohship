@@ -9,14 +9,14 @@ class CouponsController < ApplicationController
     @coupon = Coupon.new(:coupon_type => coupon_type)
     if @coupon.save
       Analytics.track(
-        user_id: current_user.id,
+        user_id: distinct_id,
         event: 'Admin Coupon Create',
         properties: serialize_resource,
       )
 
       if coupon_type == Coupon::NO_FEE_SHIPMENT
         Analytics.track(
-          user_id: current_user.id,
+          user_id: distinct_id,
           event: 'User Referral Credit Create',
           properties: serialize_resource,
         )
@@ -27,7 +27,7 @@ class CouponsController < ApplicationController
       flash[:error] = 'Could not create coupon.'
 
       Analytics.track(
-        user_id: current_user.id,
+        user_id: distinct_id,
         event: 'Admin Coupon Create Failed',
         properties: serialize_resource.merge({
           'Error' => flash[:error],
@@ -58,7 +58,7 @@ class CouponsController < ApplicationController
           @error = true
 
           Analytics.track(
-            user_id: current_user.id,
+            user_id: distinct_id,
             event: 'User Coupon Redeem Failed',
             properties: serialize_resource.merge({
               'Error' => flash[:error],
@@ -67,14 +67,14 @@ class CouponsController < ApplicationController
         else
           if @coupon.coupon_type == Coupon::NO_FEE_SHIPMENT
             Analytics.track(
-              user_id: current_user.id,
+              user_id: distinct_id,
               event: 'User Referral Credit Redeem',
               properties: serialize_resource,
             )
           end
 
           Analytics.track(
-            user_id: current_user.id,
+            user_id: distinct_id,
             event: 'User Coupon Redeem',
             properties: serialize_resource,
           )

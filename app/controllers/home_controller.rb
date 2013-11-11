@@ -4,13 +4,13 @@ class HomeController < ApplicationController
   def index
     if current_user
       Analytics.track(
-        user_id: current_user.id,
+        user_id: distinct_id,
         event: 'View Home Page',
       )
       redirect_to '/packages'
     else
       Analytics.track(
-        user_id: User::GUEST_NAME,
+        user_id: distinct_id,
         event: 'View Landing Page',
       )
     end
@@ -18,21 +18,21 @@ class HomeController < ApplicationController
 
   def details
     Analytics.track(
-      user_id: current_user ? current_user.id : User::GUEST_NAME,
+      user_id: distinct_id,
       event: 'View How it Works',
     )
   end
 
   def terms
     Analytics.track(
-      user_id: current_user ? current_user.id : User::GUEST_NAME,
+      user_id: distinct_id,
       event: 'View Terms of Service',
     )
   end
 
   def prohibited
     Analytics.track(
-      user_id: current_user ? current_user.id : User::GUEST_NAME,
+      user_id: distinct_id,
       event: 'View Prohibited Items',
     )
   end

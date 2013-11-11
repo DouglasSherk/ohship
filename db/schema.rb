@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131111175319) do
+ActiveRecord::Schema.define(version: 20131111222017) do
 
   create_table "coupons", force: true do |t|
     t.integer  "shippee_id"
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 20131111175319) do
     t.string   "uid"
     t.integer  "referrer_id"
     t.integer  "referral_credits",       default: 0
+    t.string   "distinct_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

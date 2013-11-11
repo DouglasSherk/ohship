@@ -6,31 +6,42 @@ class ApplicationController < ActionController::Base
   layout 'content'
 
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
+  before_action :cache_distinct_id
   before_action :maybe_identify_user
 
-  def self.identify_user(user)#, _session)
-    Analytics.identify(
-      user_id: user.id,
-      traits: {
-        # Built-in traits.
-        name: user.name,
-        email: user.email,
-        created: user.created_at,
+  def self.identify_user(user, _session)
+    if user.nil?
+      Analytics.identify(
+        user_id: _session[:distinct_id],
+      )
+    else
+      Analytics.identify(
+        user_id: user.distinct_id,
+        traits: {
+          # Built-in traits.
+          username: user.name,
+          email: user.email,
+          created: user.created_at,
 
-        # Custom traits.
-        'User Type' => user.user_type,
-        'Referral Credits' => user.referral_credits,
-        'Provider' => user.provider,
-      },
-    )
+          # Custom traits.
+          'User Type' => user.user_type,
+          'Referral Credits' => user.referral_credits,
+          'Provider' => user.provider,
+        },
+      )
+    end
   end
 
   Warden::Manager.after_authentication do |user, auth, opts|
-    identify_user(user)#, auth.env['rack.session'])
+    identify_user(user, auth.env['rack.session'])
   end
 
   def maybe_identify_user
-    self.class.identify_user(current_user) if current_user
+    self.class.identify_user(current_user, session)
+  end
+
+  def cache_distinct_id
+    session[:distinct_id] ||= request.uuid
   end
 
   def after_inactive_sign_up_path_for(resource)
@@ -87,5 +98,9 @@ class ApplicationController < ActionController::Base
     }.collect { |k, v|
       [k == "id" ? "#{resource_name.titleize} Id" : k.titleize, v]
     }]
+  end
+
+  def distinct_id
+    current_user ? current_user.distinct_id : session[:distinct_id]
   end
 end
