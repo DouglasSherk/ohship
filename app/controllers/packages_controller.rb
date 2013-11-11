@@ -264,7 +264,7 @@ class PackagesController < ApplicationController
 
           Analytics.track(
             user_id: current_user.id,
-            event: 'Package Shippee Sent Failed',
+            event: 'Package Shippee Update Tracking Info Failed',
             properties: serialize_package.merge({
               'Error' => flash[:error],
             }),
@@ -276,7 +276,7 @@ class PackagesController < ApplicationController
 
           Analytics.track(
             user_id: current_user.id,
-            event: 'Package Shippee Sent',
+            event: 'Package Shippee Update Tracking Info',
             properties: serialize_package,
           )
         end

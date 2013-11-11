@@ -8,8 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_devise_permitted_parameters, if: :devise_controller?
   before_action :maybe_identify_user
 
-  def self.identify_user(user, _session)
-    _session[:identified] = true
+  def self.identify_user(user)#, _session)
     Analytics.identify(
       user_id: user.id,
       traits: {
@@ -27,11 +26,11 @@ class ApplicationController < ActionController::Base
   end
 
   Warden::Manager.after_authentication do |user, auth, opts|
-    identify_user(user, auth.env['rack.session'])
+    identify_user(user)#, auth.env['rack.session'])
   end
 
   def maybe_identify_user
-    self.class.identify_user(current_user, session) if current_user && !session[:identified]
+    self.class.identify_user(current_user) if current_user
   end
 
   def after_inactive_sign_up_path_for(resource)
