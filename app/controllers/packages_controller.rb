@@ -313,6 +313,9 @@ class PackagesController < ApplicationController
           if txn = create_transaction(token, total_cost)
             @package.state += 1
             txn.save
+
+            # XXX: Wut. We can't use this helper inside the mailer.
+            @estimate = view_context.number_to_local_currency(@package.shipping_estimate, @package.origin_country)
             Mailer.notification_email(@package.shipper, @package, 'Payment accepted', 'shippee_paid').deliver
 
             if current_user.referrer &&
