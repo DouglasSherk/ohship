@@ -1,5 +1,7 @@
 class Mailer < PostageApp::Mailer
   include Devise::Mailers::Helpers
+  add_template_helper PackagesHelper
+
   EMAIL = 'hello@ohship.me'
   default from: "OhShip <#{EMAIL}>"
 
