@@ -289,7 +289,7 @@ class PackagesController < ApplicationController
 
             Analytics.track(
               user_id: current_user.id,
-              event: 'Package Shippee OhShip Received Estimate Failed',
+              event: 'Package Shippee Select Shipping Failed',
               properties: serialize_package.merge({
                 'Error' => flash[:error],
               }),
@@ -300,7 +300,7 @@ class PackagesController < ApplicationController
 
             Analytics.track(
               user_id: current_user.id,
-              event: 'Package Shippee OhShip Received Estimate',
+              event: 'Package Shippee Select Shipping',
               properties: serialize_package,
             )
           end
@@ -773,6 +773,7 @@ class PackagesController < ApplicationController
             'Charge Id' => txn.charge_id,
             'Preauth Charge Cents' => txn.preauth_charge_cents,
             'Final Charge Cents' => txn.final_charge_cents,
+            revenue: txn.final_charge_cents/100.0,
           }),
         )
 
