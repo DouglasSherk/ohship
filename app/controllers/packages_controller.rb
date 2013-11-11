@@ -325,7 +325,10 @@ class PackagesController < ApplicationController
               Analytics.track(
                 user_id: current_user.id,
                 event: 'User Referral Credit Granted',
-                properties: serialize_package,
+                properties: serialize_package.merge({
+                  'Referrer Id' => current_user.referrer.id,
+                  'Referrer Name' => current_user.referrer.name,
+                }),
               )
             end
 
@@ -564,8 +567,10 @@ class PackagesController < ApplicationController
               txn.save
 
               # Deduct a referral credit if one was used
+              used_referral_credit = false
               if @package.shippee.referral_credits > 0
                 @package.shippee.update_attributes(:referral_credits => @package.shippee.referral_credits - 1)
+                used_referral_credit = true
               end
 
               Mailer.notification_email(@package.shippee, @package, 'We have sent your package', 'shipper_sent').deliver
@@ -573,7 +578,9 @@ class PackagesController < ApplicationController
               Analytics.track(
                 user_id: current_user.id,
                 event: 'Package Shipper Sent',
-                properties: serialize_package,
+                properties: serialize_package.merge({
+                  'User Referral Credit Used' => used_referral_credit,
+                }),
               )
             end
           end
