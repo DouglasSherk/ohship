@@ -27,7 +27,7 @@
 <% if can? :admin, Package %>
   <div class="alert alert-info">
     <h3 class="no-top-margin">Administrator Panel</h3>
-    <%= link_to "Create No Fee Shipment Link", new_coupon_path, :class => "btn btn-primary" %>
+    <%= link_to "Create No Fee Shipment Link", new_coupon_path(:coupon_type => Coupon::NO_FEE_SHIPMENT), :class => "btn btn-primary" %>
   </div>
 <% end %>
 

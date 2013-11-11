@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131108180936) do
+ActiveRecord::Schema.define(version: 20131111175319) do
 
   create_table "coupons", force: true do |t|
     t.integer  "shippee_id"
     t.string   "code"
-    t.integer  "type"
+    t.integer  "coupon_type"
     t.datetime "used_at"
     t.datetime "expires_at"
     t.datetime "created_at"

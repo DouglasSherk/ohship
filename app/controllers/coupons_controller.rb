@@ -4,13 +4,37 @@ class CouponsController < ApplicationController
   def new
     authorize! :create, Coupon
 
-    type = params[:type]
+    coupon_type = params[:coupon_type]
 
-    @coupon = Coupon.new(:type => type)
+    @coupon = Coupon.new(:coupon_type => coupon_type)
     if @coupon.save
+      Analytics.track(
+        user_id: current_user.id,
+        event: 'Admin Coupon Create',
+        properties: serialize_coupon,
+      )
+
+      if coupon_type == Coupon::NO_FEE_SHIPMENT
+        Analytics.track(
+          user_id: current_user.id,
+          event: 'User Referral Credit Create',
+          properties: serialize_coupon,
+        )
+      end
+
       redirect_to coupon_path(@coupon.code)
     else
-      render 'packages/index', error: 'Could not create coupon.'
+      flash[:error] = 'Could not create coupon.'
+
+      Analytics.track(
+        user_id: current_user.id,
+        event: 'Admin Coupon Create Failed',
+        properties: serialize_coupon.merge({
+          'Error' => flash[:error],
+        }),
+      )
+
+      render 'packages/index', error: flash[:error]
     end
   end
 
@@ -19,18 +43,49 @@ class CouponsController < ApplicationController
 
   def show
     @coupon = Coupon.where(:code => params[:id]).first
-    if !@coupon.nil? && cannot?(:manage, @coupon)
+    if !@coupon.nil? && cannot?(:manage, @coupon) && current_user.user_type == User::SHIPPEE
       if !@coupon.expired? && !@coupon.used?
         @used = true
 
-        current_user.referral_credits = current_user.referral_credits + 1
+        if @coupon.coupon_type == Coupon::NO_FEE_SHIPMENT
+          current_user.referral_credits = current_user.referral_credits + 1
+        end
 
         @coupon.shippee = current_user
         @coupon.used_at = Date.today
         if !current_user.save || !@coupon.save
+          flash[:error] = 'Error redeeming coupon.'
           @error = true
+
+          Analytics.track(
+            user_id: current_user.id,
+            event: 'User Coupon Redeem Failed',
+            properties: serialize_coupon.merge({
+              'Error' => flash[:error],
+            }),
+          )
+        else
+          if @coupon.coupon_type == Coupon::NO_FEE_SHIPMENT
+            Analytics.track(
+              user_id: current_user.id,
+              event: 'User Referral Credit Redeem',
+              properties: serialize_coupon,
+            )
+          end
+
+          Analytics.track(
+            user_id: current_user.id,
+            event: 'User Coupon Redeem',
+            properties: serialize_coupon,
+          )
         end
       end
     end
   end
+
+  private
+
+    def serialize_coupon
+      @coupon.attributes.select{ |k, v| !['updated_at', 'created_at'].include?(k) }
+    end
 end

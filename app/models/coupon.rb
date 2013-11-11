@@ -8,6 +8,7 @@ class Coupon < ActiveRecord::Base
   before_create :set_defaults
 
   def set_defaults
+    self.coupon_type = NO_FEE_SHIPMENT if self.coupon_type.nil?
     self.expires_at = Date.today.advance(:months => 1) if self.expires_at.nil?
     self.code = SecureRandom.hex if self.code.nil?
   end
