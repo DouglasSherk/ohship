@@ -788,6 +788,6 @@ class PackagesController < ApplicationController
 
     def serialize_package
       strip_attrs = ['created_at', 'updated_at']
-      Hash[@package.attributes.collect { |k, v| [k.titleize, v] unless strip_attrs.include?(k) }]
+      Hash[@package.attributes.select{ |k, v| !strip_attrs.include?(k) }.collect { |k, v| [k.titleize, v] }]
     end
 end
