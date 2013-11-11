@@ -94,4 +94,8 @@ globalAnalyticsReady = ->
 $(document).ready globalAnalyticsReady
 $(document).on 'page:load', globalAnalyticsReady
 
+$(document).ready ->
+  # Only fire when the site is loaded from scratch.
+  analytics.track 'Site Load'
+
 # --- END GLOBAL ANALYTICS ---
