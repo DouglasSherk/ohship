@@ -79,6 +79,9 @@ gem 'country_select'
 # SegmentIO unified analytics
 gem 'analytics-ruby', '<1.0'
 
+# A/B testing helper
+gem 'split', require: 'split/dashboard'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

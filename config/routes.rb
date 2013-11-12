@@ -29,6 +29,12 @@ Ohship::Application.routes.draw do
   get "terms" => "home#terms"
   get "prohibited" => "home#prohibited"
 
+  mount Split::Dashboard, :at => 'split', :constraints => lambda { |request|
+    request.env['warden'].authenticated?
+    request.env['warden'].authenticate!
+    request.env['warden'].user.user_type == User::ADMIN
+  }
+
   root 'home#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
