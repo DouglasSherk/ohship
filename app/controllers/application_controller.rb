@@ -15,14 +15,6 @@ class ApplicationController < ActionController::Base
         user_id: _session[:distinct_id],
       )
     else
-      # FIXME: HACK HACK HACK! Fix FB users not being able to log in.
-      if _session[:distinct_id] && user.distinct_id.nil?
-        user.distinct_id = _session[:distinct_id]
-        if user.save
-          _session.delete(:distinct_id)
-        end
-      end
-
       Analytics.identify(
         user_id: user.distinct_id,
         traits: {
