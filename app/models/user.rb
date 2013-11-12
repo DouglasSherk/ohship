@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   # For OmniAuth Facebook authentication.
   #attr_accessible :provider, :uid, :name
 
-  def self.find_for_facebook_oauth(auth, signed_in_resource = nil, referrer_id = nil)
+  def self.find_for_facebook_oauth(auth, session, signed_in_resource = nil, referrer_id = nil)
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     unless user
       user = User.create(name: auth.extra.raw_info.name,
