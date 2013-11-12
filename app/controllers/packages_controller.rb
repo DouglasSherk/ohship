@@ -679,9 +679,6 @@ class PackagesController < ApplicationController
       end
 
       if best_match.nil?
-        @package.update_attributes(:shipper => best_match, :state => @package.state + 1)
-        Mailer.notification_email(best_match, @package, 'Package for you!', 'shipper_matched').deliver
-
         Analytics.track(
           user_id: distinct_id,
           event: 'Package Shipper Auto-Assign Failed',
