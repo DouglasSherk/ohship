@@ -23,8 +23,9 @@ module Ohship
     config.middleware.use ExceptionNotification::Rack,
       :email => {
         :email_prefix => "[OhShip Exception] ",
-        :sender_address => %{hello@ohship.me},
+        :sender_address => %w{hello@ohship.me},
         :exception_recipients => %w{hello@ohship.me},
+        :mailer_parent => 'PostageApp::Mailer',
       },
       :hipchat => {
         :api_token => '93d75861e94baa220f902ea9f638f9',

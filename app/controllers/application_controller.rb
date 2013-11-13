@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   before_action :cache_distinct_id
   before_action :maybe_identify_user
 
+  before_filter :log_additional_data
+
   def self.identify_user(user, _session)
     if user.nil?
       Analytics.identify(
@@ -102,5 +104,11 @@ class ApplicationController < ActionController::Base
 
   def distinct_id
     current_user ? current_user.distinct_id : session[:distinct_id]
+  end
+
+  def log_additional_data
+    if current_user
+      request.env["exception_notifier.exception_data"] = {:user => current_user}
+    end
   end
 end
