@@ -53,7 +53,6 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano-rvm'
   gem 'capistrano-rails'
-  gem 'hipchat', github: 'DouglasSherk/hipchat'
 end
 
 group :doc do
@@ -64,6 +63,9 @@ end
 # User login & permissions
 gem 'devise'
 gem 'cancan'
+
+# HipChat API for notifications
+gem 'hipchat', github: 'DouglasSherk/hipchat'
 
 # Emails
 gem 'postageapp'
