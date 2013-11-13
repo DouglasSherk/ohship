@@ -7,6 +7,16 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user.is_new
       @user.distinct_id = session[:distinct_id]
       session.delete(:distinct_id) if @user.save
+
+      Analytics.track(
+        user_id: @user.distinct_id,
+        event: 'User Signup',
+      )
+    else
+      Analytics.track(
+        user_id: @user.distinct_id,
+        event: 'User Login',
+      )
     end
 
     if @user.persisted?

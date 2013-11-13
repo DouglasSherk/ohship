@@ -91,9 +91,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def serialize_resource
+  def serialize_resource(resource_name = nil)
     strip_attrs = ['created_at', 'updated_at']
-    resource_name = controller_name.classify.underscore
+    resource_name ||= controller_name.classify.underscore
     resource = instance_variable_get("@#{resource_name}")
     Hash[resource.attributes.select{ |k, v|
       !strip_attrs.include?(k)
