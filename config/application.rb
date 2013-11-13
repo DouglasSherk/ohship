@@ -19,18 +19,5 @@ module Ohship
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
-
-    config.middleware.use ExceptionNotification::Rack,
-      :email => {
-        :email_prefix => "[OhShip Exception] ",
-        :sender_address => %w{hello@ohship.me},
-        :exception_recipients => %w{hello@ohship.me},
-        :mailer_parent => 'PostageApp::Mailer',
-      },
-      :hipchat => {
-        :api_token => '93d75861e94baa220f902ea9f638f9',
-        :room_name => 'SciGit',
-        :notify => true,
-      }
   end
 end
