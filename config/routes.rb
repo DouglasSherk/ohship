@@ -28,6 +28,7 @@ Ohship::Application.routes.draw do
   get "details" => "home#details"
   get "terms" => "home#terms"
   get "prohibited" => "home#prohibited"
+  get "shiphappens" => "home#shiphappens"
 
   mount Split::Dashboard, :at => 'split', :constraints => lambda { |request|
     request.env['warden'].authenticated?

@@ -36,4 +36,8 @@ class HomeController < ApplicationController
       event: 'View Prohibited Items',
     )
   end
+
+  def shiphappens
+    throw "This is a test exception, don't worry about it"
+  end
 end
