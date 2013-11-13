@@ -79,16 +79,6 @@ Ohship::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.middleware.use ExceptionNotification::Rack,
-    :email => {
-      :email_prefix => "[OhShip Exception] ",
-      :sender_address => %w{hello@ohship.me},
-      :exception_recipients => %w{hello@ohship.me},
-      :mailer_parent => 'PostageApp::Mailer',
-    },
-    :hipchat => {
-      :api_token => '93d75861e94baa220f902ea9f638f9',
-      :room_name => 'SciGit',
-      :notify => true,
-    }
+  # Notify by email and HipChat when there are exceptions.
+  config.exception_notifications = true
 end
