@@ -9,7 +9,7 @@ class HomeController < ApplicationController
       )
       redirect_to '/packages'
     else
-      @concierge_service = ab_test("concierge_service", "true", "false")
+      @concierge_service = ab_test("concierge_service2", "true", "false")
       @concierge_service = @concierge_service == "true"
 
       Analytics.track(
