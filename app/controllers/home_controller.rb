@@ -9,9 +9,15 @@ class HomeController < ApplicationController
       )
       redirect_to '/packages'
     else
+      @concierge_service = ab_test("concierge_service", "true", "false")
+      @concierge_service = @concierge_service == "true"
+
       Analytics.track(
         user_id: distinct_id,
         event: 'View Landing Page',
+        properties: {
+          'A/B Concierge Service' => @concierge_service,
+        }
       )
     end
   end
@@ -34,6 +40,13 @@ class HomeController < ApplicationController
     Analytics.track(
       user_id: distinct_id,
       event: 'View Prohibited Items',
+    )
+  end
+
+  def concierge
+    Analytics.track(
+      user_id: distinct_id,
+      event: 'View Concierge Service',
     )
   end
 

@@ -102,22 +102,20 @@
   </div>
 </div>
 
-<% ab_test("concierge_service", "true", "false") do |should_test| %>
-  <% if should_test == "true" %>
-    <div class="featurette featurette-3">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <h2 class="featurette-heading">Let us buy it for you.</h2>
-            <p class="lead">Sometimes, you can't buy an item overseas, or you don't
-            want to. We've got you covered. We can buy any item for you, and keep
-            you informed throughout the whole process.</p>
-            <p><%= link_to "Find out more", concierge_path, :class => "btn btn-primary btn-lg", :id => 'homeConcierge' %></p>
-          </div>
+<% if @concierge_service == "true" %>
+  <div class="featurette featurette-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <h2 class="featurette-heading">Let us buy it for you.</h2>
+          <p class="lead">Sometimes, you can't buy an item overseas, or you don't
+          want to. We've got you covered. We can buy any item for you, and keep
+          you informed throughout the whole process.</p>
+          <p><%= link_to "Find out more", concierge_path, :class => "btn btn-primary btn-lg", :id => 'homeConcierge' %></p>
         </div>
       </div>
     </div>
-  <% end %>
+  </div>
 <% end %>
 
 <div id="signup" class="section expanded">
