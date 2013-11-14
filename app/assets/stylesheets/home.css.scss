@@ -16,7 +16,7 @@ body {
   .section {
     &#features {
       text-align: center;
-      color: #999;
+      color: #777;
       font-size: 18px;
       padding: 80px 0;
 
@@ -40,7 +40,7 @@ body {
 
         position: relative;
         padding: 0;
-        height: 425px;
+        height: 400px;
 
         @include respond-to(handhelds, tablets) {
           margin-bottom: 50px;
@@ -67,7 +67,7 @@ body {
 
         .step-caption {
           position: absolute;
-          top: 270px;
+          top: 290px;
           width: 100%;
         }
       }
