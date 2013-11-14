@@ -487,6 +487,11 @@ body {
       @include background-cover;
       background: url(../img/point2.png) center center;
     }
+
+    &.featurette-3 {
+      @include background-cover;
+      background: url(../img/point3.png) center center;
+    }
   }
 
   .featurette-divider {
