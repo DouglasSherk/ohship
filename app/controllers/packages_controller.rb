@@ -57,7 +57,7 @@ class PackagesController < ApplicationController
     @shippers = User.where(:user_type => User::SHIPPER, :country => @package.origin_country) if can? :admin, @package
 
     # Load shipping estimates from USPS
-    if current_user.user_type == User::SHIPPEE &&
+    if current_user.user_type != User::SHIPPER &&
        @package.state == Package::STATE_SHIPPER_RECEIVED &&
        @package.shipping_estimate_confirmed &&
        @package.shipping_estimate.nil?
