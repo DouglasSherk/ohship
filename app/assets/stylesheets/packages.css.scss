@@ -45,3 +45,24 @@
     width: 100%;
   }
 }
+
+address .table {
+  margin: 0;
+
+  tr td {
+    padding: 0;
+    border-top: none;
+
+    &:first-child {
+      text-align: right;
+      padding-right: 30px;
+      width: 185px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    &:nth-child(2) {
+    }
+  }
+}

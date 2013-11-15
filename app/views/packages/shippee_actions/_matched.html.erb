@@ -1,11 +1,32 @@
 <% if @package.shippee_tracking.nil? %>
   You can now send your package to this OhShip location:
   <address class="alert alert-info">
-    <strong><%= @package.shipper.name %></strong><br />
-    <%= @package.shipper.address %><br />
-    <%= @package.shipper.city %>, <%= @package.shipper.state %>, <%= @package.shipper.country %><br />
-    <%= @package.shipper.postal_code %><br />
-    For <strong><%= @package.shippee.name %></strong>
+    <table class="table">
+      <tr>
+        <td class="text-muted">Name</td>
+        <td><strong><%= @package.shippee.name %></strong></td>
+      </tr>
+      <tr>
+        <td class="text-muted">Address Line 1</td>
+        <td><%= @package.shipper.address %></td>
+      </tr>
+      <tr>
+        <td class="text-muted">Address Line 2</td>
+        <td>OhShip, <%= @package.shipper.name %></td>
+      </tr>
+      <tr>
+        <td class="text-muted">City, Region</td>
+        <td><%= @package.shipper.city %>, <%= @package.shipper.state %></td>
+      </tr>
+      <tr>
+        <td class="text-muted">Zip/Postal Code</td>
+        <td><%= @package.shipper.postal_code %></td>
+      </tr>
+      <tr>
+        <td class="text-muted">Country</td>
+        <td><%= @package.shipper.country %></td>
+      </tr>
+    </table>
   </address>
   Please press the button below when you've successfully ordered the item.
   <%= form_tag package_path + '/shippee_action', :class => 'form-horizontal' do %>
