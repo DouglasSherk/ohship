@@ -25,6 +25,7 @@ module Ohship
     config.before_initialize do
       if config.exception_notifications
         config.middleware.use ExceptionNotification::Rack,
+          :ignore_exceptions => ['CanCan::AccessDenied'] + ExceptionNotifier.ignored_exceptions,
           :email => {
             :email_prefix => "[OhShip Exception] ",
             :sender_address => %w{hello@ohship.me},
