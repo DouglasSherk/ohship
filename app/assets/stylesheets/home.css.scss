@@ -187,6 +187,21 @@ body {
             }
           }
         }
+
+        .auth {
+          position: relative;
+          left: -25%;
+          opacity: 0;
+
+          &.active {
+            @include respond-to(desktops, widescreens) {
+              @include transition(0.8s);
+            }
+
+            left: auto;
+            opacity: 1;
+          }
+        }
       }
 
       &#mobile {
@@ -499,19 +514,6 @@ body {
   }
 
   .auth {
-    position: relative;
-    left: -25%;
-    opacity: 0;
-
-    &.active {
-      @include respond-to(desktops, widescreens) {
-        @include transition(0.8s);
-      }
-
-      left: auto;
-      opacity: 1;
-    }
-
     .modal-dialog {
       width: 400px;
     }
