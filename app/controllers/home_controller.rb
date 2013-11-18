@@ -9,14 +9,15 @@ class HomeController < ApplicationController
       )
       redirect_to '/packages'
     else
-      @concierge_service = ab_test("concierge_service2", "true", "false")
-      @concierge_service = @concierge_service == "true"
+      @concierge_service = ab_test("concierge_service2", "true", "false") == "true"
+      @get_started_button = ab_test("get_started_button", "red", "green")
 
       Analytics.track(
         user_id: distinct_id,
         event: 'View Landing Page',
         properties: {
           'A/B Concierge Service' => @concierge_service,
+          'A/B Get Started Button' => @get_started_button,
         }
       )
     end

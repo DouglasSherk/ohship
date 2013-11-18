@@ -11,9 +11,7 @@
       <h2>Website doesn't ship to your country? We'll do it for you.</h2>
     </div>
     <br><br>
-    <% ab_test("get_started_button", "red", "green") do |btn_color| %>
-      <%= link_to "Get Started Now", new_user_registration_path, :class => "btn button-starter button-#{btn_color}" %>
-    <% end %>
+    <%= link_to "Get Started Now", new_user_registration_path, :class => "btn button-starter button-#{@get_started_button}" %>
     </div>
   </div>
 </div>
