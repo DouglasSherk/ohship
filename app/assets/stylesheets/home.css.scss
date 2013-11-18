@@ -564,6 +564,11 @@ body {
     color: white;
     text-transform: uppercase;
 
+    &.btn-lg {
+      padding: 30px 60px;
+      font-size: 32px;
+    }
+
     &:hover {
       background: lighten($color, 10%);
       color: white;
