@@ -12,7 +12,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
         user_id: @user.distinct_id,
         event: 'User Signup',
       )
-    else
+    elsif @user.valid?
       Analytics.track(
         user_id: @user.distinct_id,
         event: 'User Login',
