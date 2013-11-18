@@ -15,6 +15,8 @@ class PackagesController < ApplicationController
   # GET /packages
   # GET /packages.json
   def index
+    finished "get_started_button"
+
     @packages = Package.all.select { |package| can? :read, package }
 
     @show = params[:show] || ''

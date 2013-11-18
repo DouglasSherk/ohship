@@ -577,6 +577,10 @@ body {
 
   .button-starter {
     @include button(#e8461f);
+
+    &.button-green {
+      @include button(darken(#5cb85c, 10%));
+    }
   }
 
   .button-monthly {
