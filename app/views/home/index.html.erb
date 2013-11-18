@@ -1,7 +1,7 @@
 <% content_for :navbar do %>
   <li class="active"><a href="#overview">Overview</a></li>
   <li><a href="#features">How it Works</a></li>
-  <li><a href="#signup">Signup</a></li>
+  <li><%= link_to 'Signup', new_user_registration_path %></li>
 <% end %>
 
 <div id="overview" class="section expanded">
