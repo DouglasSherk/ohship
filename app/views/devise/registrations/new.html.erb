@@ -1,19 +1,7 @@
 <div class="row-fluid auth">
   <div class="col-md-12 center">
     <div class="col-md-6" style="margin: auto; float: none; text-align: left;">
-      <% if @email_only.nil? && devise_error_messages!.empty? %>
-        <%= link_to "#{user_omniauth_authorize_path(:facebook)}#{@referrer_id && "?referrer_id=#{@referrer_id}"}", :class => "facebook-connect", :style => "margin: auto;" do %>
-          <span><%= fa_icon "facebook", :class => "fa-3x" %></span>
-          <span>Log in with Facebook</span>
-        <% end %>
-
-        <hr class="soften" />
-        <div class="center">
-          <span class="or"> or </span>
-        </div>
-      <% end %>
-
-      <h3>Sign up by email</h3>
+      <h2>Get started with OhShip</h2>
 
       <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
         <% unless (devise_error_messages!).empty? %>
@@ -38,12 +26,26 @@
 
         <div class="row row-gutterless">
           <div class="col-xs-6">
-            <div class="form-group"><%= f.submit "Sign up", :class => "btn btn-primary btn-lg" %></div>
+            <div class="form-group"><%= f.submit "Sign up", :class => "btn btn-danger btn-lg" %></div>
           </div>
           <div class="col-xs-6 right">
             <%= link_to "Already have an account?", new_user_session_path %>
           </div>
         </div>
+      <% end %>
+
+      <% if @email_only.nil? && devise_error_messages!.empty? %>
+        <hr class="soften" />
+        <div class="center">
+          <span class="or"> or </span>
+        </div>
+        <br>
+
+        <%= link_to "#{user_omniauth_authorize_path(:facebook)}#{@referrer_id && "?referrer_id=#{@referrer_id}"}", :class => "facebook-connect", :style => "margin: auto;" do %>
+          <span><%= fa_icon "facebook", :class => "fa-3x" %></span>
+          <span>Log in with Facebook</span>
+        <% end %>
+        <br>
       <% end %>
     </div>
   </div>
