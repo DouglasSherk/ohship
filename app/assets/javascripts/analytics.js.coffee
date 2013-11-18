@@ -21,22 +21,24 @@ homeAnalyticsReady = ->
     analytics.track 'Click Contact',
       from: 'Details'
 
-  $(window).scroll ->
-    scrollTop = $(window).scrollTop()
+  sections = $('.section')
+  if sections.length > 0
+    $(window).scroll ->
+      scrollTop = $(window).scrollTop()
 
-    closestSection = undefined
-    closestDist = undefined
-    $('.section').each ->
-      dist = Math.abs($(@).offset().top - scrollTop)
-      if !closestSection? || dist < closestDist
-        closestSection = @
-        closestDist = dist
+      closestSection = undefined
+      closestDist = undefined
+      sections.each ->
+        dist = Math.abs($(@).offset().top - scrollTop)
+        if !closestSection? || dist < closestDist
+          closestSection = @
+          closestDist = dist
 
-    sectionId = $(closestSection).attr('id')
-    if sectionId not in scrolledSections
-      analytics.track 'Landing Page - Read Section',
-        'Section': sectionId.charAt(0).toUpperCase() + sectionId.slice(1)
-      scrolledSections.push sectionId
+      sectionId = $(closestSection).attr('id')
+      if sectionId not in scrolledSections
+        analytics.track 'Landing Page - Read Section',
+          'Section': sectionId.charAt(0).toUpperCase() + sectionId.slice(1)
+        scrolledSections.push sectionId
 
 $(document).ready homeAnalyticsReady
 $(document).on 'page:load', homeAnalyticsReady
