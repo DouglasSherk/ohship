@@ -272,26 +272,6 @@ body {
           }
         }
 
-        @mixin button($color) {
-          padding: 30px 60px;
-          font-size: 32px;
-          background: $color;
-          color: white;
-          text-transform: uppercase;
-
-          &:hover {
-            background: lighten($color, 10%);
-          }
-        }
-
-        .button-starter {
-          @include button(#ed6c4d);
-        }
-
-        .button-monthly {
-          @include button(#3e94d1);
-        }
-
         .price {
           color: #444;
           text-align: center;
@@ -575,5 +555,26 @@ body {
         margin: auto;
       }
     }
+  }
+
+  @mixin button($color) {
+    padding: 20px 40px;
+    font-size: 24px;
+    background: $color;
+    color: white;
+    text-transform: uppercase;
+
+    &:hover {
+      background: lighten($color, 10%);
+      color: white;
+    }
+  }
+
+  .button-starter {
+    @include button(#e8461f);
+  }
+
+  .button-monthly {
+    @include button(#3e94d1);
   }
 }

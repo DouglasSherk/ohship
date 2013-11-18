@@ -11,26 +11,7 @@
       <h2>Website doesn't ship to your country? We'll do it for you.</h2>
     </div>
     <br><br>
-    <div class="row-fluid row-gutterless">
-      <div class="col-md-4">
-        <%= link_to user_omniauth_authorize_path(:facebook), :class => "facebook-connect", :id => "homeFacebookLogin" do %>
-          <span><%= fa_icon "facebook", :class => "fa-3x" %></span>
-          <span>Log in with Facebook</span>
-        <% end %>
-      </div>
-      <div class="col-md-4 mobile-or">
-        <span class="or">- or -</span>
-      </div>
-      <div class="col-md-4">
-        <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:id => "homeEmailForm"}) do |f| %>
-          <%= hidden_field_tag :email_only, true %>
-          <div class="form-group">
-            <span class="or"><div class="or-inner">or</div></span>
-            <%= f.email_field :email, :class => "email form-control col-xs-6", :placeholder => "Sign up with email", :id => "homeEmailField" %>
-            <%= button_tag raw(fa_icon("arrow-right", :class => "fa-lg")), :class => "email-signup btn btn-primary" %>
-          </div>
-        <% end %>
-      </div>
+    <%= link_to "Get Started Now", new_user_registration_path, :class => "btn button-starter" %>
     </div>
   </div>
 </div>
@@ -69,7 +50,7 @@
       </div>
     </div>
     <div class="row-fluid">
-      <%= link_to "Read more", details_path, :class => "btn btn-primary btn-lg", :id => 'homeReadMore' %>
+      <%= link_to "Read more", details_path, :class => "btn btn-primary btn-xlg", :id => 'homeReadMore' %>
     </div>
   </div>
 </div>
