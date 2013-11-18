@@ -23,8 +23,6 @@ class HomeController < ApplicationController
   end
 
   def details
-    finished "read_more_button"
-
     Analytics.track(
       user_id: distinct_id,
       event: 'View How it Works',

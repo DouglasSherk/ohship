@@ -52,9 +52,7 @@
       </div>
     </div>
     <div class="row-fluid">
-      <% ab_test("read_more_button", "btn-success", "btn-primary") do |btn_class| %>
-        <%= link_to "Read more", details_path, :class => "btn btn-xlg #{btn_class}", :id => 'homeReadMore' %>
-      <% end %>
+      <%= link_to "Read more", details_path, :class => "btn btn-xlg btn-primary", :id => 'homeReadMore' %>
     </div>
   </div>
 </div>

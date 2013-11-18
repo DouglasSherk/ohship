@@ -27,6 +27,13 @@
     the item.</em></li>
     <li><strong>You receive the package.</strong></li>
   </ol>
+  <% unless current_user %>
+    <br>
+    <div class="center">
+      <%= link_to "Get Started Now", new_user_registration_path, :class => "btn button-starter" %>
+    </div>
+    <br>
+  <% end %>
   <h2>Our Shipping</h2>
   <p>We offer up to $100 of coverage on
   any item shipped through our service. If you need more coverage than this,
