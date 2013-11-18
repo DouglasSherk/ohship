@@ -15,8 +15,6 @@ class PackagesController < ApplicationController
   # GET /packages
   # GET /packages.json
   def index
-    finished "get_started_button"
-
     @packages = Package.all.select { |package| can? :read, package }
 
     @show = params[:show] || ''
@@ -81,6 +79,8 @@ class PackagesController < ApplicationController
   def new
     authorize! :create, Package
     @package = Package.new
+
+    finished "get_started_button"
 
     @signup = params[:signup]
 
