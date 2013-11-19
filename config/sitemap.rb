@@ -1,5 +1,5 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://ohship.me"
+SitemapGenerator::Sitemap.default_host = "https://ohship.me"
 
 SitemapGenerator::Sitemap.create do
   # Put links creation logic here.
