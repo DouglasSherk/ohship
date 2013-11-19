@@ -38,9 +38,16 @@
 
   <% unless @signup %>
     <div class="form-group <%= 'has-error' if @user.errors[:address].any? %>">
-      <%= f.label :address, :class => 'col-sm-3 control-label' %>
+      <%= f.label :address, 'Address Line 1', :class => 'col-sm-3 control-label' %>
       <div class="col-sm-9">
         <%= f.text_field :address, :class => "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-group <%= 'has-error' if @user.errors[:address2].any? %>">
+      <%= f.label :address2, 'Address Line 2', :class => 'col-sm-3 control-label' %>
+      <div class="col-sm-9">
+        <%= f.text_field :address2, :class => "form-control" %>
       </div>
     </div>
 

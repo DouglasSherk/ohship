@@ -102,8 +102,10 @@
 
     <dl class="dl-horizontal">
     <% if is_shippee? || @package.state >= Package::STATE_SHIPPEE_PAID %>
-      <dt>Address</dt>
+      <dt>Address Line 1</dt>
       <dd><%= @package.ship_to_address %></dd>
+      <dt>Address Line 2</dt>
+      <dd><%= @package.ship_to_address2 %></dd>
     <% else %>
       <div class="alert alert-info">
         <i>Full address details will be available once the shippee has made the payment.</i>

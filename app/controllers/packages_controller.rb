@@ -87,6 +87,7 @@ class PackagesController < ApplicationController
     # Load user's address as the default
     @package.ship_to_name = current_user.name
     @package.ship_to_address = current_user.address
+    @package.ship_to_address2 = current_user.address2
     @package.ship_to_city = current_user.city
     @package.ship_to_state = current_user.state
     @package.ship_to_country = current_user.country
@@ -115,6 +116,7 @@ class PackagesController < ApplicationController
       current_user.update_attributes(
         :name => @package.ship_to_name,
         :address => @package.ship_to_address,
+        :address2 => @package.ship_to_address2,
         :city => @package.ship_to_city,
         :state => @package.ship_to_state,
         :country => @package.ship_to_country,
@@ -652,6 +654,7 @@ class PackagesController < ApplicationController
         :origin_country,
         :ship_to_name,
         :ship_to_address,
+        :ship_to_address2,
         :ship_to_state,
         :ship_to_city,
         :ship_to_country,

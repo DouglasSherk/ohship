@@ -37,6 +37,7 @@ class UsersController < ApplicationController
         :name,
         :email,
         :address,
+        :address2,
         :city,
         :state,
         :country,

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131111222017) do
+ActiveRecord::Schema.define(version: 20131119043102) do
 
   create_table "coupons", force: true do |t|
     t.integer  "shippee_id"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20131111222017) do
     t.string   "shipping_class"
     t.boolean  "shipping_estimate_confirmed", default: false
     t.boolean  "custom_shipping",             default: false
+    t.string   "ship_to_address2"
   end
 
   create_table "photos", force: true do |t|
@@ -106,6 +107,7 @@ ActiveRecord::Schema.define(version: 20131111222017) do
     t.integer  "referrer_id"
     t.integer  "referral_credits",       default: 0
     t.string   "distinct_id"
+    t.string   "address2"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
