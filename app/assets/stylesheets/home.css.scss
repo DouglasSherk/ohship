@@ -500,7 +500,7 @@ body {
 
     a.facebook-connect {
       @include border-radius(5px);
-      width: 300px;
+      width: 225px;
       $bg-color: #4063b3;
       $bg-color-gradient: #3c599d;
       background-color: $bg-color;
@@ -528,7 +528,7 @@ body {
       span {
         display: table-cell;
         text-align: center;
-        padding: 15px 10px;
+        padding: 5px 5px 5px 10px;
         position: relative;
 
         i {
@@ -561,11 +561,6 @@ body {
         @include border-radius(5px);
         padding: 30px;
         background: #f7f7f7;
-
-        .facebook-connect {
-          width: 100%;
-          max-width: 300px;
-        }
       }
 
       .info-panel {
