@@ -178,6 +178,8 @@ GEM
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
+    sitemap_generator (4.3.0)
+      builder
     split (0.6.6)
       redis (>= 2.1)
       redis-namespace (>= 1.1.0)
@@ -252,6 +254,7 @@ DEPENDENCIES
   rails (= 4.0.0)
   sass-rails (~> 4.0.0)
   sdoc
+  sitemap_generator
   split
   sqlite3
   stripe
