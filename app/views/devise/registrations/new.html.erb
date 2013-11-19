@@ -1,15 +1,20 @@
-<div class="row-fluid auth">
-  <div class="col-md-12 center">
-    <div class="col-md-6" style="margin: auto; float: none; text-align: left;">
+<% unless (devise_error_messages!).empty? %>
+  <div class="alert alert-danger">
+    <%= devise_error_messages! %>
+  </div>
+<% end %>
+
+<div class="auth signup">
+  <div class="row row-gutterless">
+    <div class="col-md-12">
       <h2>Get started with OhShip</h2>
+      <br />
+    </div>
+  </div>
 
+  <div class="row row-gutterless">
+    <div class="form-panel col-sm-5">
       <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-        <% unless (devise_error_messages!).empty? %>
-          <div class="alert alert-danger">
-            <%= devise_error_messages! %>
-          </div>
-        <% end %>
-
         <%= f.hidden_field :referrer_id, :value => @referrer_id if @referrer_id %>
 
         <div class="form-group"><%= f.label :email %>
@@ -24,14 +29,7 @@
         <div class="form-group"><%= f.label :password_confirmation %>
         <%= f.password_field :password_confirmation, :class => "form-control" %></div>
 
-        <div class="row row-gutterless">
-          <div class="col-xs-6">
-            <div class="form-group"><%= f.submit "Sign up", :class => "btn btn-danger btn-lg" %></div>
-          </div>
-          <div class="col-xs-6 right">
-            <%= link_to "Already have an account?", new_user_session_path %>
-          </div>
-        </div>
+        <div class="form-group"><%= f.submit "Sign up", :class => "btn btn-danger btn-lg" %></div>
       <% end %>
 
       <% if @email_only.nil? && devise_error_messages!.empty? %>
@@ -47,6 +45,36 @@
         <% end %>
         <br>
       <% end %>
+    </div>
+    <div class="info-panel col-sm-7">
+<!--       <div class="info-section">
+        <%= image_tag '../img/tag.png' %>
+        <div class="text">
+          <h3>Shop online. Ship anywhere.</h3>
+          <p>Buy things anywhere in three easy steps.</p>
+          <ol>
+            <li>Sign up and get your address.</li>
+            <li>Shop like usual and ship.</li>
+            <li>We send the item to you.</li>
+          </ol>
+        </div>
+      </div> -->
+
+      <div class="info-section">
+        <%= image_tag '../img/tag.png' %>
+        <div class="text">
+          <h3>Affordable, with no sign-up fees.</h3>
+          We only charge you once - when we ship the package to you. OhShip adds a 20% fee on top of the shipping costs from our location to yours.
+        </div>
+      </div>
+
+      <div class="info-section">
+        <%= image_tag '../img/lock.png' %>
+        <div class="text">
+          <h3>Safe and secure.</h3>
+          We provide photos, receipts and tracking information so you can be sure your package arrives in perfect condition.
+        </div>
+      </div>
     </div>
   </div>
 </div>
