@@ -30,6 +30,7 @@ Ohship::Application.routes.draw do
   get "prohibited" => "home#prohibited"
   get "concierge" => "home#concierge"
   get "contact" => "home#contact"
+  get "refer" => "home#refer"
   get "shiphappens" => "home#shiphappens"
 
   mount Split::Dashboard, :at => 'split', :constraints => lambda { |request|

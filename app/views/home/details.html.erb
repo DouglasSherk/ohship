@@ -1,58 +1,48 @@
-<div class="home content container">
-  <h1>How OhShip Works</h1>
-  <p>Have you ever had the problem that something you want doesn't ship to your
-  country? OhShip has locations all over the world that can receive packages and
-  pass them along to you.</p>
-  <p>For example, if you live in Canada and the retailer will only ship to the
-  US, we will have one of our US locations receive it, then send it to you.</p>
-  <h2>How it Works</h2>
-  <ol class="spaced">
-    <li><strong>Shop online as usual.</strong> During the checkout process, when
-    you’re asked to provide a shipping address, signup/login at
-    www.ohship.me.</li>
-    <li><strong>Provide OhShip with the package details and your shipping
-    address.</strong> OhShip will then give you your
-    international shipping address to enter on the retailer’s checkout page.<br>
-    <em>For example, if you're buying something on Amazon's US site, but you
-    live in the UK, when filling out the shipping info for Amazon, instead of
-    entering your address, enter your international shipping address.</em></li>
-    <li><strong>The package is shipped to your international shipping
-    address.</strong> We will take a picture of the package, measure it, and
-    will give you an estimate of the shipping cost. We may open the package to
-    ensure it doesn’t contain any prohibited items. <em>If there are sensitive
-    items and you’d prefer us not to open the package, you could opt to have us
-    buy the items for you instead.</em></li>
-    <li><strong>You pre-authorize payment for shipping.</strong> We will then
-    ship the package to you. <em>We only charge your card once we have shipped
-    the item.</em></li>
-    <li><strong>You receive the package.</strong></li>
-  </ol>
-  <% unless current_user %>
-    <br>
-    <div class="center">
-      <%= link_to "Get Started Now", new_user_registration_path, :class => "btn button-starter" %>
-    </div>
-    <br>
-  <% end %>
-  <h2>Our Shipping</h2>
-  <p>We offer up to $100 of coverage on
-  any item shipped through our service. If you need more coverage than this,
-  please contact us and we can arrange an alternative plan.</p>
-  <h2>Our Fees</h2>
-  <p>We charge a small 20% service fee on top of the shipping costs to your home
-  (not the value of the merchandise itself). So if shipping costs you $10, we'll
-  charge you $2, regardless of the value of the item itself.</p> <p>We value
-  transparency. We use the shipping estimates provided by international courier
-  services (such as USPS) so that our shipping quotes will be as accurate as
-  possible. Duties, tariffs, brokerage fees, and taxes are the responsibility of
-  the purchaser. We will provide you with receipts and a cost breakdown, telling
-  you exactly how much each shipment costs.</p>
-  <h2>Referrals</h2>
-  <p>When you refer your friends to OhShip, if they ship a package with us, your
-  next shipment will have our usual 20% service fee waived. You can accumulate
-  several referral credits by referring several friends. Your referral credits
-  are used automatically on your next order with us.</p>
-  <p>To get a referral credit, you must give your friend your referral link
-  (available in your profile) before they sign up. If you have forgot to do so,
-  contact us and we'll fix it for you.</p>
-</div>
+<h1>How OhShip Works</h1>
+<p>Have you ever tried to buy something from a retailer who wouldn't ship to
+your country? OhShip has locations all over the world that can receive
+packages and pass them along to you.</p>
+<p>For example, if you live in Canada and the retailer will only ship to the
+US, we will have one of our US locations receive it, then send it to you.</p>
+<h2>How it Works</h2>
+<ol class="spaced">
+  <li><strong>Shop online as usual.</strong> During the checkout process, when
+  you’re asked to provide a shipping address, signup/login at
+  www.ohship.me.</li>
+  <li><strong>Provide OhShip with the package details and your shipping
+  address.</strong> OhShip will then give you your
+  international shipping address to enter on the retailer’s checkout page.<br>
+  <em>For example, if you're buying something on Amazon's US site, but you
+  live in the UK, when filling out the shipping info for Amazon, instead of
+  entering your address, enter your international shipping address.</em></li>
+  <li><strong>The package is shipped to your international shipping
+  address.</strong> We will take a picture of the package, measure it, and
+  will give you an estimate of the shipping cost. We may open the package to
+  ensure it doesn’t contain any prohibited items. <em>If there are sensitive
+  items and you’d prefer us not to open the package, you could opt to have us
+  buy the items for you instead.</em></li>
+  <li><strong>You pre-authorize payment for shipping.</strong> We will then
+  ship the package to you. <em>We only charge your card once we have shipped
+  the item.</em></li>
+  <li><strong>You receive the package.</strong></li>
+</ol>
+<% unless current_user %>
+  <br>
+  <div class="center">
+    <%= link_to "Get Started Now", new_user_registration_path, :class => "btn button-starter" %>
+  </div>
+  <br>
+<% end %>
+<h2>Our Shipping</h2>
+<p>We offer up to $100 of coverage on
+any item shipped through our service. If you need more coverage than this,
+please contact us and we can arrange an alternative plan.</p>
+<h2>Our Fees</h2>
+<p>We charge a small 20% service fee on top of the shipping costs to your home
+(not the value of the merchandise itself). So if shipping costs you $10, we'll
+charge you $2, regardless of the value of the item itself.</p> <p>We value
+transparency. We use the shipping estimates provided by international courier
+services (such as USPS) so that our shipping quotes will be as accurate as
+possible. Duties, tariffs, brokerage fees, and taxes are the responsibility of
+the purchaser. We will provide you with receipts and a cost breakdown, telling
+you exactly how much each shipment costs.</p>

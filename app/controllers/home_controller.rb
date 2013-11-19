@@ -1,6 +1,4 @@
 class HomeController < ApplicationController
-  layout 'application'
-
   def index
     if current_user
       Analytics.track(
@@ -21,6 +19,8 @@ class HomeController < ApplicationController
         }
       )
     end
+
+    render :layout => 'application'
   end
 
   def details
@@ -48,6 +48,13 @@ class HomeController < ApplicationController
     Analytics.track(
       user_id: distinct_id,
       event: 'View Concierge Service',
+    )
+  end
+
+  def refer
+    Analytics.track(
+      user_id: distinct_id,
+      event: 'View Refer a Friend',
     )
   end
 
