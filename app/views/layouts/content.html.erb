@@ -34,7 +34,7 @@
               <li class="<%= 'active' if request.path == packages_path %>"><%= link_to "Packages", packages_path %></li>
               <li class="<%= 'active' if request.path == users_profile_path %>"><a href="/users/profile">My Profile</a></li>
               <li><%= link_to "Logout", destroy_user_session_path, :method => :delete %></li>
-            <% else %>
+            <% elsif request.path == new_user_registration_path %>
               <li><%= link_to raw("Already have an account? <button class='btn btn-primary'>Login</button>"),
                               new_user_registration_path, :class => 'navbar-login-link' %></li>
             <% end %>

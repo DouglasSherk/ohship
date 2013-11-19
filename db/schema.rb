@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20131119043102) do
     t.integer "package_id"
   end
 
-  add_index "transactions", ["package_id"], name: "index_transactions_on_package_id", using: :btree
+  add_index "transactions", ["package_id"], name: "index_transactions_on_package_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 20131119043102) do
     t.string   "address2"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
