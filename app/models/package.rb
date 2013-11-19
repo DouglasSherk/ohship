@@ -39,7 +39,7 @@ class Package < ActiveRecord::Base
   validates :state, :inclusion => { :in => STATE_SUBMITTED..STATE_COMPLETED }
 
   # Shipping details
-  validates :ship_to_name, :ship_to_address, :ship_to_address2, :ship_to_city, :ship_to_state, :ship_to_country, :ship_to_postal_code,
+  validates :ship_to_name, :ship_to_address, :ship_to_address2, :ship_to_city, :ship_to_state, :ship_to_postal_code, :ship_to_country,
             :origin_country, :description, presence: true
   validates :ship_to_name, :ship_to_city, :ship_to_state, :ship_to_country, :origin_country,
             length: { in: 1..80 }

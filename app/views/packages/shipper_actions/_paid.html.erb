@@ -4,8 +4,9 @@
     <strong><%= @package.ship_to_name %></strong><br />
     <%= @package.ship_to_address %><br />
     <%= @package.ship_to_address2 %><br />
-    <%= @package.ship_to_city %>, <%= @package.ship_to_state%>, <%= @package.ship_to_country %><br />
-    <%= @package.ship_to_postal_code %>
+    <%= @package.ship_to_city %>, <%= @package.ship_to_state %><br />
+    <%= @package.ship_to_postal_code %><br />
+    <%= @package.ship_to_country %>
   </address>
 
   Use <strong><%= @package.shipping_class %></strong> shipping; the cost should be about <%= number_to_local_currency @package.shipping_estimate, @package.origin_country %>.<br />

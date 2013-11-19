@@ -6,8 +6,9 @@ Please send the package to the following address:
 <%= @package.ship_to_name %>
 <%= @package.ship_to_address %>
 <%= @package.ship_to_address2 %>
-<%= @package.ship_to_city %>, <%= @package.ship_to_state %>, <%= @package.ship_to_country %>
+<%= @package.ship_to_city %>, <%= @package.ship_to_state %>
 <%= @package.ship_to_postal_code %>
+<%= @package.ship_to_country %>
 
 Use <%= @package.shipping_class %> shipping; the cost should be <%= number_to_local_currency @package.shipping_estimate, @package.origin_country %>.
 

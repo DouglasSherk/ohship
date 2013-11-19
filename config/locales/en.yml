@@ -35,5 +35,5 @@ en:
         ship_to_address2: Shipping address line 2
         ship_to_city: Shipping city
         ship_to_state: Shipping state/province
-        ship_to_country: Shipping country
         ship_to_postal_code: Shipping postal/zip code
+        ship_to_country: Shipping country

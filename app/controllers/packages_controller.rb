@@ -90,8 +90,8 @@ class PackagesController < ApplicationController
     @package.ship_to_address2 = current_user.address2
     @package.ship_to_city = current_user.city
     @package.ship_to_state = current_user.state
-    @package.ship_to_country = current_user.country
     @package.ship_to_postal_code = current_user.postal_code
+    @package.ship_to_country = current_user.country
 
     @country = current_user.country || User.guess_user_country(request.remote_ip)
 
@@ -119,8 +119,8 @@ class PackagesController < ApplicationController
         :address2 => @package.ship_to_address2,
         :city => @package.ship_to_city,
         :state => @package.ship_to_state,
-        :country => @package.ship_to_country,
         :postal_code => @package.ship_to_postal_code,
+        :country => @package.ship_to_country,
       )
     end
 
@@ -657,8 +657,8 @@ class PackagesController < ApplicationController
         :ship_to_address2,
         :ship_to_state,
         :ship_to_city,
-        :ship_to_country,
         :ship_to_postal_code,
+        :ship_to_country,
         :special_instructions,
         :size_group,
       ]
