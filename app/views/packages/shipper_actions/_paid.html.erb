@@ -3,7 +3,9 @@
   <address>
     <strong><%= @package.ship_to_name %></strong><br />
     <%= @package.ship_to_address %><br />
-    <%= @package.ship_to_address2 %><br />
+    <% unless @package.ship_to_address2.blank? %>
+      <%= @package.ship_to_address2 %><br />
+    <% end %>
     <%= @package.ship_to_city %>, <%= @package.ship_to_state %><br />
     <%= @package.ship_to_postal_code %><br />
     <%= @package.ship_to_country %>

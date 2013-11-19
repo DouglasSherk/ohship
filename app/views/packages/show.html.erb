@@ -104,8 +104,10 @@
     <% if is_shippee? || @package.state >= Package::STATE_SHIPPEE_PAID %>
       <dt>Address Line 1</dt>
       <dd><%= @package.ship_to_address %></dd>
-      <dt>Address Line 2</dt>
-      <dd><%= @package.ship_to_address2 %></dd>
+      <% unless @package.ship_to_address2.blank? %>
+        <dt>Address Line 2</dt>
+        <dd><%= @package.ship_to_address2 %></dd>
+      <% end %>
     <% else %>
       <div class="alert alert-info">
         <i>Full address details will be available once the shippee has made the payment.</i>

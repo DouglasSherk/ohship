@@ -4,8 +4,8 @@ The recipient for package <%= @package.description %> has paid the shipping fees
 Please send the package to the following address:
 
 <%= @package.ship_to_name %>
-<%= @package.ship_to_address %>
-<%= @package.ship_to_address2 %>
+<%= @package.ship_to_address %><% unless @package.ship_to_address2.blank? %>
+<%= @package.ship_to_address2 %><% end %>
 <%= @package.ship_to_city %>, <%= @package.ship_to_state %>
 <%= @package.ship_to_postal_code %>
 <%= @package.ship_to_country %>
