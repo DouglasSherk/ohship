@@ -5,7 +5,7 @@ module USPS
   API_URL = 'http://production.shippingapis.com/ShippingAPI.dll'
   USER_ID = '868SCIGI7323'
   SHIPPING_CLASSES = {
-    'first_class' => 'USPS First Class (up to 90 days)',
+    'first_class' => 'USPS First Class (7-21 days)',
     'priority' => 'USPS Priority (6-10 days)',
     'priority_express' => 'USPS Priority Express (3-5 days)',
   }
