@@ -28,6 +28,7 @@ SitemapGenerator::Sitemap.create do
   add details_path, :priority => 0.9
   add new_user_registration_path, :priority => 0.7
   add concierge_path, :priority => 0.5
+  add estimate_path, :priority => 0.4
   add contact_path, :priority => 0.3
   add prohibited_path, :priority => 0.2
   add terms_path, :priority => 0.1
