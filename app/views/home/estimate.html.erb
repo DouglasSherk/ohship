@@ -1,6 +1,6 @@
 <% content_for :title, 'Shipping Estimator' %>
 
-<h1>Shipping Estimator</h1>
+<h1 class="estimator-heading">Shipping Estimator</h1>
 
 <%= form_for(@package, :html => {:class => 'form-horizontal'}) do |f| %>
   <% if @package.errors.any? %>
