@@ -58,6 +58,16 @@ class HomeController < ApplicationController
     )
   end
 
+  def estimate
+    @package = Package.new
+    @country = current_user && current_user.country || User.guess_user_country(request.remote_ip)
+
+    Analytics.track(
+      user_id: distinct_id,
+      event: 'View Shipping Estimator',
+    )
+  end
+
   def shiphappens
     throw "This is a test exception, don't worry about it"
   end

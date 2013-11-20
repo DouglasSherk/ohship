@@ -1,0 +1,82 @@
+<% content_for :title, 'Shipping Estimator' %>
+
+<h1>Shipping Estimator</h1>
+
+<%= form_for(@package, :html => {:class => 'form-horizontal'}) do |f| %>
+  <% if @package.errors.any? %>
+    <div class="alert alert-danger">
+      Please fix the following errors:
+      <ul>
+      <% @package.errors.full_messages.each do |msg| %>
+        <li><%= raw msg %></li>
+      <% end %>
+      </ul>
+    </div>
+    <hr class="soften" />
+  <% end %>
+
+  <h3>Where do you want it shipped?</h3>
+
+  <div class="form-group <%= 'has-error' if @package.errors[:ship_to_country].any? %>">
+    <% # HACK: provide garbage values for the usual package fields %>
+    <%= f.hidden_field :ship_to_name, :value => 'test' %>
+    <%= f.hidden_field :ship_to_address, :value => 'test' %>
+    <%= f.hidden_field :ship_to_city, :value => 'test' %>
+    <%= f.hidden_field :ship_to_state, :value => 'test' %>
+    <%= f.hidden_field :ship_to_postal_code, :value => 'test' %>
+
+    <%= f.label :ship_to_country, 'Country', :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
+      <%= f.country_select :ship_to_country, [@country], {}, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <hr class="soften" />
+
+  <h3>Package details</h3>
+
+  <div class="form-group <%= 'has-error' if @package.errors[:origin_country].any? %>">
+    <%= f.label :origin_country, :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
+      <%= f.select :origin_country, Package::COUNTRY_DATA.keys, {},  :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group <%= 'has-error' if @package.errors[:description].any? %>">
+    <%= f.label :description, 'What is it?', :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
+      <%= f.text_field :description, :class => 'form-control' %>
+      <%= link_to "Read about prohibited items", prohibited_path, :id => "packageProhibitedLink" %>
+    </div>
+  </div>
+
+  <div class="form-group <%= 'has-error' if @package.errors[:value_cents].any? %>">
+    <%= f.label :value, 'Value (local currency)', :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
+      <%= f.text_field :value, :value => @package.value && format('%.2f', @package.value), :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group <%= 'has-error' if @package.errors[:weight_lb].any? %>">
+    <%= f.label :weight_lb, 'Weight (lb)', :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
+      <%= f.text_field :weight_lb, :class => 'form-control',
+                       :placeholder => 'Provide your best guess of the package weight.' %>
+    </div>
+  </div>
+
+  <hr class="soften" />
+
+  <h3>Package size</h3>
+  <p>Please choose the size that best matches your item, or provide a custom guess.</p>
+
+  <%= render :partial => 'packages/size_selector', :locals => {:f => f} %>
+
+  <br />
+
+  <div id="shipping-estimate-display"></div>
+
+  <div class="actions">
+    <%= f.button "Get shipping estimate", :id => "shipping-estimate-button", :class => "btn btn-primary btn-lg", :type => "button" %>
+  </div>
+<% end %>

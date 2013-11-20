@@ -2,17 +2,23 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import 'include/utilities';
+
 .sizes {
-  div[class*="col-"] {
+  text-align: center;
+
+  .diagram {
     background-repeat: no-repeat;
     background-position: bottom center;
     background-size: contain;
-    height: 200px;
-  }
-}
 
-.size-names {
-  div[class*="col-"] {
+    height: 150px;
+    @include respond-to(tablets, desktops) {
+      height: 100px;
+    }
+  }
+
+  .size-label {
     margin-top: 20px;
     margin-bottom: 40px;
   }

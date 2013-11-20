@@ -39,57 +39,57 @@
   <h3>Where do you want it shipped?</h3>
 
   <div class="form-group <%= 'has-error' if @package.errors[:ship_to_name].any? %>">
-    <%= f.label :ship_to_name, 'Name', :class => 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
+    <%= f.label :ship_to_name, 'Name', :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
       <%= f.text_field :ship_to_name, :class => 'form-control' %>
     </div>
   </div>
 
   <div class="form-group <%= 'has-error' if @package.errors[:ship_to_address].any? %>">
-    <%= f.label :ship_to_address, 'Address Line 1', :class => 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
+    <%= f.label :ship_to_address, 'Address Line 1', :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
       <%= f.text_field :ship_to_address, :class => 'form-control' %>
     </div>
   </div>
 
   <div class="form-group <%= 'has-error' if @package.errors[:ship_to_address2].any? %>">
-    <%= f.label :ship_to_address2, 'Address Line 2', :class => 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
+    <%= f.label :ship_to_address2, 'Address Line 2', :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
       <%= f.text_field :ship_to_address2, :class => 'form-control' %>
     </div>
   </div>
 
   <div class="form-group <%= 'has-error' if @package.errors[:ship_to_city].any? %>">
-    <%= f.label :ship_to_city, 'City', :class => 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
+    <%= f.label :ship_to_city, 'City', :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
       <%= f.text_field :ship_to_city, :class => 'form-control' %>
     </div>
   </div>
 
   <div class="form-group <%= 'has-error' if @package.errors[:ship_to_state].any? %>">
-    <%= f.label :ship_to_state, 'State/province', :class => 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
+    <%= f.label :ship_to_state, 'State/province', :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
       <%= f.text_field :ship_to_state, :class => 'form-control' %>
     </div>
   </div>
 
   <div class="form-group <%= 'has-error' if @package.errors[:ship_to_postal_code].any? %>">
-    <%= f.label :ship_to_postal_code, 'Zip/Postal code', :class => 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
+    <%= f.label :ship_to_postal_code, 'Zip/Postal code', :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
       <%= f.text_field :ship_to_postal_code, :class => 'form-control' %>
     </div>
   </div>
 
   <div class="form-group <%= 'has-error' if @package.errors[:ship_to_country].any? %>">
-    <%= f.label :ship_to_country, 'Country', :class => 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
+    <%= f.label :ship_to_country, 'Country', :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
       <%= f.country_select :ship_to_country, [@country], {}, :class => 'form-control' %>
     </div>
   </div>
 
   <div class="form-group">
-    <div class="col-sm-2"></div>
-    <div class="col-sm-10">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-9">
       <div class="checkbox">
         <%= check_box_tag :save_address, '1', @save_address || !current_user.address %>
         <%= label_tag :save_address, 'Save this as my default address' %>
@@ -102,30 +102,30 @@
   <h3>Package details</h3>
 
   <div class="form-group <%= 'has-error' if @package.errors[:origin_country].any? %>">
-    <%= f.label :origin_country, :class => 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
+    <%= f.label :origin_country, :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
       <%= f.select :origin_country, Package::COUNTRY_DATA.keys, {},  :class => 'form-control' %>
     </div>
   </div>
 
   <div class="form-group <%= 'has-error' if @package.errors[:description].any? %>">
-    <%= f.label :description, 'What is it?', :class => 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
+    <%= f.label :description, 'What is it?', :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
       <%= f.text_field :description, :class => 'form-control' %>
       <%= link_to "Read about prohibited items", prohibited_path, :id => "packageProhibitedLink" %>
     </div>
   </div>
 
   <div class="form-group <%= 'has-error' if @package.errors[:value_cents].any? %>">
-    <%= f.label :value, 'Value (local currency)', :class => 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
+    <%= f.label :value, 'Value (local currency)', :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
       <%= f.text_field :value, :value => @package.value && format('%.2f', @package.value), :class => 'form-control' %>
     </div>
   </div>
 
   <div class="form-group <%= 'has-error' if @package.errors[:weight_lb].any? %>">
-    <%= f.label :weight_lb, 'Weight (lb)', :class => 'col-sm-2 control-label' %>
-    <div class="col-sm-10">
+    <%= f.label :weight_lb, 'Weight (lb)', :class => 'col-sm-3 control-label' %>
+    <div class="col-sm-9">
       <%= f.text_field :weight_lb, :class => 'form-control',
                        :placeholder => 'Provide a rough guess. This is only used for shipping estimation' %>
     </div>
@@ -136,64 +136,7 @@
   <h3>Package size</h3>
   <p>Please guess the size of this package. Don't worry if you're wrong; it's just for estimation purposes.</p>
 
-  <div class="row-fluid sizes">
-    <div class="col-sm-3 size-select" data-size-select="package_size_group_envelope" style="background-image: url('../img/box-envelope.png');">
-    </div>
-    <div class="col-sm-3 size-select" data-size-select="package_size_group_small" style="background-image: url('../img/box-small.png');">
-    </div>
-    <div class="col-sm-3 size-select" data-size-select="package_size_group_medium" style="background-image: url('../img/box-medium.png');">
-    </div>
-    <div class="col-sm-3 size-select" data-size-select="package_size_group_large" style="background-image: url('../img/box-large.png');">
-    </div>
-  </div>
-
-  <div class="row-fluid size-names">
-    <div class="col-sm-3">
-      <h3 class="center"><%= f.radio_button :size_group, "envelope" %> <%= f.label :size_group_envelope, "Envelope" %></h3>
-    </div>
-    <div class="col-sm-3">
-      <h3 class="center"><%= f.radio_button :size_group, "small" %> <%= f.label :size_group_small, "Small" %></h3>
-    </div>
-    <div class="col-sm-3">
-      <h3 class="center"><%= f.radio_button :size_group, "medium" %> <%= f.label :size_group_medium, "Medium" %></h3>
-    </div>
-    <div class="col-sm-3">
-      <h3 class="center"><%= f.radio_button :size_group, "large" %> <%= f.label :size_group_large, "Large" %></h3>
-    </div>
-  </div>
-
-  <h2 class="center">- OR -</h2>
-  <br>
-  <h3 class="center"><%= f.radio_button :size_group, "custom" %> <%= f.label :size_group_custom, "Custom" %></h3>
-
-  <div class="dimensions hidden">
-    <div class="form-group <%= 'has-error' if @package.errors[:length_in].any? %>">
-      <%= f.label :length_in, 'Length (in)', :class => 'col-sm-2 control-label' %>
-      <div class="col-sm-10">
-        <%= f.text_field :length_in, :class => 'form-control' %>
-      </div>
-    </div>
-
-    <div class="form-group <%= 'has-error' if @package.errors[:width_in].any? %>">
-      <%= f.label :width_in,  'Width (in)', :class => 'col-sm-2 control-label' %>
-      <div class="col-sm-10">
-        <%= f.text_field :width_in, :class => 'form-control' %>
-      </div>
-    </div>
-
-    <div class="form-group <%= 'has-error' if @package.errors[:height_in].any? %>">
-      <%= f.label :height_in, 'Height (in)', :class => 'col-sm-2 control-label' %>
-      <div class="col-sm-2">
-        <div class="checkbox">
-          <%= f.check_box :is_envelope, :id => "packageIsAnEnvelope" %>
-          <%= label_tag :packageIsAnEnvelope, 'Is an envelope' %>
-        </div>
-      </div>
-      <div class="col-sm-8">
-        <%= f.text_field :height_in, :class => 'form-control', :id => "packageHeight" %>
-      </div>
-    </div>
-  </div>
+  <%= render :partial => 'packages/size_selector', :locals => {:f => f} %>
 
   <hr class="soften" />
 

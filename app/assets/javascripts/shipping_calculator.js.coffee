@@ -32,10 +32,12 @@ ready = ->
           display.html(p)
           display.attr('class', 'alert alert-info')
       else if data.url
-        display.html("We can't automatically calculate shipping for this destination. Visit <a href='#{data.url}'><b>the #{data.carrier} site</b></a> for details.")
+        display.html("We can't automatically calculate shipping for this country. Visit <a href='#{data.url}'><b>the #{data.carrier} site</b></a> for details.<br />" +
+                     "Note that OhShip charges a 20% fee on top of the quoted amount.<br />" +
+                     "Alternatively, contact <a href='mailto:hello@ohship.me'>hello@ohship.me</a> for assistance.")
         display.attr('class', 'alert alert-info')
       else
-        display.html("We can't automatically calculate shipping for this destination. Contact <a href='mailto:hello@ohship.me'>hello@ohship.me</a> for details.")
+        display.html("We can't automatically calculate shipping for this country. Contact <a href='mailto:hello@ohship.me'>hello@ohship.me</a> for details.")
         display.attr('class', 'alert alert-info')
     ).fail((data) ->
       display.attr('class', 'alert alert-danger')

@@ -8,7 +8,7 @@ require 'stripe'
 require 'currencies/exchange_bank'
 
 class PackagesController < ApplicationController
-  before_filter :authenticate_user_with_return!
+  before_filter :authenticate_user_with_return!, :except => [:shipping_estimate]
   load_and_authorize_resource :except => [:index, :new, :create]
   skip_authorize_resource :only => [:cancel, :shippee_action, :shipper_action, :admin_action]
 

@@ -1,0 +1,51 @@
+<div class="row-fluid sizes">
+  <div class="col-sm-3">
+    <div class="diagram size-select" data-size-select="package_size_group_envelope" style="background-image: url('../img/box-envelope.png');"></div>
+    <h3 class="size-label"><%= f.radio_button :size_group, "envelope" %> <%= f.label :size_group_envelope, "Envelope" %></h3>
+  </div>
+  <div class="col-sm-3">
+    <div class="diagram size-select" data-size-select="package_size_group_small" style="background-image: url('../img/box-small.png');"></div>
+    <h3 class="size-label"><%= f.radio_button :size_group, "small" %> <%= f.label :size_group_small, "Small" %></h3>
+  </div>
+  <div class="col-sm-3">
+    <div class="diagram size-select" data-size-select="package_size_group_medium" style="background-image: url('../img/box-medium.png');"></div>
+    <h3 class="size-label"><%= f.radio_button :size_group, "medium" %> <%= f.label :size_group_medium, "Medium" %></h3>
+  </div>
+  <div class="col-sm-3">
+    <div class="diagram size-select" data-size-select="package_size_group_large" style="background-image: url('../img/box-large.png');"></div>
+    <h3 class="size-label"><%= f.radio_button :size_group, "large" %> <%= f.label :size_group_large, "Large" %></h3>
+  </div>
+</div>
+
+<h2 class="center">- OR -</h2>
+<br>
+<h3 class="center"><%= f.radio_button :size_group, "custom" %> <%= f.label :size_group_custom, "Custom" %></h3>
+
+<div class="dimensions hidden">
+  <div class="form-group <%= 'has-error' if @package.errors[:length_in].any? %>">
+    <%= f.label :length_in, 'Length (in)', :class => 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.text_field :length_in, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group <%= 'has-error' if @package.errors[:width_in].any? %>">
+    <%= f.label :width_in,  'Width (in)', :class => 'col-sm-2 control-label' %>
+    <div class="col-sm-10">
+      <%= f.text_field :width_in, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group <%= 'has-error' if @package.errors[:height_in].any? %>">
+    <%= f.label :height_in, 'Height (in)', :class => 'col-sm-2 control-label' %>
+    <div class="col-sm-3">
+      <div class="checkbox">
+        <%= f.check_box :is_envelope, :id => "packageIsAnEnvelope" %>
+        <%= label_tag :packageIsAnEnvelope, 'Is an envelope' %>
+      </div>
+    </div>
+    <div class="col-sm-7">
+      <%= f.text_field :height_in, :class => 'form-control', :id => "packageHeight" %>
+    </div>
+  </div>
+</div>
