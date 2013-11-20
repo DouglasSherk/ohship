@@ -1,14 +1,20 @@
 <footer>
   <%= render "analytics/segment_identify" %>
   <div class="container <%= local_assigns[:thin] && "thin" %>">
-    <div class="row">
+    <div class="row row-gutterless">
       <div class="col-md-2">
         <h3>OhShip</h3>
         <ul>
           <li><%= link_to "Home", root_path %></li>
-          <li><%= link_to "How it Works", details_path %></li>
           <li><%= link_to "Shipping Estimator", estimate_path %></li>
           <li><%= link_to "Refer a Friend", refer_path %></li>
+        </ul>
+      </div>
+      <div class="col-md-2">
+        <h3>Help</h3>
+        <ul>
+          <li><%= link_to "How it Works", details_path %></li>
+          <li><%= link_to "FAQ", faq_path %></li>
         </ul>
       </div>
       <div class="col-md-2">
@@ -33,16 +39,10 @@
           <li><%= link_to "Mailing Address", contact_path %></li>
         </ul>
       </div>
-      <div class="col-md-2">
-        <br>
-        <%= link_to root_path do %>
-          <%= image_tag '../img/ohship.png' %>
-        <% end %>
-      </div>
     </div>
     <br>
     <br>
-    <div class="row">
+    <div class="row row-gutterless">
       <div class="col-md-12">
         <p class="pull-right"><a href="#">Back to top</a></p>
         <p>&copy; 2013 SciGit, Inc.</p>

@@ -67,6 +67,13 @@ class HomeController < ApplicationController
     )
   end
 
+  def faq
+    Analytics.track(
+      user_id: distinct_id,
+      event: 'View FAQ',
+    )
+  end
+
   def shiphappens
     throw "This is a test exception, don't worry about it"
   end

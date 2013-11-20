@@ -32,6 +32,7 @@ Ohship::Application.routes.draw do
   get "contact" => "home#contact"
   get "refer" => "home#refer"
   get "estimate" => "home#estimate"
+  get "faq" => "home#faq"
   get "shiphappens" => "home#shiphappens"
 
   mount Split::Dashboard, :at => 'split', :constraints => lambda { |request|

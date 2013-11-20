@@ -15,7 +15,7 @@
     <%= csrf_meta_tags %>
     <%= render "analytics/segment_inject" %>
   </head>
-  <body>
+  <body <%= yield :body_tag %>>
     <div class="content navbar navbar-inverse navbar-fixed-top">
       <div class="container thin">
         <div class="navbar-header">
