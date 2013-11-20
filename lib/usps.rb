@@ -40,6 +40,10 @@ module USPS
       ounces = 0
     end
 
+    if pounds + ounces == 0
+      ounces = 1
+    end
+
     height = package.is_envelope == 1 ? 0.5 : package.height_in
     length, width, height = pkg_dims = [package.length_in, package.width_in, height].sort.reverse
 
