@@ -5,7 +5,6 @@ class HomeController < ApplicationController
         user_id: distinct_id,
         event: 'View Home Page',
       )
-      return redirect_to '/packages'
     else
       @concierge_service = ab_test("concierge_service2", "true", "false") == "true"
       @get_started_button = ab_test("get_started_button", "red", "green")
