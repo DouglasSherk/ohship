@@ -27,6 +27,7 @@ class Package < ActiveRecord::Base
     'France' => {:carrier => 'FedEx France', :url => 'https://www.fedex.com/ratefinder/home?cc=fr', :currency => 'EUR'},
     'Hong Kong' => {:carrier => 'Hongkong Post', :url => 'http://app1.hongkongpost.hk/calc/eng/index.php', :currency => 'HKD'},
     'Canada' => {:carrier => 'Canada Post', :url => 'http://www.canadapost.ca/cpotools/apps/far/business/findARate?execution=e2s2', :currency => 'CAD'},
+    'Australia' => {:carrier => 'Australia Post', :url => 'http://auspost.com.au/apps/postage-calculator.html', :currency => 'AUD'},
   }
 
   SHIPPING_SIZES = {
