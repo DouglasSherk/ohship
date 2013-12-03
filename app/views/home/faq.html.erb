@@ -2,24 +2,124 @@
   data-spy="scroll" data-target="#faq-nav"
 <% end %>
 
+<% content_for :title, 'FAQ' %>
+
+<%
+  faq = {
+    :shipping => {
+      "Which items are prohibited (and can't be delivered) through OhShip?" =>
+        "See #{link_to "prohibited items list", prohibited_path}.",
+      "Does OhShip consolidate packages?" =>
+        "Yes, OhShip can consolidate your packages for free, saving you money on
+        shipping. Please #{link_to "contact us", contact_path} us for this
+        service.",
+      "Does OhShip repack packages?" =>
+        "Yes, OhShip offers free repacking services if the packaging is
+        inadequate or takes too much space, saving you money on shipping. We do
+        this automatically, so you don't need to do anything.",
+      "What is the maximum size of package I can receive?" =>
+        "<p>The maximum parcel size is 25\" x 22\" x 17\" (roughly as big as a 26\"
+        TV).  The parcel weight limit is a maximum of 30 kg (~65 lbs).  If your parcel
+        exceeds the maximum size or weight, you will be emailed with the choice of
+        picking it up from our central warehouse during operating hours or having it
+        returned to the sender. If you’re not sure whether a parcel will be within the
+        limits, we recommend asking the sender before placing your order.",
+      "How do I track my shipment?" =>
+        "When you purchase your package through a Merchant, you may receive a
+        tracking number from them for tracking it on its way to OhShip. We will
+        ask you for this number when you enter your package details, but it is
+        not required.<br>
+        <br>
+        Once we have received your package and then sent it to you, we will
+        provide you with a tracking number if you chose a shipping option that includes
+        tracking. You can use this number on the shipping carrier’s website to track
+        your package’s status.",
+      "How do I calculate my shipping charges in advance?" =>
+        "If you know the size of the package, you can estimate the costs using
+        our #{link_to "shipping estimator", estimate_path}. Unfortunately, it is
+        impossible to determine the exact charges in advance as we do not know the
+        package size coming from the merchant.",
+      "Does the package have to be delivered to my billing address?" =>
+        "No, you can send your package to another address, so long as someone
+        can sign for the package during the day.",
+      "How do I change my delivery address?" =>
+        "When you're logged in, click on the \"My Profile\" button. In here, you
+        can edit your address.",
+      "Can you deliver to any address?" =>
+        "We deliver to most addresses. However, if you live in a remote area,
+        you may need to pick up your package from your nearest post office.",
+      "How long does delivery take?" =>
+        "Delivery time depends on the origin and destination country as well as
+        the method of shipment that is selected.<br>
+        <br>
+        For example, a US website normally takes 1-3 days to deliver it to your
+        OhShip address if standard shipping was selected. Once the item is delivered to
+        your OhShip address, depending on the destination address and the shipment
+        method selected, shipment to your address could take 3 days (most of the time)
+        to 2 weeks (rarely). Please allow for a day of processing between receiving it
+        at your OhShip address and sending it to you.",
+      "What if my package is arrived damaged to my OhShip address?" =>
+        "OhShip may refuse to receive any package that shows obvious signs of
+        damage or missing contents. If this happens, the package will be rejected and
+        returned to sender, and we’ll notify you.<br>
+        <br>
+        While we don’t have the responsibility to determine any potential
+        damages in the packages, if during handling we notice any signal of
+        damages, we’ll notify you through via email.  If this happens,
+        your package would not be shipped unless you specifically authorize to
+        do so."
+      "Do I really have to pay tax and duty?" =>
+        "Yes. Governments have regulations requiring the payment of these fees.
+        We will do "
+    },
+    :payment => {
+      "Which currency is used for payment?" =>
+        "You pay the Merchant in the currency of their country (e.g. US
+        Merchants will charge in US dollars). OhShip charges in US dollars, but
+        alternate currency payments can be arranged by
+        #{link_to "contacting us", contact_path}."
+    }
+  }
+%>
+
+<h1>FAQ</h1>
+<hr class="soften" />
+
+<ul class="nav nav-pills nav-justified">
+  <% faq.each do |section_name, section| %>
+    <li>
+      <%= link_to "", :class => "nav-category" do %>
+        <%= section_name.to_s.titleize %> <%= fa_icon "caret-right" %>
+      <% end %>
+      <ul class="nav nav-pills nav-stacked hide">
+        <% count = 0 %>
+        <% section.each do |question, answer| %>
+          <li><%= link_to question, "##{section_name}#{count}" %></li>
+          <% count = count + 1 %>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ul>
+
 <div class="row">
-  <div id="faq-nav" class="col-sm-4">
+  <div id="faq-nav" class="col-sm-3">
     <ul class="nav nav-pills nav-stacked nav-side">
-      <li class="active">
-        <ul class="nav nav-pills nav-stacked">
-          <li><%= link_to "Home", "#navtest" %></li>
-          <li><%= link_to "blah", "#navtest2" %></li>
-        </ul>
-      </li>
-      <li><%= link_to "Blahblah", "#navtest3" %></li>
+      <% faq.each do |section_name, section| %>
+        <li><%= link_to section_name.to_s.titleize, "##{section_name}" %></li>
+      <% end %>
     </ul>
   </div>
-  <div class="col-md-8">
-    <h3 id="navtest">Ohai</h3>
-    <p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-    <h3 id="navtest2">Blah</h3>
-    <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
-    <h3 id="navtest3">Blah</h3>
-    <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+  <div class="col-md-9">
+    <% faq.each do |section_name, section| %>
+      <h2 id="<%= section_name %>"><%= section_name.to_s.titleize %></h2>
+      <% count = 0 %>
+      <% section.each do |question, answer| %>
+        <h3 id="<%= section_name %><%= count %>"><%= question.to_s.titleize %></h3>
+        <p><%= raw answer %></p>
+        <br>
+        <% count = count + 1 %>
+      <% end %>
+    <% end %>
   </div>
 </div>

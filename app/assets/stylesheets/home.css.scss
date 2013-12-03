@@ -657,7 +657,14 @@ body {
   }
 
   .nav-side {
+    @include transition();
+    @include transform(-1000px, 0);
+
+    &.active {
+      @include transform(0, 0);
+    }
+
+    top: 100px;
     position: fixed;
-    margin-top: 20px;
   }
 }

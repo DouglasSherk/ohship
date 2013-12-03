@@ -35,5 +35,21 @@ ready = ->
 
   $('.auth').addClass('active')
 
+  $('.nav-category').click (e) ->
+    $('.nav-category i').removeClass('fa-caret-down').addClass('fa-caret-right')
+    $('.nav-category + ul').addClass('hide')
+    $(@).next('ul').removeClass('hide')
+    $(@).find('i').toggleClass('fa-caret-right fa-caret-down')
+    e.preventDefault()
+
+  if $('#faq-nav')[0]
+    pos = 200
+    $(window).scroll ->
+      scrollTop = $(window).scrollTop()
+      if scrollTop >= pos && !$('#faq-nav > ul').hasClass('active')
+        $('#faq-nav > ul').addClass('active')
+      else if scrollTop < pos && $('#faq-nav > ul').hasClass('active')
+        $('#faq-nav > ul').removeClass('active')
+
 $(document).ready ready
 $(document).on 'page:load', ready
